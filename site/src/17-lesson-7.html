@@ -1,0 +1,157 @@
+<section id="lesson-7" class="lesson" hidden>
+  <div class="eyebrow">Lesson 7</div>
+  <h1>Cleaning Up</h1>
+  <div class="bigidea"><strong>Whatever you borrow, you give back, even when things go wrong.</strong> Effect has a built-in rule for "get a thing, use it, always put it back," and it holds no matter how the recipe ends: success, error, or interruption.</div>
+
+  <h2>The story</h2>
+  <p>Maya checks a book out of the library. Three ways her afternoon can go.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya happily reads a book, then returns it.">
+        <use href="#maya-happy" x="10" y="20" width="102" height="170"/>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">returned ✓</text>
+      </svg>
+      <div class="cap"><b>She reads it and returns it.</b> The happy ending.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Juice spilled on the book. Maya is upset but still returns it.">
+        <use href="#maya-sad" x="10" y="20" width="102" height="170"/>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <ellipse cx="160" cy="100" rx="18" ry="10" style="fill:var(--mango);opacity:.8"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">still returned ✓</text>
+      </svg>
+      <div class="cap"><b>She spills juice on chapter three.</b> An error. She still has to return it.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A phone call says come home now. Maya still returns the book on the way out.">
+        <use href="#maya-wave" x="10" y="20" width="102" height="170"/>
+        <rect x="8" y="4" width="120" height="26" rx="6" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="68" y="21" text-anchor="middle" font-size="11" style="fill:var(--ink)">📞 "Come home NOW."</text>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">still returned ✓</text>
+      </svg>
+      <div class="cap"><b>She's called home mid-chapter.</b> An interruption. She <i>still</i> returns the book on the way out.</div>
+    </div>
+  </div>
+  <p>The return is not optional. It doesn't care why she stopped reading. Kitchen version: Sam turns on the blender. Whether the smoothie succeeds, the fruit was rotten, or the customer left and the recipe was interrupted, <b>the blender gets turned off.</b> A blender left running overnight is how kitchens burn down. Effect calls this pattern <b>acquire and release</b>, and the guarantee is: <i>release always runs.</i></p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 260" role="img" aria-label="Acquire turns the blender on, use blends the fruit, and all three exits from use, success, error and interrupted, go through release which turns the blender off.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="20" y="100" width="150" height="50" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="95" y="120" text-anchor="middle" font-weight="700">acquire</text><text x="95" y="138" text-anchor="middle" font-size="11">turn blender ON</text>
+        <path d="M170 125H218" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="222" y="100" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="297" y="120" text-anchor="middle" font-weight="700">use</text><text x="297" y="138" text-anchor="middle" font-size="11">blend the fruit</text>
+        <!-- three exits -->
+        <path d="M372 110C420 60 440 50 500 50" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="440" y="44" text-anchor="middle" font-size="11" style="fill:var(--mint)">success 🥤</text>
+        <path d="M372 125H500" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <text x="440" y="118" text-anchor="middle" font-size="11" style="fill:var(--berry)">error (rotten fruit)</text>
+        <path d="M372 140C420 200 440 200 500 200" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="428" y="228" text-anchor="middle" font-size="11">interrupted (customer left)</text>
+        <use href="#scissors" x="405" y="168" width="22" height="22"/>
+        <!-- release -->
+        <rect x="504" y="30" width="170" height="190" rx="10" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:2"/>
+        <text x="589" y="112" text-anchor="middle" font-weight="700" font-size="14">release</text>
+        <text x="589" y="132" text-anchor="middle" font-size="11">turn blender OFF</text>
+        <text x="589" y="152" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">always</text>
+        <use href="#blender" x="574" y="160" width="30" height="45"/>
+        <path d="M589 220V240" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <text x="589" y="256" text-anchor="middle" font-size="11">done, blender is OFF no matter what</text>
+      </g>
+    </svg>
+    <figcaption>Every arrow out of "use" goes through "release." There is no path that skips it.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console } from "effect"
+
+const blenderOn  = Console.log("blender ON  🔛")
+const blenderOff = Console.log("blender OFF ⏹️")
+
+const useBlender = Effect.acquireRelease(
+  blenderOn,            // acquire
+  () =&gt; blenderOff      // release: ALWAYS runs
+)
+
+const smoothie = Effect.gen(function* () {
+  yield* useBlender
+  yield* Console.log("blending...")
+  yield* Effect.fail(new Error("rotten fruit!"))   // uh oh
+  yield* Console.log("pouring")                    // never reached
+})
+
+Effect.runPromise(Effect.scoped(smoothie)).catch(() =&gt; {})
+// blender ON  🔛
+// blending...
+// blender OFF ⏹️        &lt;-- ran anyway</code></pre>
+  <p>Delete the <code>Effect.fail</code> line and you'll see ON, blending, pouring, OFF. Put it back: ON, blending, OFF. Either way, OFF.</p>
+
+  <div class="demo">
+    <h3>Three endings, one release</h3>
+    <p>Choose how the recipe ends, then run it. Watch the last line of the log and the blender.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="How the recipe ends">
+        <label><input type="radio" name="l7-end" id="l7-ok" value="ok" checked><span>success</span></label>
+        <label><input type="radio" name="l7-end" id="l7-err" value="err"><span>rotten fruit (error)</span></label>
+        <label><input type="radio" name="l7-end" id="l7-int" value="int"><span>customer left (interrupt)</span></label>
+      </span>
+      <button class="btn primary" id="l7-run">Run</button>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start">
+      <svg viewBox="0 0 80 140" aria-hidden="true" style="width:70px;height:auto">
+        <use href="#blender" x="0" y="0" width="80" height="120"/>
+        <text id="l7-lamp" x="40" y="136" text-anchor="middle" font-size="12" font-weight="700" class="mono" style="fill:var(--muted)">OFF</text>
+      </svg>
+      <pre class="log" id="l7-log" style="min-width:0" aria-live="polite"></pre>
+    </div>
+  </div>
+
+  <h2>What's Effect.scoped?</h2>
+  <p>The library book has a <i>due date</i>: how long you're allowed to keep it. Effect calls that window a <b>scope</b>. <code>Effect.acquireRelease</code> adds "Needs: a Scope" to the card's third line, because the card needs to know <i>when</i> to return things. <code>Effect.scoped</code> says "the scope is this recipe: return everything when it ends." Layers (Lesson 5) also make scopes, so a blender acquired in a layer is returned when the app shuts down.</p>
+  <p>You don't need to understand scopes deeply this month. You need: <b>acquireRelease borrows, scoped sets the due date, release always happens.</b></p>
+
+  <h2>Why this is a big deal</h2>
+  <p>With a Promise, there's no "interrupted" path at all, so people forget cleanup on the "customer left" case, because that case doesn't exist for them. Then a real program runs for a week and has ten thousand blenders still on. Effect makes the interrupted path a first-class thing, and cleanup runs on it too.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Name the three ways a recipe can end. Which of them skips the release step?</summary>Success, error, interruption. None of them skip release.</details>
+  <details><summary>2. Why is "turn the blender off" not just the last line of the recipe?</summary>Because if a line before it fails or gets interrupted, the last line is never reached. Release has to be attached to the borrowing, not written at the end.</details>
+  <details><summary>3. In library words, what's a scope?</summary>The due date: the window of time you're allowed to hold what you borrowed.</details>
+  <details><summary>4. A friend says "I'll just put cleanup in the <code>.catch</code> of my Promise." What case did they forget?</summary>The interrupted case. Promises don't have one, so their cleanup never runs when a customer walks away.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li><code>acquireRelease(acquire, release)</code> returns the acquired thing, so you can do <code>const blender = yield* useBlender</code> and then use it. The example throws it away for simplicity.</li>
+      <li><code>Effect.ensuring(cleanup)</code> is the simpler cousin: "after this card, always run cleanup." <code>Effect.addFinalizer</code> registers cleanup from inside a <code>gen</code> block.</li>
+      <li>A closer for the unit: draw the full smoothie card on the board with all three lines filled in, a retry and timeout wrapped around it, a Blender layer provided, and acquireRelease keeping the blender safe. Then ask: "What can go wrong that we haven't written down?" The answer, "a defect, and we'd see it loudly," is the whole philosophy in one sentence.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-6">← Lesson 6</a><a href="#cheat-sheet">Cheat sheet →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l7-log"), lamp = K.$("#l7-lamp"), btn = K.$("#l7-run");
+    btn.addEventListener("click", function () {
+      var end = K.$("input[name=l7-end]:checked").value; btn.disabled = true; K.clear(log);
+      K.log(log, "blender ON  🔛"); lamp.textContent = "ON"; lamp.style.fill = "var(--mint)";
+      K.sleep(700).then(function () { K.log(log, "blending..."); return K.sleep(900); })
+        .then(function () {
+          if (end === "ok") { K.log(log, "pouring 🥤", "ok"); }
+          else if (end === "err") { K.log(log, "✕ Error: rotten fruit!  (the recipe stops here)", "bad"); }
+          else { K.log(log, "✂ interrupted: customer left  (the recipe stops here)", "bad"); }
+          return K.sleep(700);
+        })
+        .then(function () { K.log(log, "blender OFF ⏹️   ← release ran anyway", "ok"); lamp.textContent = "OFF"; lamp.style.fill = "var(--muted)"; btn.disabled = false; });
+    });
+  })();
+  </script>
+</section>

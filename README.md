@@ -8,6 +8,15 @@ Promises are order receipts. Effects are recipe cards. Services are the applianc
 Fibers are bookmarks in half-finished recipes. Every lesson adds one thing to that picture,
 so students never have to hold more than one new idea at a time.
 
+## The illustrated version
+
+The same seven lessons as an interactive web page, with SVG comic panels (Sam the cook, Maya the customer,
+Ty the type checker), mechanism diagrams, and a small hands-on demo per lesson:
+**https://claude.ai/artifact/8xbKVQ6zzg9G5WXUJepXxD**
+
+Its source lives in `site/src` (one file per lesson, plus `sprites.svg` for the cast and props).
+Run `python3 site/build.py` to rebuild `site/dist/index.html`.
+
 ## The lessons
 
 | # | Lesson | The one big idea | Kitchen picture |
@@ -36,6 +45,11 @@ Every lesson has the same shape so students know what to expect:
 4. **The tiniest possible code**, in TypeScript, using Effect 4.0 names.
 5. **Check yourself**, three or four questions to talk about.
 6. **Teacher notes**, including what to say when a sharp kid asks the hard question.
+
+## Reference
+
+`reference/effect-smol` is a shallow git submodule of the Effect 4 source, for checking API names.
+Fetch it with `git submodule update --init --depth 1`.
 
 ## About the code
 

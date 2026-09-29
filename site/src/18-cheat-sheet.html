@@ -1,0 +1,76 @@
+<section id="cheat-sheet" class="lesson" hidden>
+  <div class="eyebrow">Reference</div>
+  <h1>Promise vs. Effect, on one page</h1>
+  <p>Everything from the seven lessons, side by side. The receipt on the left, the recipe card on the right.</p>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>Question</th><th>Promise (the receipt)</th><th>Effect (the recipe card)</th></tr></thead>
+      <tbody>
+        <tr><td>What is it?</td><td>A value that isn't ready yet</td><td>A plan for getting a value</td></tr>
+        <tr><td>When does it start?</td><td>The moment you make it</td><td>Only when you run it</td></tr>
+        <tr><td>Can you run it twice?</td><td>No. One receipt, one smoothie</td><td>Yes, as many times as you like</td></tr>
+        <tr><td>Does the type say what can go wrong?</td><td>No: <code>Promise&lt;Smoothie&gt;</code></td><td>Yes: <code>Effect&lt;Smoothie, OutOfMango&gt;</code></td></tr>
+        <tr><td>Does the type say what it needs?</td><td>No</td><td>Yes: <code>Effect&lt;Smoothie, OutOfMango, Blender&gt;</code></td></tr>
+        <tr><td>Can you cancel it?</td><td>No</td><td>Yes. Interrupt the fiber; cleanup still runs</td></tr>
+        <tr><td>Write steps top to bottom</td><td><code>async</code> / <code>await</code></td><td><code>Effect.gen</code> / <code>yield*</code></td></tr>
+        <tr><td>"Do this when it succeeds"</td><td><code>.then(f)</code></td><td><code>Effect.map</code> / <code>Effect.andThen</code></td></tr>
+        <tr><td>"Do this if it fails"</td><td><code>.catch(f)</code>, catches everything, mystery box</td><td><code>Effect.catchTag("Name", f)</code> for one error, <code>Effect.catch</code> for all listed errors</td></tr>
+        <tr><td>Try again on failure</td><td>Write a loop yourself</td><td><code>Effect.retry(card, { times: 3 })</code></td></tr>
+        <tr><td>Give up after a while</td><td>Hard: a second Promise and a timer</td><td><code>Effect.timeout(card, "2 seconds")</code></td></tr>
+        <tr><td>Several at once</td><td><code>Promise.all([...])</code></td><td><code>Effect.all([...], { concurrency: n })</code></td></tr>
+        <tr><td>First one wins</td><td><code>Promise.race([...])</code>, loser keeps running</td><td><code>Effect.race(a, b)</code>, loser is interrupted</td></tr>
+        <tr><td>Always clean up</td><td><code>try { } finally { }</code>, no interrupt case</td><td><code>Effect.acquireRelease</code>: success, error, and interrupt</td></tr>
+        <tr><td>Ask for a helper</td><td>Import it or pass it in by hand</td><td><code>yield* Blender</code>, then <code>Effect.provide(layer)</code></td></tr>
+        <tr><td>Turn it into the other</td><td>(a Promise is already running)</td><td><code>Effect.runPromise(card)</code> at the door of the program</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Reading an Effect type out loud</h2>
+  <div class="typeline">Effect&lt;<span class="slot-a">Smoothie</span>, <span class="slot-e">OutOfMango</span>, <span class="slot-r">Blender</span>&gt;</div>
+  <p>"An Effect that <b style="color:var(--mint)">gives you</b> a Smoothie, <b style="color:var(--berry)">might fail with</b> OutOfMango, and <b style="color:var(--sky)">needs</b> a Blender."</p>
+  <ul>
+    <li><code>never</code> in slot 2: nothing can go wrong.</li>
+    <li><code>never</code> in slot 3: needs nothing. Ready to run.</li>
+    <li>Trailing <code>never</code>s can be left off: <code>Effect&lt;number&gt;</code> means <code>Effect&lt;number, never, never&gt;</code>.</li>
+  </ul>
+
+  <h2>The five lines of Effect 4 you actually need this month</h2>
+<pre><code>import { Effect, Console, Context, Layer, Data, Fiber } from "effect"
+
+Effect.gen(function* () { const x = yield* step; return x })   // a recipe with steps
+class OutOfMango extends Data.TaggedError("OutOfMango") {}     // a named error
+class Blender extends Context.Service&lt;Blender, { ... }&gt;()("Blender") {}   // a needed thing
+Layer.succeed(Blender, { ... })                                 // a way to provide it
+Effect.runPromise(card.pipe(Effect.provide(layer)))            // the door out of the kitchen</code></pre>
+
+  <h2>Kitchen word, programmer word</h2>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>Kitchen picture</th><th>Programmer word</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>One cook</td><td>single-threaded</td><td>JavaScript does one instruction at a time. Always.</td></tr>
+        <tr><td>Standing and staring at the toaster</td><td>blocking / synchronous</td><td>Waiting in a way that freezes everything else.</td></tr>
+        <tr><td>Leaving a ticket and walking away</td><td>asynchronous</td><td>Waiting in a way that lets other work happen.</td></tr>
+        <tr><td>The ticket you leave</td><td>callback</td><td>A function to run later, when something finishes.</td></tr>
+        <tr><td>The ticket rail</td><td>event loop</td><td>The list the cook checks whenever hands are free.</td></tr>
+        <tr><td>A receipt for a smoothie</td><td>Promise</td><td>A value that isn't ready yet. Starts the moment it's made.</td></tr>
+        <tr><td>A recipe card</td><td>Effect</td><td>A plan for producing a value. Does nothing until run.</td></tr>
+        <tr><td>"You get" / "Can go wrong" / "Needs"</td><td>Success / Error / Requirements</td><td>The three slots of the Effect type.</td></tr>
+        <tr><td>Nothing on that line</td><td><code>never</code></td><td>Nothing can go wrong, or nothing is needed.</td></tr>
+        <tr><td>Out of mango</td><td>error</td><td>A known failure, written on the card, must be handled.</td></tr>
+        <tr><td>Kitchen fire</td><td>defect</td><td>A bug. Not on the card. Crashes loudly on purpose.</td></tr>
+        <tr><td>A name tag on a problem</td><td>tagged error</td><td>An error class with a <code>_tag</code> string.</td></tr>
+        <tr><td>An appliance the recipe asks for</td><td>service</td><td>A described capability, like "a Blender that can blend."</td></tr>
+        <tr><td>The kitchen supplying the appliance</td><td>layer</td><td>A way to build or provide a service.</td></tr>
+        <tr><td>Ty, the kitchen manager</td><td>the type checker</td><td>Reads every card before it can run. Stops incomplete ones.</td></tr>
+        <tr><td>A bookmark in a half-done recipe</td><td>fiber</td><td>A running Effect that can be paused, resumed, or stopped.</td></tr>
+        <tr><td>Pulling the bookmark out</td><td>interruption</td><td>Stopping a fiber cleanly; its cleanup still runs.</td></tr>
+        <tr><td>Borrow it, always return it</td><td>acquire / release</td><td>Get a resource and guarantee cleanup on every ending.</td></tr>
+        <tr><td>The due date</td><td>scope</td><td>The window during which a borrowed resource is held.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pager"><a href="#lesson-7">← Lesson 7</a><a href="#home">Home →</a></div>
+</section>

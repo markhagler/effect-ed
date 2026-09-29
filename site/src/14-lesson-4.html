@@ -1,0 +1,176 @@
+<section id="lesson-4" class="lesson" hidden>
+  <div class="eyebrow">Lesson 4</div>
+  <h1>Errors You Can See</h1>
+  <div class="bigidea"><strong>The card says what can go wrong, so the compiler makes you deal with it.</strong> Effect also separates "problems we expected" from "the kitchen caught fire," and gives you tools like retry and timeout that snap onto any card.</div>
+
+  <h2>The story</h2>
+  <p>Two very different things can go wrong at the smoothie counter.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam shrugs beside an empty mango crate and offers a strawberry. Maya is fine with it.">
+        <use href="#sam-shrug" x="110" y="10" width="108" height="180"/>
+        <use href="#maya-happy" x="0" y="20" width="102" height="170"/>
+        <rect x="150" y="150" width="60" height="34" rx="4" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="180" y="171" text-anchor="middle" font-size="10" style="fill:var(--muted)">mango: 0</text>
+        <use href="#strawberry" x="200" y="100" width="34" height="34"/>
+        <rect x="86" y="4" width="150" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="161" y="22" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"Out of mango. Strawberry?"</text>
+      </svg>
+      <div class="cap"><b>Out of mango.</b> Annoying, but normal. It's going to happen sometimes. A good card lists it, and a good cook has a plan: offer strawberry.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A fire in the kitchen. Sam looks worried and Ty holds up a hand to stop everything.">
+        <use href="#fire" x="80" y="100" width="50" height="66"/>
+        <use href="#fire" x="110" y="120" width="36" height="48"/>
+        <use href="#sam-worried" x="0" y="10" width="108" height="180"/>
+        <use href="#ty-stop" x="130" y="10" width="108" height="180"/>
+        <text x="120" y="24" text-anchor="middle" font-size="14" class="hand" font-weight="800" style="fill:var(--berry)">KITCHEN FIRE</text>
+      </svg>
+      <div class="cap"><b>Kitchen fire.</b> Nobody writes "fire" on a smoothie card. It's not a smoothie problem, it's a bug in the building. You don't handle it with a strawberry.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty reads a card whose error line says OutOfMango and stops it. After the cook adds a plan, Ty gives a thumbs up.">
+        <use href="#ty-stop" x="0" y="10" width="96" height="160"/>
+        <use href="#card" x="86" y="124" width="56" height="35"/>
+        <text x="90" y="149" font-size="7" class="mono" style="fill:var(--berry)">OutOfMango</text>
+        <line x1="120" y1="14" x2="120" y2="110" stroke="currentColor" stroke-dasharray="4 4"/>
+        <use href="#ty-check" x="144" y="10" width="96" height="160"/>
+        <text x="48" y="190" text-anchor="middle" font-size="10" style="fill:var(--berry)" font-weight="700">before: stop</text>
+        <text x="192" y="190" text-anchor="middle" font-size="10" style="fill:var(--mint)" font-weight="700">after: plan added ✓</text>
+      </svg>
+      <div class="cap"><b>Ty checks the card.</b> If the error line still lists something nobody planned for, Ty stops it at the door. Add the plan, and the card is cleared.</div>
+    </div>
+  </div>
+  <p>Effect calls the first kind an <b>error</b> (expected, written on the card) and the second kind a <b>defect</b> (unexpected, a bug). The compiler makes you deal with errors. Defects crash loudly, which is what you want, because hiding a fire is worse than seeing it.</p>
+
+  <h2>Name tags for errors</h2>
+  <p>Each expected error gets a <b>name tag</b> so you can tell them apart:</p>
+<pre><code>import { Data } from "effect"
+
+class OutOfMango extends Data.TaggedError("OutOfMango") {}
+class BlenderJammed extends Data.TaggedError("BlenderJammed")&lt;{ readonly speed: number }&gt; {}</code></pre>
+  <p>That's a whole error type. The string in quotes is the name tag. Now a card can list them:</p>
+<pre><code>import { Effect } from "effect"
+
+const getMango = Effect.gen(function* () {
+  if (Math.random() &lt; 0.3) {
+    return yield* Effect.fail(new OutOfMango())     // the "can go wrong" line
+  }
+  return "🥭"
+})
+// getMango : Effect&lt;string, OutOfMango&gt;
+//                           ^ TypeScript figured this out on its own</code></pre>
+  <p>Nobody wrote <code>OutOfMango</code> in the type. Ty <i>read the recipe</i> and filled in the "Can go wrong" line alone.</p>
+
+  <h2>The picture: a card going through the kitchen</h2>
+  <figure>
+    <svg viewBox="0 0 760 300" role="img" aria-label="Running the getMango card leads to success, or to the OutOfMango error, or to a defect. For the error, if the cook wrote a plan, a strawberry comes out; if not, the error stays on the card for whoever runs it. A defect crashes loudly.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card" x="20" y="110" width="96" height="60"/>
+        <text x="68" y="188" text-anchor="middle" font-weight="700" class="mono">getMango</text>
+        <rect x="150" y="122" width="70" height="36" rx="18" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="185" y="145" text-anchor="middle" font-weight="700">run it</text>
+        <path d="M116 140H148" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <!-- success -->
+        <path d="M220 130C260 60 300 50 340 50" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="300" y="40" text-anchor="middle" font-size="11" style="fill:var(--mint)">success</text>
+        <use href="#mango" x="346" y="34" width="32" height="32"/>
+        <text x="386" y="55">a mango. Done.</text>
+        <!-- error -->
+        <path d="M220 140H338" stroke="currentColor" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <text x="280" y="132" text-anchor="middle" font-size="11" style="fill:var(--berry)">error: OutOfMango</text>
+        <rect x="342" y="112" width="178" height="56" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="431" y="134" text-anchor="middle" font-weight="700">Did the cook write</text>
+        <text x="431" y="152" text-anchor="middle" font-weight="700">a plan for OutOfMango?</text>
+        <path d="M520 128C545 100 565 96 590 96" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="516" y="86" font-size="11">yes: catchTag</text>
+        <use href="#strawberry" x="596" y="80" width="30" height="30"/>
+        <text x="632" y="100">strawberry</text>
+        <path d="M520 152C545 180 565 184 590 184" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="518" y="178" font-size="11">no</text>
+        <text x="596" y="180" font-size="11">stays on the error line.</text>
+        <text x="596" y="196" font-size="11">Whoever runs it handles it.</text>
+        <use href="#ty-look" x="696" y="204" width="50" height="84"/>
+        <!-- defect -->
+        <path d="M220 150C260 230 300 240 340 240" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="300" y="262" text-anchor="middle" font-size="11">defect: fire</text>
+        <use href="#fire" x="346" y="212" width="28" height="38"/>
+        <text x="384" y="238" font-weight="700" style="fill:var(--berry)">crash loudly.</text>
+        <text x="384" y="256" font-size="11">This is a bug, not a smoothie problem.</text>
+      </g>
+    </svg>
+    <figcaption>Three ways out of "run it." Only the middle one is the cook's business. The error line on the card is the list of things the cook is expected to have a plan for.</figcaption>
+  </figure>
+
+  <h2>Catching one specific error</h2>
+<pre><code>const getFruit = getMango.pipe(
+  Effect.catchTag("OutOfMango", () =&gt; Effect.succeed("🍓"))
+)
+// getFruit : Effect&lt;string&gt;      &lt;-- OutOfMango is GONE from the error line</code></pre>
+  <p>Look at what happened to the type. Before: <code>Effect&lt;string, OutOfMango&gt;</code>. After: <code>Effect&lt;string&gt;</code>. Ty saw that we wrote a plan for <code>OutOfMango</code> and <b>crossed it off the card.</b> If a card still has errors on it when you reach <code>Effect.runPromise</code>, that's your reminder that you haven't planned for them.</p>
+  <p><code>Effect.catch</code> (no tag) is the "catch anything on the error line" version. It still doesn't catch defects. Fires are not on the error line.</p>
+
+  <h2>Two tools that snap onto any card</h2>
+  <p>Because a card is just a plan, you can wrap a plan around a plan.</p>
+<pre><code>// Retry: "if it fails, try again, up to 3 more times."
+const stubbornMango = Effect.retry(getMango, { times: 3 })
+
+// Timeout: "give up if it takes longer than 2 seconds."  The error line grows:
+const quickMango = Effect.timeout(getMango, "2 seconds")
+// quickMango : Effect&lt;string, OutOfMango | TimeoutError&gt;</code></pre>
+  <p>Try doing that to a Promise. You can't wrap a plan around a receipt, because the receipt already started.</p>
+
+  <div class="demo">
+    <h3>Build the card, watch the error line</h3>
+    <p>Snap tools onto <code>getMango</code> and watch the type change. Ty only lets a card through when its error line is empty.</p>
+    <div class="controls">
+      <label class="check"><input type="checkbox" id="l4-retry"> retry({ times: 3 })</label>
+      <label class="check"><input type="checkbox" id="l4-timeout"> timeout("2 seconds")</label>
+      <label class="check"><input type="checkbox" id="l4-catch"> catchTag("OutOfMango", 🍓)</label>
+    </div>
+    <div class="typeline" id="l4-type" aria-live="polite"></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;margin-top:.8rem">
+      <svg viewBox="0 0 120 200" aria-hidden="true" style="width:90px;height:auto"><use id="l4-ty" href="#ty-look"/></svg>
+      <p id="l4-say" style="margin:0"></p>
+    </div>
+    <pre class="log" id="l4-pipe" style="margin-top:.8rem"></pre>
+  </div>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. "Out of mango" versus "kitchen fire": which one belongs on the recipe card, and why?</summary>Out of mango. It's expected and specific to this recipe, so the cook should have a plan. A fire is a bug in the building, not part of any recipe.</details>
+  <details><summary>2. Before <code>catchTag</code>, the type was <code>Effect&lt;string, OutOfMango&gt;</code>. After, it was <code>Effect&lt;string&gt;</code>. Who crossed the error off, and how did they know they could?</summary>The type checker (Ty). It saw a handler for the exact name tag "OutOfMango," so that failure can no longer escape the card.</details>
+  <details><summary>3. Why can you wrap <code>retry</code> around an Effect but not around a Promise?</summary>An Effect is a plan that hasn't started, so "do this plan again if it fails" makes sense. A Promise has already started; there's nothing to re-run.</details>
+  <details><summary>4. <code>Effect.timeout</code> <i>adds</i> an error to the card. Is that a bad thing?</summary>No. It's honest. The card can now fail a new way, and the card says so.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The single most important moment in this unit is showing the error type <b>disappear</b> when you add <code>catchTag</code>. Do it live with hover-over types in the editor. Let them see the red squiggle when they forget.</li>
+      <li><code>Data.TaggedError("Name")</code> makes a class with a <code>_tag</code> field. The <code>_tag</code> is literally the name tag. <code>console.log(err._tag)</code> proves it.</li>
+      <li>Defects come from <code>throw</code> inside plain code, or <code>Effect.die</code>. You can catch them with <code>Effect.catchDefect</code>, but that's for the fire-alarm layer of a program, not recipes.</li>
+      <li>Ask students to write the "Can go wrong" line for logging into a game: WrongPassword, ServerDown, TooManyAttempts. That makes it click that errors are a list of known things, not "stuff happened."</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-3">← Lesson 3</a><a href="#lesson-5">Lesson 5: Services →</a></div>
+
+  <script>
+  (function () {
+    var boxes = { retry: K.$("#l4-retry"), timeout: K.$("#l4-timeout"), catch: K.$("#l4-catch") };
+    var type = K.$("#l4-type"), ty = K.$("#l4-ty"), say = K.$("#l4-say"), pipe = K.$("#l4-pipe");
+    function render() {
+      var errs = ["OutOfMango"], lines = ["getMango                                  // Effect<string, OutOfMango>"];
+      if (boxes.retry.checked) lines.push("  .pipe(Effect.retry({ times: 3 }))       // same error line, but 3 more tries first");
+      if (boxes.timeout.checked) { errs.push("TimeoutError"); lines.push("  .pipe(Effect.timeout(\"2 seconds\"))      // adds TimeoutError to the error line"); }
+      if (boxes.catch.checked) { errs = errs.filter(function (e) { return e !== "OutOfMango"; }); lines.push("  .pipe(Effect.catchTag(\"OutOfMango\", () => Effect.succeed(\"🍓\")))   // crosses OutOfMango off"); }
+      var eHtml = errs.length ? errs.map(function (e) { return '<span class="slot-e">' + e + '</span>'; }).join(" | ") : '<span class="slot-never">never</span>';
+      type.innerHTML = 'Effect&lt;<span class="slot-a">string</span>, ' + eHtml + '&gt;';
+      pipe.textContent = lines.join("\n");
+      if (errs.length) { ty.setAttribute("href", "#ty-look"); say.innerHTML = "<b>Ty:</b> the error line still says <code>" + errs.join("</code> and <code>") + "</code>. Whoever runs this card has to deal with that. Not ready for the door."; }
+      else { ty.setAttribute("href", "#ty-check"); say.innerHTML = "<b>Ty:</b> error line is empty. Nothing can escape this card. Ready to run."; }
+    }
+    Object.keys(boxes).forEach(function (k) { boxes[k].addEventListener("change", render); });
+    render();
+  })();
+  </script>
+</section>

@@ -1,0 +1,211 @@
+<section id="lesson-2" class="lesson" hidden>
+  <div class="eyebrow">Lesson 2</div>
+  <h1>Promises: The Receipt</h1>
+  <div class="bigidea"><strong>A Promise is a receipt for a value that isn't ready yet.</strong> You order a smoothie, you get a receipt, and the receipt says "your smoothie will be here soon, or we'll tell you why not."</div>
+
+  <h2>The story</h2>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya orders a mango smoothie. Sam hands her a receipt.">
+        <use href="#maya-happy" x="10" y="20" width="102" height="170"/>
+        <use href="#sam-busy" x="120" y="10" width="108" height="180"/>
+        <rect x="6" y="4" width="162" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="87" y="22" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"One mango smoothie, please!"</text>
+        <use href="#receipt" x="196" y="86" width="30" height="39"/>
+      </svg>
+      <div class="cap"><b>She orders.</b> Sam doesn't hand her a smoothie. Sam hands her a receipt with a number on it.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya looks at the receipt while the blender is already running behind the counter.">
+        <use href="#maya-receipt" x="20" y="20" width="102" height="170"/>
+        <use href="#blender" x="150" y="50" width="56" height="84"/>
+        <path d="M146 60l-6-8M212 60l6-8M150 44l-4-8M208 44l4-8" style="stroke:var(--ink);stroke-width:2;stroke-linecap:round" fill="none"/>
+        <text x="178" y="160" text-anchor="middle" font-size="12" class="hand" font-weight="700" style="fill:var(--mango)">already blending</text>
+      </svg>
+      <div class="cap"><b>The receipt is not the smoothie.</b> It's a promise of one. And notice: the blender started the moment she ordered.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Two endings: Maya holding a smoothie, or Maya sad next to a sign saying out of mango.">
+        <use href="#maya-smoothie" x="0" y="20" width="102" height="170"/>
+        <use href="#maya-sad" x="130" y="20" width="102" height="170"/>
+        <rect x="122" y="6" width="114" height="26" rx="5" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="179" y="23" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Sorry, out of mango"</text>
+        <line x1="120" y1="20" x2="120" y2="190" stroke="currentColor" stroke-dasharray="4 4"/>
+      </svg>
+      <div class="cap"><b>Two endings.</b> Her number is called and here's the smoothie. Or: "Sorry, we're out of mango." Either way, the receipt is finished.</div>
+    </div>
+  </div>
+
+  <p>Three things can be true about that receipt at any moment:</p>
+  <ul>
+    <li><b>Pending</b>: still blending. You're holding the receipt, waiting.</li>
+    <li><b>Fulfilled</b>: your number is called, here's your smoothie. The receipt "turned into" the value.</li>
+    <li><b>Rejected</b>: "Sorry, we're out of mango." The receipt turned into a reason it failed.</li>
+  </ul>
+  <p>Once a receipt is fulfilled or rejected, it never changes again. A smoothie doesn't un-blend.</p>
+
+  <figure>
+    <svg viewBox="0 0 700 250" role="img" aria-label="A pending receipt becomes either a fulfilled receipt with a smoothie or a rejected receipt marked out of mango. Neither ever changes back.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">The three states of a receipt</text>
+        <!-- pending -->
+        <use href="#receipt" x="40" y="60" width="80" height="104"/>
+        <use href="#clock" x="62" y="96" width="36" height="36"/>
+        <text x="80" y="188" text-anchor="middle" font-weight="700">Pending</text>
+        <text x="80" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">still blending</text>
+        <!-- fulfilled -->
+        <use href="#receipt" x="400" y="20" width="80" height="104"/>
+        <use href="#smoothie" x="424" y="48" width="32" height="48"/>
+        <text x="540" y="84" font-weight="700" style="fill:var(--mint)">Fulfilled</text>
+        <text x="540" y="100" font-size="11" style="fill:var(--muted)">turned into a smoothie</text>
+        <!-- rejected -->
+        <use href="#receipt" x="400" y="120" width="80" height="104"/>
+        <path d="M420 150l40 40M460 150l-40 40" style="stroke:var(--berry);stroke-width:5;stroke-linecap:round" fill="none"/>
+        <text x="540" y="180" font-weight="700" style="fill:var(--berry)">Rejected</text>
+        <text x="540" y="196" font-size="11" style="fill:var(--muted)">turned into a reason</text>
+        <!-- arrows -->
+        <path d="M130 100C250 100 300 60 392 62" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="250" y="66" text-anchor="middle" font-size="11">smoothie ready</text>
+        <path d="M130 120C250 120 300 170 392 172" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="250" y="160" text-anchor="middle" font-size="11">out of mango</text>
+        <!-- never changes -->
+        <text x="540" y="48" font-size="11" font-style="italic" style="fill:var(--muted)">both are final: never changes again</text>
+        <text x="80" y="224" text-anchor="middle" font-size="11" style="fill:var(--muted)">(the blender started</text>
+        <text x="80" y="238" text-anchor="middle" font-size="11" style="fill:var(--muted)">the moment you ordered)</text>
+      </g>
+    </svg>
+    <figcaption>A receipt moves from pending to exactly one of two final states, and then stays there. There is no arrow back.</figcaption>
+  </figure>
+
+  <h2>What you can do with a receipt</h2>
+  <p>You can write instructions on the back of it:</p>
+  <ul>
+    <li><code>.then(...)</code> means <i>"when it's ready, do this with it."</i></li>
+    <li><code>.catch(...)</code> means <i>"if it fails, do this instead."</i></li>
+  </ul>
+<pre><code>orderSmoothie("mango")
+  .then((smoothie) =&gt; console.log("Yum:", smoothie))
+  .catch((reason) =&gt; console.log("Oh no:", reason))</code></pre>
+
+  <div class="demo">
+    <h3>The order machine</h3>
+    <p>Pick a flavor and order. Watch the receipt change state, and watch which instruction on the back of it runs. Kiwi is out of stock today.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Flavor">
+        <label><input type="radio" name="l2-flavor" id="l2-mango" value="mango" checked><span>🥭 mango</span></label>
+        <label><input type="radio" name="l2-flavor" id="l2-kiwi" value="kiwi"><span>🥝 kiwi</span></label>
+      </span>
+      <button class="btn primary" id="l2-order">Order</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;align-items:start">
+      <svg viewBox="0 0 220 200" aria-hidden="true" style="width:100%;max-width:220px;height:auto">
+        <use id="l2-maya" href="#maya-happy" x="0" y="10" width="108" height="180"/>
+        <use href="#receipt" x="120" y="30" width="90" height="117"/>
+        <g id="l2-state">
+          <text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--muted)">(no order)</text>
+        </g>
+      </svg>
+      <pre class="log" id="l2-log" aria-live="polite" style="min-width:0"></pre>
+    </div>
+  </div>
+
+  <h2>async and await: writing it like a normal story</h2>
+  <p>Writing everything in <code>.then</code> chains gets awkward. So JavaScript lets you write it top to bottom:</p>
+<pre><code>async function lunch() {
+  const smoothie = await orderSmoothie("mango")   // wait here, but Sam stays busy elsewhere
+  console.log("Yum:", smoothie)
+}</code></pre>
+  <ul>
+    <li><code>async</code> on a function means: <i>"this function hands back a receipt, not the answer."</i></li>
+    <li><code>await</code> means: <i>"pause this story until the receipt is fulfilled, then continue."</i> The cook is <b>not</b> frozen while we wait. Other tickets still get done. It's only <i>this story</i> that pauses.</li>
+  </ul>
+  <p>If the receipt is rejected, <code>await</code> throws, and you catch it with a normal <code>try/catch</code>:</p>
+<pre><code>async function lunch() {
+  try {
+    const smoothie = await orderSmoothie("mango")
+    console.log("Yum:", smoothie)
+  } catch (reason) {
+    console.log("Oh no:", reason)
+  }
+}</code></pre>
+
+  <h2>Three things a receipt can't tell you</h2>
+  <figure>
+    <svg viewBox="0 0 700 220" role="img" aria-label="A receipt with three question marks pointing at it: what can go wrong, can I reorder from it, can I cancel it.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#receipt" x="280" y="30" width="130" height="169"/>
+        <text x="345" y="120" text-anchor="middle" font-size="12" class="mono">1 mango smoothie</text>
+        <use href="#maya-receipt" x="150" y="30" width="110" height="183"/>
+        <g>
+          <text x="470" y="60" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="52" font-weight="700">What can go wrong?</text>
+          <text x="490" y="68" font-size="11" style="fill:var(--muted)">It says "smoothie", never "might be out of mango".</text>
+          <path d="M466 52H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+        <g>
+          <text x="470" y="122" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="114" font-weight="700">Can I get another from it?</text>
+          <text x="490" y="130" font-size="11" style="fill:var(--muted)">No. One receipt, one smoothie, already started.</text>
+          <path d="M466 114H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+        <g>
+          <text x="470" y="184" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="176" font-weight="700">Can I cancel it?</text>
+          <text x="490" y="192" font-size="11" style="fill:var(--muted)">No. Walk away and the smoothie still gets made.</text>
+          <path d="M466 176H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Hold up a real receipt and ask what's missing. In code, a <code>Promise&lt;Smoothie&gt;</code> tells you the happy answer and nothing about failures, reuse, or cancelling. Lesson 3 fixes all three.</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Is the receipt the smoothie? What is it, then?</summary>No. It's a promise of a smoothie: a placeholder that will turn into either the smoothie or a reason you didn't get one.</details>
+  <details><summary>2. When does the blender start: when you order, or when you read the receipt?</summary>When you order. Creating the Promise starts the work. Reading the receipt (calling <code>.then</code>) doesn't start or stop anything.</details>
+  <details><summary>3. What are the three states? Can a receipt go from Fulfilled back to Pending?</summary>Pending, fulfilled, rejected. No. Once settled, a Promise never changes again.</details>
+  <details><summary>4. Your friend says "await freezes the whole program." Use the kitchen to explain why they're wrong.</summary><code>await</code> pauses one story (one function) until its receipt is ready. Sam keeps taking other tickets off the rail meanwhile. The truck never freezes; only that one customer's story is waiting.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>A Promise is a real thing you can print. <code>console.log(orderSmoothie("mango"))</code> shows <code>Promise { &lt;pending&gt; }</code>. Kids love seeing the word "pending" for real.</li>
+      <li>Reinforce that <code>async/await</code> is only a nicer way to write <code>.then</code>. Nothing new happens underneath.</li>
+      <li>The "three things a receipt can't tell you" figure is the bridge to Effect. If you have to cut something from this lesson, don't cut that.</li>
+      <li>A fake <code>orderSmoothie</code> for the demo: <code>new Promise((resolve, reject) =&gt; setTimeout(() =&gt; flavor === "mango" ? resolve("mango smoothie") : reject("out of " + flavor), 1000))</code>.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-1">← Lesson 1</a><a href="#lesson-3">Lesson 3: Effects →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l2-log"), state = K.$("#l2-state"), maya = K.$("#l2-maya"), btn = K.$("#l2-order");
+    function setState(html) { state.innerHTML = html; }
+    function orderSmoothie(flavor) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () { flavor === "mango" ? resolve("mango smoothie 🥤") : reject("out of " + flavor); }, 1500);
+      });
+    }
+    btn.addEventListener("click", function () {
+      var flavor = K.$("input[name=l2-flavor]:checked").value;
+      btn.disabled = true; K.clear(log);
+      maya.setAttribute("href", "#maya-receipt");
+      K.log(log, "Maya: one " + flavor + " smoothie, please");
+      K.log(log, "Sam hands over a receipt. Blender starts NOW.", "dim");
+      setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--muted)">PENDING</text><text x="165" y="120" text-anchor="middle" font-size="18">⏳</text>');
+      orderSmoothie(flavor)
+        .then(function (s) {
+          setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--mint)">FULFILLED</text><use href="#smoothie" x="150" y="104" width="30" height="45"/>');
+          maya.setAttribute("href", "#maya-smoothie");
+          K.log(log, ".then ran  →  Yum: " + s, "ok");
+        })
+        .catch(function (r) {
+          setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--berry)">REJECTED</text><text x="165" y="130" text-anchor="middle" font-size="22" style="fill:var(--berry)">✕</text>');
+          maya.setAttribute("href", "#maya-sad");
+          K.log(log, ".catch ran  →  Oh no: " + r, "bad");
+        })
+        .then(function () { K.log(log, "the receipt is settled. It will never change again.", "dim"); btn.disabled = false; });
+    });
+  })();
+  </script>
+</section>

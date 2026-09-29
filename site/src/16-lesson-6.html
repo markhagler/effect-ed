@@ -1,0 +1,215 @@
+<section id="lesson-6" class="lesson" hidden>
+  <div class="eyebrow">Lesson 6</div>
+  <h1>Many Things at Once: Fibers</h1>
+  <div class="bigidea"><strong>One cook can keep many recipes going by using bookmarks, and can cleanly stop any of them.</strong> Effect calls a bookmark in a running recipe a <b>fiber</b>. Fibers let you run recipes side by side, race them, and interrupt them, which Promises can't do.</div>
+
+  <h2>The story</h2>
+  <p>Remember: still one cook, Sam. Sam is making three smoothies for three customers. Sam does not grow extra arms.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam stands behind three recipe cards, each with a red bookmark tucked into it.">
+        <use href="#sam-happy" x="0" y="10" width="102" height="170"/>
+        <use href="#card" x="110" y="30" width="72" height="45"/><use href="#bookmark" x="150" y="18" width="14" height="32"/>
+        <use href="#card" x="120" y="90" width="72" height="45"/><use href="#bookmark" x="160" y="78" width="14" height="32"/>
+        <use href="#card" x="130" y="150" width="72" height="45"/><use href="#bookmark" x="170" y="138" width="14" height="32"/>
+        <text x="216" y="60" font-size="11" style="fill:var(--ink)">#1</text><text x="216" y="120" font-size="11" style="fill:var(--ink)">#2</text><text x="208" y="180" font-size="11" style="fill:var(--ink)">#3</text>
+      </svg>
+      <div class="cap"><b>Bookmarks.</b> Sam puts a bookmark in recipe 1 while it blends, starts recipe 2, bookmarks that, starts recipe 3. Three recipes in progress, one cook.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A bell rings and Sam returns to the bookmarked recipe number one.">
+        <use href="#bell" x="20" y="20" width="40" height="40"/>
+        <text x="70" y="44" font-size="14" class="hand" font-weight="700" style="fill:var(--mango)">DING! #1</text>
+        <use href="#sam-busy" x="0" y="30" width="102" height="170"/>
+        <use href="#card" x="120" y="70" width="90" height="56"/><use href="#bookmark" x="176" y="56" width="16" height="36"/>
+        <path d="M108 110H118" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="165" y="150" text-anchor="middle" font-size="11" style="fill:var(--muted)">"where was I? ah, step 4"</text>
+      </svg>
+      <div class="cap"><b>Each bookmark is a fiber.</b> It remembers where in the recipe we were, so Sam can pick it back up when the bell rings.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya waves goodbye and leaves. Sam pulls the bookmark out of recipe two with scissors.">
+        <use href="#maya-wave" x="130" y="20" width="102" height="170"/>
+        <text x="180" y="24" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Gotta go, bye!"</text>
+        <use href="#card" x="20" y="60" width="90" height="56"/><use href="#bookmark" x="76" y="46" width="16" height="36"/>
+        <use href="#scissors" x="50" y="112" width="40" height="40"/>
+        <text x="65" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">recipe #2: stopped</text>
+      </svg>
+      <div class="cap"><b>Customer 2 leaves.</b> With a receipt, too bad, the smoothie gets made anyway. With a fiber, Sam pulls the bookmark out. Effect calls this <b>interruption</b>.</div>
+    </div>
+  </div>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 720 260" role="img" aria-label="Three fibers on one timeline. Sam only works during the short get-fruit and pour steps. The long blending stretches overlap because the blenders do the work. Recipe two is interrupted before pouring.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">One cook, three fibers</text>
+        <line x1="120" y1="215" x2="700" y2="215" stroke="currentColor" stroke-width="1.5"/>
+        <g text-anchor="middle" font-size="11" style="fill:var(--muted)">
+          <text x="120" y="235">0 s</text><text x="236" y="235">1 s</text><text x="352" y="235">2 s</text><text x="468" y="235">3 s</text><text x="584" y="235">4 s</text><text x="700" y="235">5 s</text>
+        </g>
+        <!-- recipe 1 -->
+        <text x="20" y="62" font-weight="700">Recipe 1</text>
+        <rect x="120" y="46" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="149" y="61" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="178" y="46" width="348" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="352" y="61" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending (blender works, Sam is elsewhere)</text>
+        <rect x="526" y="46" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="555" y="61" text-anchor="middle" font-size="10">pour</text>
+        <use href="#bookmark" x="176" y="30" width="10" height="22"/>
+        <!-- recipe 2 -->
+        <text x="20" y="112" font-weight="700">Recipe 2</text>
+        <rect x="178" y="96" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="207" y="111" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="236" y="96" width="290" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="381" y="111" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending</text>
+        <use href="#scissors" x="512" y="86" width="30" height="30"/>
+        <text x="552" y="112" font-size="11" font-weight="700" style="fill:var(--berry)">interrupted</text>
+        <use href="#bookmark" x="234" y="80" width="10" height="22"/>
+        <!-- recipe 3 -->
+        <text x="20" y="162" font-weight="700">Recipe 3</text>
+        <rect x="236" y="146" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="265" y="161" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="294" y="146" width="348" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="468" y="161" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending</text>
+        <rect x="642" y="146" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="671" y="161" text-anchor="middle" font-size="10">pour</text>
+        <use href="#bookmark" x="292" y="130" width="10" height="22"/>
+        <!-- legend -->
+        <rect x="120" y="190" width="14" height="12" rx="3" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="140" y="200" font-size="11">Sam's hands are busy</text>
+        <rect x="290" y="190" width="14" height="12" rx="3" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:3 2"/><text x="310" y="200" font-size="11">waiting on a machine (bookmark placed)</text>
+      </g>
+    </svg>
+    <figcaption>Sam only works during the orange bits. The gray stretches overlap, which is why three 3-second smoothies take about five seconds, not nine. Recipe 2 never gets its pour step.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p><b>Run several cards at once.</b> <code>Effect.all</code> takes a list of cards and gives back one card that produces a list of results. The <code>concurrency</code> option is "how many bookmarks may Sam have open at once."</p>
+<pre><code>import { Effect } from "effect"
+
+const makeSmoothie = (name: string) =&gt;
+  Effect.sleep("3 seconds").pipe(Effect.as(`${name} 🥤`))
+
+const three = Effect.all(
+  [makeSmoothie("mango"), makeSmoothie("berry"), makeSmoothie("kiwi")],
+  { concurrency: "unbounded" }      // as many bookmarks as needed
+)
+// three : Effect&lt;string[]&gt;
+
+Effect.runPromise(three).then(console.log)   // ~3 seconds, not 9</code></pre>
+  <p><b>Race.</b> Two cards start; the first to finish wins, and the loser is interrupted (its bookmark is pulled).</p>
+<pre><code>const fastest = Effect.race(makeSmoothie("mango"), makeSmoothie("berry"))</code></pre>
+  <p><b>A bookmark you can hold.</b> <code>Effect.forkChild</code> starts a card in the background and hands you the fiber. <code>Fiber.join</code> waits for it. <code>Fiber.interrupt</code> stops it.</p>
+<pre><code>import { Effect, Fiber, Console } from "effect"
+
+const program = Effect.gen(function* () {
+  const fiber = yield* Effect.forkChild(makeSmoothie("mango"))   // start it, keep the bookmark
+  yield* Console.log("customer is waiting...")
+  yield* Effect.sleep("1 second")
+  yield* Console.log("customer left!")
+  yield* Fiber.interrupt(fiber)                                  // pull the bookmark
+  yield* Console.log("stopped the mango smoothie")
+})
+
+Effect.runPromise(program)</code></pre>
+  <p>Try that with a Promise. There is no way to stop <code>orderSmoothie("mango")</code> once it's called.</p>
+
+  <div class="demo">
+    <h3>Three smoothies, one cook</h3>
+    <p>Each smoothie takes 3 seconds of blending. Pick how many bookmarks Sam may hold, start, and time it. While it runs, customer 2 can leave.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Concurrency">
+        <label><input type="radio" name="l6-c" id="l6-c1" value="1"><span>concurrency: 1</span></label>
+        <label><input type="radio" name="l6-c" id="l6-c2" value="2"><span>2</span></label>
+        <label><input type="radio" name="l6-c" id="l6-cu" value="unbounded" checked><span>"unbounded"</span></label>
+      </span>
+      <button class="btn primary" id="l6-start">Start</button>
+      <button class="btn danger" id="l6-leave" disabled>Customer 2 left! (interrupt)</button>
+      <span style="font-family:var(--font-mono);font-weight:600">elapsed: <span id="l6-time">0.0</span> s</span>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 700 150" aria-label="Live progress of three smoothie fibers" role="img">
+        <g font-size="12" style="fill:var(--ink)" id="l6-bars">
+          <text x="10" y="30">mango</text><rect x="70" y="16" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b0" x="70" y="16" width="0" height="22" rx="5" style="fill:var(--mango)"/><text id="l6-s0" x="640" y="31" font-size="11"></text>
+          <text x="10" y="80">berry</text><rect x="70" y="66" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b1" x="70" y="66" width="0" height="22" rx="5" style="fill:var(--berry)"/><text id="l6-s1" x="640" y="81" font-size="11"></text>
+          <text x="10" y="130">kiwi</text><rect x="70" y="116" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b2" x="70" y="116" width="0" height="22" rx="5" style="fill:var(--mint)"/><text id="l6-s2" x="640" y="131" font-size="11"></text>
+        </g>
+      </svg>
+    </div>
+    <pre class="log" id="l6-log" aria-live="polite"></pre>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 700 200" role="img" aria-label="A race: mango and berry fibers start together. Berry finishes first, so mango is interrupted and the result is berry.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">Effect.race: first one wins, loser is interrupted</text>
+        <rect x="20" y="40" width="120" height="34" rx="17" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><text x="80" y="62" text-anchor="middle" font-weight="700">race card</text>
+        <path d="M140 50C200 50 200 40 260 40" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="200" y="36" text-anchor="middle" font-size="10">start</text>
+        <path d="M140 64C200 64 200 110 260 110" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="200" y="104" text-anchor="middle" font-size="10">start</text>
+        <rect x="264" y="26" width="120" height="28" rx="6" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/><text x="324" y="45" text-anchor="middle">mango fiber</text>
+        <rect x="264" y="96" width="120" height="28" rx="6" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/><text x="324" y="115" text-anchor="middle">berry fiber</text>
+        <path d="M384 110H470" stroke="currentColor" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)" fill="none"/><text x="427" y="104" text-anchor="middle" font-size="10" style="fill:var(--mint)">done first!</text>
+        <use href="#smoothie" x="474" y="90" width="26" height="39"/>
+        <path d="M384 40H440" stroke="currentColor" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <use href="#scissors" x="444" y="24" width="30" height="30"/><text x="480" y="44" font-size="11" style="fill:var(--berry)">interrupted, cleans up</text>
+        <path d="M500 110H560" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <rect x="564" y="94" width="120" height="32" rx="6" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/><text x="624" y="115" text-anchor="middle" font-weight="700">result: berry</text>
+        <text x="20" y="170" font-size="11" style="fill:var(--muted)">With Promise.race, the loser keeps running. Nobody tells the mango blender to stop.</text>
+      </g>
+    </svg>
+    <figcaption>Race keeps the first result and pulls the other bookmark. The interrupted fiber still runs its cleanup (Lesson 7).</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Did Sam ever do two things at the exact same instant? Then how did three smoothies take three seconds?</summary>No. Sam only did the short steps. The blenders did the long waiting parts, all overlapping, while Sam held three bookmarks.</details>
+  <details><summary>2. What is a fiber, in kitchen words?</summary>A bookmark in a half-finished recipe: it remembers where Sam was, so Sam can come back to it, or pull it out.</details>
+  <details><summary>3. A customer leaves. What happens to their smoothie with a Promise? With a fiber?</summary>Promise: it gets made anyway; nothing can stop it. Fiber: Sam interrupts it, the recipe stops at its next step, and any cleanup it promised still runs.</details>
+  <details><summary>4. In <code>Effect.all</code> with <code>concurrency: 2</code>, how long do three 3-second smoothies take?</summary>About 6 seconds. Two run together (3 s), then the third runs alone (3 s). Try it in the demo above.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The word for "many things in progress at once" is <b>concurrency</b>. It's not "many things happening at the same instant," which is parallelism and needs more cooks. Say "in progress," never "at the same time," and you'll avoid a year of confusion.</li>
+      <li><code>Effect.forkChild</code> makes the fiber a <i>child</i> of the current one. If the parent finishes or is interrupted, the child is interrupted too. Effect 4 also has <code>forkScoped</code> and <code>forkDetach</code> for other lifetimes; skip them.</li>
+      <li>Leaving out <code>concurrency</code> means one at a time.</li>
+      <li>Interruption is polite. A fiber isn't killed mid-instruction; it stops at the next step boundary and runs its cleanup. Compare pulling the plug to pressing the off button.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-5">← Lesson 5</a><a href="#lesson-7">Lesson 7: Cleaning up →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l6-log"), time = K.$("#l6-time"), start = K.$("#l6-start"), leave = K.$("#l6-leave");
+    var names = ["mango", "berry", "kiwi"], DUR = 3000, timer = null, fibers = [];
+    function bar(i) { return K.$("#l6-b" + i); } function status(i) { return K.$("#l6-s" + i); }
+    start.addEventListener("click", function () {
+      var limit = K.$("input[name=l6-c]:checked").value, max = limit === "unbounded" ? 3 : +limit;
+      K.clear(log); start.disabled = true; leave.disabled = false;
+      var t0 = Date.now(), running = 0, next = 0, done = 0;
+      fibers = names.map(function () { return { started: 0, state: "queued" }; });
+      names.forEach(function (n, i) { bar(i).setAttribute("width", 0); status(i).textContent = "waiting for a bookmark"; status(i).style.fill = "var(--muted)"; });
+      K.log(log, "Effect.all([...], { concurrency: " + (limit === "unbounded" ? '"unbounded"' : limit) + " })");
+      function launch() {
+        while (running < max && next < 3) {
+          var i = next++; fibers[i].started = Date.now(); fibers[i].state = "running"; running++;
+          status(i).textContent = "blending..."; K.log(log, "bookmark placed in " + names[i] + " recipe", "dim");
+        }
+      }
+      function finish(i, how) {
+        fibers[i].state = how; running--; done++;
+        if (how === "done") { bar(i).setAttribute("width", 560); status(i).textContent = "🥤 done"; status(i).style.fill = "var(--mint)"; K.log(log, names[i] + " 🥤 ready", "ok"); }
+        else { status(i).textContent = "✂ interrupted"; status(i).style.fill = "var(--berry)"; K.log(log, names[i] + " interrupted. Bookmark pulled, blender switched off.", "bad"); }
+        if (done === 3) { clearInterval(timer); start.disabled = false; leave.disabled = true; K.log(log, "all settled in " + ((Date.now() - t0) / 1000).toFixed(1) + " s"); }
+        else launch();
+      }
+      leave.onclick = function () {
+        if (fibers[1].state === "running") finish(1, "interrupted");
+        else if (fibers[1].state === "queued") { fibers[1].state = "interrupted"; done++; next = Math.max(next, 2); status(1).textContent = "✂ never started"; status(1).style.fill = "var(--berry)"; K.log(log, "berry was still queued. Interrupted before it began.", "bad"); if (done === 3) { clearInterval(timer); start.disabled = false; } launch(); }
+        leave.disabled = true;
+      };
+      launch();
+      timer = setInterval(function () {
+        var now = Date.now(); time.textContent = ((now - t0) / 1000).toFixed(1);
+        fibers.forEach(function (f, i) {
+          if (f.state !== "running") return;
+          var p = Math.min(1, (now - f.started) / DUR); bar(i).setAttribute("width", Math.round(560 * p));
+          if (p >= 1) finish(i, "done");
+        });
+      }, 50);
+    });
+  })();
+  </script>
+</section>

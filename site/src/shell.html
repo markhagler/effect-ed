@@ -1,0 +1,240 @@
+<title>The Effect Kitchen</title>
+<meta name="description" content="Effect for TypeScript explained to middle schoolers with one kitchen, one cook, and a lot of smoothies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a sticky order-ticket rail of lesson tabs on top, one lesson shown at a time below,
+   text column ~72ch, figures and demos allowed to run wider. */
+:root {
+  --bg: #f3f6f8;          /* kitchen tile */
+  --surface: #ffffff;
+  --surface-2: #e9eef3;
+  --ink: #1b2734;
+  --muted: #5b6b7b;
+  --line: #d3dbe4;
+  --mango: #ef8a2a;       /* accent: the smoothie */
+  --mango-soft: #fde7d2;
+  --mint: #23996f;        /* success, "ready" */
+  --mint-soft: #d6f2e6;
+  --berry: #d3405a;       /* errors */
+  --berry-soft: #fadbe1;
+  --sky: #3273c9;         /* services, "needs" */
+  --sky-soft: #dbe7f8;
+  --code-bg: #eef2f6;
+  --paper: #fffdf7;       /* recipe cards and receipts */
+  --paper-rule: #b9c6d6;
+  --paper-red: #e05a5a;
+  --shadow: 0 2px 10px rgba(27,39,52,.08);
+  /* cast */
+  --sam-skin: #c98a5e; --sam-shirt: #3b7dd8; --apron: #fbfbf7; --hat: #ffffff;
+  --maya-skin: #7a4a2b; --maya-hoodie: #2aa9a0; --maya-hair: #1a1a1a;
+  --ty-skin: #f1c9a5; --ty-cardigan: #8e5bd1; --ty-hair: #8d8d99; --ty-glass: #1b2734;
+  --pants: #2c3e50; --shoe: #1b2734; --board: #ffffff;
+  --font-display: "Baloo 2", "Trebuchet MS", sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131d27; --surface: #1b2733; --surface-2: #233140; --ink: #e9eef3; --muted: #a2b1c0; --line: #33445a;
+    --mango: #f6a04c; --mango-soft: #4a3320; --mint: #3fc48f; --mint-soft: #1c3a30; --berry: #ef6c82; --berry-soft: #452230;
+    --sky: #6aa2ea; --sky-soft: #1f334d; --code-bg: #0f1821; --paper: #f4efe2; --paper-rule: #a9b6c6; --paper-red: #d85a5a;
+    --shadow: 0 2px 12px rgba(0,0,0,.35); --hat: #f4f4f4; --apron: #f1f1ea; --board: #1b2733; --ty-glass: #1b2734;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131d27; --surface: #1b2733; --surface-2: #233140; --ink: #e9eef3; --muted: #a2b1c0; --line: #33445a;
+  --mango: #f6a04c; --mango-soft: #4a3320; --mint: #3fc48f; --mint-soft: #1c3a30; --berry: #ef6c82; --berry-soft: #452230;
+  --sky: #6aa2ea; --sky-soft: #1f334d; --code-bg: #0f1821; --paper: #f4efe2; --paper-rule: #a9b6c6; --paper-red: #d85a5a;
+  --shadow: 0 2px 12px rgba(0,0,0,.35); --hat: #f4f4f4; --apron: #f1f1ea; --board: #1b2733; --ty-glass: #1b2734;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.55 var(--font-body); margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 700; margin-block: 2.2rem .6rem; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-block: 1.4rem .4rem; }
+p, li { max-width: 72ch; }
+a { color: var(--sky); }
+code { font-family: var(--font-mono); font-size: .9em; background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; overflow-x: auto; font-size: .88rem; line-height: 1.55; margin-block: 1rem; }
+pre code { background: none; padding: 0; font-size: 1em; }
+.tok-k { color: var(--sky); font-weight: 600; } .tok-s { color: var(--mint); } .tok-c { color: var(--muted); font-style: italic; } .tok-n { color: var(--mango); } .tok-t { color: var(--berry); }
+button { font: inherit; }
+figure { margin: 1.4rem 0; overflow-x: auto; }
+figure > svg[viewBox^="0 0 6"], figure > svg[viewBox^="0 0 7"] { min-width: 560px; }
+figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figcaption { font-size: .92rem; color: var(--muted); margin-top: .5rem; max-width: 72ch; }
+.svg-scroll { overflow-x: auto; }
+svg text { font-family: var(--font-body); }
+svg .hand { font-family: var(--font-display); }
+svg .mono { font-family: var(--font-mono); }
+details { border: 1px solid var(--line); border-radius: 10px; padding: .6rem 1rem; margin-block: .6rem; background: var(--surface); }
+details > summary { cursor: pointer; font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
+details[open] > summary { margin-bottom: .4rem; }
+summary::-webkit-details-marker { color: var(--mango); }
+
+/* top rail */
+.rail { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
+.rail-inner { max-width: 1100px; margin: 0 auto; padding: .55rem 16px; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: .45rem; white-space: nowrap; }
+.brand svg { width: 28px; height: 28px; }
+.tabs { display: flex; gap: .35rem; flex-wrap: wrap; margin-left: auto; }
+.tab { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); border-radius: 999px; padding: .25rem .7rem; text-decoration: none; font-size: .9rem; font-weight: 700; font-family: var(--font-display); }
+.tab[aria-current="page"] { background: var(--mango); border-color: var(--mango); color: #1b1b1b; }
+.tab:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+.tab .t-long { display: none; }
+@media (min-width: 1000px) { .tab .t-long { display: inline; } }
+
+main { max-width: 1100px; margin: 0 auto; padding-block: 1.5rem 4rem; padding-inline: 16px; }
+.lesson { display: grid; gap: .2rem; }
+.lesson[hidden] { display: none; }
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; color: var(--mango); font-weight: 800; }
+.bigidea { background: var(--mango-soft); border-left: 6px solid var(--mango); border-radius: 0 12px 12px 0; padding: .9rem 1.1rem; margin-block: 1rem 1.2rem; font-size: 1.15rem; max-width: 72ch; }
+.bigidea strong { font-family: var(--font-display); }
+
+/* comic strip */
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-block: 1rem; }
+.panel { background: var(--surface); border: 2px solid var(--ink); border-radius: 8px; padding: .6rem; display: grid; grid-template-rows: auto 1fr; gap: .4rem; }
+.panel svg { width: 100%; height: auto; display: block; }
+.panel .cap { font-size: .95rem; line-height: 1.4; }
+.panel .cap b { font-family: var(--font-display); }
+
+/* callouts */
+.note { border: 1px dashed var(--line); border-radius: 10px; padding: .8rem 1rem; background: var(--surface); max-width: 72ch; }
+.note.warn { border-color: var(--berry); background: var(--berry-soft); }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-block: 1rem; }
+.compare > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; min-width: 0; }
+.compare h3 { margin-top: 0; }
+
+/* the type line, big and readable */
+.typeline { font-family: var(--font-mono); font-size: clamp(1rem, 2.6vw, 1.35rem); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; overflow-x: auto; white-space: nowrap; }
+.slot-a { color: var(--mint); font-weight: 600; } .slot-e { color: var(--berry); font-weight: 600; } .slot-r { color: var(--sky); font-weight: 600; }
+.slot-never { color: var(--muted); font-style: italic; }
+
+/* demos */
+.demo { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; margin-block: 1.4rem; box-shadow: var(--shadow); }
+.demo h3 { margin-top: 0; display: flex; align-items: center; gap: .5rem; }
+.demo h3::before { content: "Try it"; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; background: var(--mint-soft); color: var(--mint); padding: .15rem .5rem; border-radius: 999px; }
+.controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-block: .6rem; }
+.btn { border: 2px solid var(--ink); background: var(--surface); color: var(--ink); border-radius: 999px; padding: .4rem .95rem; font-weight: 700; font-family: var(--font-display); cursor: pointer; }
+.btn.primary { background: var(--mango); border-color: var(--mango); color: #1b1b1b; }
+.btn.danger { background: var(--berry-soft); border-color: var(--berry); color: var(--ink); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.seg label { padding: .35rem .8rem; cursor: pointer; font-weight: 700; font-family: var(--font-display); }
+.seg input { position: absolute; opacity: 0; width: 0; height: 0; }
+.seg input:checked + span { background: var(--ink); color: var(--bg); }
+.seg label span { display: block; padding: .35rem .8rem; margin: -.35rem -.8rem; }
+.check { display: inline-flex; gap: .4rem; align-items: center; font-weight: 700; font-family: var(--font-display); border: 2px solid var(--line); border-radius: 10px; padding: .35rem .7rem; cursor: pointer; background: var(--surface-2); }
+.check input { accent-color: var(--mango); width: 1.1em; height: 1.1em; }
+.log { font-family: var(--font-mono); font-size: .88rem; background: var(--code-bg); border-radius: 10px; padding: .8rem 1rem; min-height: 5.5em; white-space: pre-wrap; margin: 0; border: 1px solid var(--line); }
+.log .ok { color: var(--mint); } .log .bad { color: var(--berry); } .log .dim { color: var(--muted); }
+.stage { position: relative; }
+.stage svg { width: 100%; height: auto; display: block; }
+
+/* home */
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.5rem; align-items: center; margin-block: .5rem 1rem; }
+.hero .lede { font-size: 1.2rem; max-width: 56ch; }
+.hero svg { width: 100%; height: auto; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+.cast { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.cast > div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .8rem; text-align: center; }
+.cast svg { width: 110px; height: auto; }
+.cast b { font-family: var(--font-display); font-size: 1.15rem; display: block; margin-top: .3rem; }
+.cast p { font-size: .95rem; margin: .2rem auto 0; color: var(--muted); }
+.menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin-block: 1rem; }
+.menu a { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .8rem .9rem; }
+.menu a:hover { border-color: var(--mango); }
+.menu .num { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: var(--mango); line-height: 1; }
+.menu b { font-family: var(--font-display); font-size: 1.05rem; display: block; }
+.menu small { color: var(--muted); display: block; margin-top: .2rem; }
+
+/* cheat sheet */
+.sheet { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .95rem; }
+th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-display); background: var(--surface-2); }
+td:first-child { font-weight: 700; }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.pager a { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--ink); border: 2px solid var(--ink); border-radius: 999px; padding: .4rem 1rem; }
+.pager a:hover { background: var(--mango); border-color: var(--mango); }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.sr-only { position: absolute; left: -9999px; }
+</style>
+
+<!--@sprites-->
+
+<header class="rail">
+  <div class="rail-inner">
+    <a class="brand" href="#home" aria-label="The Effect Kitchen, home">
+      <svg viewBox="0 0 120 200" aria-hidden="true"><use href="#sam-happy"/></svg>
+      The Effect Kitchen
+    </a>
+    <nav class="tabs" aria-label="Lessons">
+      <a class="tab" href="#home">Home</a>
+      <a class="tab" href="#lesson-1">1<span class="t-long"> · Waiting</span></a>
+      <a class="tab" href="#lesson-2">2<span class="t-long"> · Promises</span></a>
+      <a class="tab" href="#lesson-3">3<span class="t-long"> · Effects</span></a>
+      <a class="tab" href="#lesson-4">4<span class="t-long"> · Errors</span></a>
+      <a class="tab" href="#lesson-5">5<span class="t-long"> · Services</span></a>
+      <a class="tab" href="#lesson-6">6<span class="t-long"> · Fibers</span></a>
+      <a class="tab" href="#lesson-7">7<span class="t-long"> · Cleanup</span></a>
+      <a class="tab" href="#cheat-sheet">Cheat sheet</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<!--@sections-->
+</main>
+
+<script>
+(function () {
+  // Router: one section visible at a time, chosen by a plain #anchor.
+  var ids = ["home","lesson-1","lesson-2","lesson-3","lesson-4","lesson-5","lesson-6","lesson-7","cheat-sheet"];
+  function show() {
+    var id = (location.hash || "#home").slice(1);
+    if (ids.indexOf(id) < 0) id = "home";
+    ids.forEach(function (x) { var el = document.getElementById(x); if (el) el.hidden = (x !== id); });
+    document.querySelectorAll(".tab").forEach(function (t) {
+      if (t.getAttribute("href") === "#" + id) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+    document.dispatchEvent(new CustomEvent("lesson-shown", { detail: id }));
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+  // Tiny TypeScript highlighter, enough for the snippets on this page.
+  var kw = /\b(import|from|const|let|class|extends|function|return|yield|new|if|else|readonly|async|await|try|catch|finally|throw|typeof|export)\b/;
+  var re = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|(\b[A-Z][A-Za-z0-9_]*\b)|(\b(?:import|from|const|let|class|extends|function|return|yield|new|if|else|readonly|async|await|try|catch|finally|throw|typeof|export)\b)/g;
+  function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  document.querySelectorAll("pre code").forEach(function (el) {
+    var src = el.textContent, out = "", last = 0, m;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      var cls = m[1] ? "tok-c" : m[2] ? "tok-s" : m[3] ? "tok-n" : m[4] ? "tok-t" : "tok-k";
+      out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    el.innerHTML = out + esc(src.slice(last));
+  });
+
+  // Helpers shared by the demos.
+  window.K = {
+    $: function (s, r) { return (r || document).querySelector(s); },
+    $$: function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); },
+    log: function (el, msg, cls) { var s = document.createElement("span"); if (cls) s.className = cls; s.textContent = msg + "\n"; el.appendChild(s); el.scrollTop = el.scrollHeight; },
+    clear: function (el) { el.textContent = ""; },
+    sleep: function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  };
+})();
+</script>

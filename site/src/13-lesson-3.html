@@ -1,0 +1,170 @@
+<section id="lesson-3" class="lesson" hidden>
+  <div class="eyebrow">Lesson 3</div>
+  <h1>Effects: The Recipe Card</h1>
+  <div class="bigidea"><strong>An Effect is a recipe card, not a meal.</strong> It describes what to do. Nothing happens until you hand the card to the kitchen and say "run it." And the card has three lines on it that a receipt never had.</div>
+
+  <h2>The story</h2>
+  <p>Remember the receipt? The blender started the moment you ordered. You couldn't reorder from it, couldn't cancel it, and it didn't say what could go wrong. Now imagine the counter hands you a <b>recipe card</b> instead.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam hands Maya a recipe card. Nothing is being cooked.">
+        <use href="#sam-card" x="120" y="10" width="108" height="180"/>
+        <use href="#maya-surprised" x="10" y="20" width="102" height="170"/>
+        <rect x="58" y="4" width="178" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="147" y="22" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Here's the recipe. Nothing's made."</text>
+      </svg>
+      <div class="cap"><b>A card is just paper.</b> Holding it makes no smoothie. The blender is off.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya holds a card while two photocopies of it lie on the counter.">
+        <use href="#maya-card" x="10" y="20" width="102" height="170"/>
+        <use href="#card" x="130" y="50" width="96" height="60"/>
+        <use href="#card" x="140" y="120" width="96" height="60"/>
+        <text x="178" y="42" text-anchor="middle" font-size="12" class="hand" font-weight="700" style="fill:var(--ink)">copies!</text>
+      </svg>
+      <div class="cap"><b>You can copy it.</b> Read it, photocopy it, staple it to another card, hand it around. Still no smoothie.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya hands the card to Sam who runs it at the blender. A smoothie appears.">
+        <use href="#maya-card" x="0" y="20" width="96" height="160"/>
+        <path d="M96 110H120" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="108" y="102" text-anchor="middle" font-size="10" class="mono" style="fill:var(--ink)">run</text>
+        <use href="#sam-busy" x="118" y="10" width="102" height="170"/>
+        <use href="#smoothie" x="200" y="120" width="32" height="48"/>
+      </svg>
+      <div class="cap"><b>Only handing it to the kitchen makes a smoothie.</b> Programmers say you <b>run</b> the effect.</div>
+    </div>
+  </div>
+
+  <p>That one difference fixes all three receipt problems:</p>
+  <div class="compare">
+    <div>
+      <h3>Receipt (Promise)</h3>
+      <ul><li>Starts the moment it's made</li><li>One use</li><li>Doesn't say what can go wrong</li><li>Doesn't say what it needs</li></ul>
+    </div>
+    <div>
+      <h3>Recipe card (Effect)</h3>
+      <ul><li>Starts only when you run it</li><li>Run it as many times as you like</li><li>Has a "Can go wrong" line</li><li>Has a "Needs" line</li></ul>
+    </div>
+  </div>
+
+  <h2>The three lines on the card</h2>
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="A recipe card with three lines: You get a Smoothie, Can go wrong OutOfMango, Needs a Blender. Each line points to one slot of the TypeScript type Effect of Smoothie, OutOfMango, Blender.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card-labeled" x="40" y="30" width="320" height="200"/>
+        <text x="248" y="112" font-size="13" class="mono">a Smoothie</text>
+        <text x="248" y="156" font-size="13" class="mono">OutOfMango</text>
+        <text x="248" y="200" font-size="13" class="mono">a Blender</text>
+        <use href="#smoothie" x="330" y="86" width="22" height="33"/>
+        <use href="#blender" x="328" y="170" width="26" height="39"/>
+        <!-- the type -->
+        <rect x="40" y="252" width="620" height="40" rx="8" style="fill:var(--surface);stroke:var(--line)"/>
+        <text x="60" y="278" font-size="18" class="mono">Effect&lt;<tspan style="fill:var(--mint)" font-weight="600">Smoothie</tspan>, <tspan style="fill:var(--berry)" font-weight="600">OutOfMango</tspan>, <tspan style="fill:var(--sky)" font-weight="600">Blender</tspan>&gt;</text>
+        <!-- leaders -->
+        <path d="M46 118V236Q46 246 60 246H150V256" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <path d="M52 162V232Q52 240 60 240H236V256" fill="none" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)"/>
+        <path d="M58 206V226Q58 234 66 234H330V256" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <!-- side labels -->
+        <text x="400" y="60" class="hand" font-size="14" font-weight="700">Read the type out loud:</text>
+        <text x="400" y="84" font-size="13">"An Effect that <tspan font-weight="700" style="fill:var(--mint)">gives you</tspan> a Smoothie,</text>
+        <text x="400" y="104" font-size="13"><tspan font-weight="700" style="fill:var(--berry)">might fail with</tspan> OutOfMango,</text>
+        <text x="400" y="124" font-size="13">and <tspan font-weight="700" style="fill:var(--sky)">needs</tspan> a Blender."</text>
+        <text x="400" y="168" class="hand" font-size="14" font-weight="700">Nothing on a line?</text>
+        <text x="400" y="190" font-size="13">Then it says <tspan class="mono" style="fill:var(--muted)">never</tspan>, which means</text>
+        <text x="400" y="210" font-size="13">"nothing here." <tspan class="mono">Effect&lt;number&gt;</tspan> is</text>
+        <text x="400" y="230" font-size="13">"a number, nothing wrong, needs nothing."</text>
+      </g>
+    </svg>
+    <figcaption>The three lines on the card are the three slots of the type. Say it as a sentence every time until it's automatic.</figcaption>
+  </figure>
+  <div class="typeline">Effect&lt;<span class="slot-a">Smoothie</span>, <span class="slot-e">OutOfMango</span>, <span class="slot-r">Blender</span>&gt;<br><span class="slot-never">// slot 1: you get · slot 2: can go wrong · slot 3: needs</span></div>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console } from "effect"
+
+// Making a card. NOTHING RUNS YET.
+const sayHi = Console.log("hi!")           // Effect&lt;void&gt;
+
+// Still nothing runs. We're just stapling two cards together into one.
+const sayHiTwice = Effect.andThen(sayHi, sayHi)
+
+// NOW it runs.
+Effect.runPromise(sayHiTwice)              // prints "hi!" twice</code></pre>
+  <p>Compare with a Promise: <code>console.log("hi!")</code> prints immediately. There is no "card" step.</p>
+
+  <div class="demo">
+    <h3>Receipt vs. card</h3>
+    <p>On the left, a receipt for one smoothie. On the right, a recipe card. Press each button a few times and count the smoothies.</p>
+    <div class="compare">
+      <div>
+        <h3>Receipt (Promise)</h3>
+        <div class="controls"><button class="btn" id="l3-await">await it again</button></div>
+        <div id="l3-cups-p" style="min-height:52px;display:flex;flex-wrap:wrap;gap:4px" aria-live="polite"></div>
+        <p style="font-size:.9rem;color:var(--muted)" id="l3-msg-p">One receipt was created when the page loaded. The blender already ran.</p>
+      </div>
+      <div>
+        <h3>Recipe card (Effect)</h3>
+        <div class="controls"><button class="btn primary" id="l3-run">run the card</button></div>
+        <div id="l3-cups-e" style="min-height:52px;display:flex;flex-wrap:wrap;gap:4px" aria-live="polite"></div>
+        <p style="font-size:.9rem;color:var(--muted)" id="l3-msg-e">The card is a plan. Nothing has run.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Writing a recipe with steps: Effect.gen</h2>
+  <p>Real recipes have several steps. <code>Effect.gen</code> lets you write them top to bottom, like the <code>async/await</code> story from Lesson 2. The magic word is <code>yield*</code>, which you read as <b>"do this step and hand me the result."</b></p>
+<pre><code>import { Effect, Console } from "effect"
+
+const getMango = Effect.succeed("🥭")          // a card that always gives a mango
+const getIce   = Effect.succeed("🧊")          // a card that always gives ice
+
+const smoothie = Effect.gen(function* () {
+  const mango = yield* getMango                 // do this step, hand me the mango
+  const ice   = yield* getIce                   // do this step, hand me the ice
+  yield* Console.log(`blending ${mango} + ${ice}`)
+  return "🥤"                                   // the "You get" line
+})
+// smoothie : Effect&lt;string&gt;   (gives a string, nothing can go wrong, needs nothing)
+
+Effect.runPromise(smoothie).then(console.log)   // blending 🥭 + 🧊  then  🥤</code></pre>
+  <p>The <code>function*</code> with a star is a <b>generator</b>. You don't need to know what that means this month. Treat <code>Effect.gen(function* () { ... })</code> as "here begins a recipe" and <code>yield*</code> as "do this step." And notice: <code>smoothie</code> is still just a card. You could run it a hundred times and get a hundred smoothies.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. You have <code>const s = makeSmoothie()</code> where <code>makeSmoothie</code> returns an Effect. Has a smoothie been made?</summary>No. You're holding a card. A smoothie is made only when something runs the card.</details>
+  <details><summary>2. Read this out loud as a sentence: <code>Effect&lt;Toast, BreadIsMoldy, Toaster&gt;</code>.</summary>"An Effect that gives you Toast, might fail with BreadIsMoldy, and needs a Toaster."</details>
+  <details><summary>3. What does <code>never</code> mean in the middle slot? In the last slot?</summary>Middle: nothing can go wrong. Last: it needs nothing, so it's ready to run.</details>
+  <details><summary>4. Why can you run the same Effect twice, but not "re-await" the same Promise to get a second smoothie?</summary>The Effect is a plan; running it twice does the plan twice. The Promise is the result of work that already happened; awaiting it again just hands you the same finished result.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The phrase to repeat: <b>"plan, not action."</b> Have students say "plan" when they see <code>Effect.</code> and "action" when they see <code>Effect.runPromise</code>.</li>
+      <li>Why want a card instead of the meal? Because cards can be checked before cooking. Ty can look at the card and say "you forgot to handle OutOfMango" before anyone turns on a blender. Lesson 4 shows it.</li>
+      <li><code>Effect.succeed(x)</code> is a card that just hands you <code>x</code>. <code>Effect.fail(e)</code> is a card that just fails with <code>e</code>. Those two plus <code>Effect.gen</code> are enough for this unit.</li>
+      <li><code>Effect.runPromise</code> gives back a Promise, so the card world plugs into the receipt world at the very edge of the program. Real programs call it once, at the door. Everything inside is cards.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-2">← Lesson 2</a><a href="#lesson-4">Lesson 4: Errors →</a></div>
+
+  <script>
+  (function () {
+    var cupsP = K.$("#l3-cups-p"), cupsE = K.$("#l3-cups-e"), msgP = K.$("#l3-msg-p"), msgE = K.$("#l3-msg-e"), nP = 0, nE = 0;
+    function cup(el) { var s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 60 90"); s.style.width = "30px"; s.style.height = "45px"; s.innerHTML = '<use href="#smoothie"/>'; el.appendChild(s); }
+    // The receipt: created once, resolved once.
+    var receipt = new Promise(function (r) { setTimeout(function () { r("smoothie"); }, 10); });
+    K.$("#l3-await").addEventListener("click", function () {
+      receipt.then(function () {
+        if (nP === 0) { nP = 1; cup(cupsP); msgP.textContent = "await #1: here's the smoothie the blender already made."; }
+        else { nP++; msgP.textContent = "await #" + nP + ": same smoothie as before. Still 1 cup. A receipt can't make a second one."; }
+      });
+    });
+    // The card: a plan you can run again and again.
+    var card = function () { return Promise.resolve("smoothie"); };
+    K.$("#l3-run").addEventListener("click", function () {
+      card().then(function () { nE++; cup(cupsE); msgE.textContent = "run #" + nE + ": the kitchen followed the card again. " + nE + " cup" + (nE > 1 ? "s" : "") + "."; });
+    });
+  })();
+  </script>
+</section>

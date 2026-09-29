@@ -1,0 +1,202 @@
+<section id="lesson-5" class="lesson" hidden>
+  <div class="eyebrow">Lesson 5</div>
+  <h1>Asking for Help: Services and Layers</h1>
+  <div class="bigidea"><strong>A recipe says what it needs. The kitchen supplies it.</strong> The smoothie recipe says "Needs: a blender." It does not say which blender, and it definitely doesn't build one. That's the third line on the card, and it's what makes recipes testable and swappable.</div>
+
+  <h2>The story</h2>
+  <p>The smoothie recipe says "blend for 30 seconds." It doesn't say "go buy a Blendtec 575." Any blender will do. On the day, the kitchen hands the cook whichever blender it has.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam reads a card that says Needs: Blender and holds out a hand for one.">
+        <use href="#sam-busy" x="0" y="10" width="108" height="180"/>
+        <use href="#card-labeled" x="120" y="30" width="112" height="70"/>
+        <text x="163" y="90" font-size="8" class="mono" style="fill:var(--ink)">a Blender</text>
+        <rect x="112" y="120" width="120" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="172" y="138" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Blender, please."</text>
+      </svg>
+      <div class="cap"><b>The recipe asks.</b> Sam holds out a hand: "blender, please." The recipe never says which blender.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Two blenders: a real one and a pretend cardboard one drawn with dashed lines.">
+        <use href="#blender" x="30" y="30" width="70" height="105"/>
+        <text x="65" y="160" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">real blender</text>
+        <text x="65" y="176" text-anchor="middle" font-size="10" style="fill:var(--muted)">spins real blades</text>
+        <g style="opacity:.75">
+          <rect x="148" y="104" width="50" height="26" rx="6" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+          <path d="M155 104L150 50H196L191 104Z" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+          <rect x="146" y="42" width="54" height="9" rx="3" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+        </g>
+        <text x="173" y="80" text-anchor="middle" font-size="11" class="hand" font-weight="700" style="fill:var(--ink)">whirrr</text>
+        <text x="173" y="160" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">pretend blender</text>
+        <text x="173" y="176" text-anchor="middle" font-size="10" style="fill:var(--muted)">no blades, no mess</text>
+      </svg>
+      <div class="cap"><b>The kitchen provides.</b> For a practice kitchen, a pretend blender that instantly hands back a smoothie. Same recipe, no mess. Programmers call this a <b>test</b>.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty stops a card at the door because the kitchen has no blender.">
+        <use href="#ty-stop" x="10" y="10" width="108" height="180"/>
+        <use href="#card" x="140" y="70" width="90" height="56"/>
+        <text x="146" y="118" font-size="8" class="mono" style="fill:var(--sky)">Needs: Blender</text>
+        <rect x="100" y="8" width="136" height="40" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="168" y="24" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Card says Needs: Blender.</text>
+        <text x="168" y="39" text-anchor="middle" font-size="10" style="fill:var(--ink)">Kitchen has none. Stop."</text>
+      </svg>
+      <div class="cap"><b>Ty checks the Needs line too.</b> Try to run a card that still needs something, and Ty stops it before Sam even sees it.</div>
+    </div>
+  </div>
+  <p>In Effect, a thing a recipe needs is called a <b>service</b>. The way the kitchen supplies it is called a <b>layer</b>.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 720 260" role="img" aria-label="A smoothie card needing a Blender is provided either the RealBlender layer or the FakeBlender layer. Either way the result is a card that needs nothing.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card-labeled" x="20" y="66" width="176" height="110"/>
+        <text x="88" y="160" font-size="11" class="mono">Blender</text>
+        <text x="132" y="204" text-anchor="middle" class="mono" font-size="12">Effect&lt;Smoothie, never, <tspan style="fill:var(--sky)" font-weight="600">Blender</tspan>&gt;</text>
+        <!-- layers -->
+        <rect x="300" y="30" width="190" height="70" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <use href="#blender" x="312" y="38" width="36" height="54"/>
+        <text x="356" y="58" font-weight="700">RealBlender layer</text>
+        <text x="356" y="76" font-size="11">actually spins blades</text>
+        <rect x="300" y="150" width="190" height="70" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5;stroke-dasharray:6 4"/>
+        <g style="opacity:.8"><path d="M320 200L316 168H344L340 200Z" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 2"/><rect x="314" y="160" width="32" height="6" rx="2" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 2"/></g>
+        <text x="356" y="178" font-weight="700">FakeBlender layer</text>
+        <text x="356" y="196" font-size="11">just says "whirrr"</text>
+        <!-- provide arrows -->
+        <path d="M198 110C250 110 250 65 298 65" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <path d="M198 135C250 135 250 185 298 185" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <text x="254" y="127" text-anchor="middle" font-size="9.5" class="mono">Effect.provide(..)</text>
+        <!-- results -->
+        <path d="M490 65H508" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <path d="M490 185H508" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="512" y="42" width="196" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="610" y="62" text-anchor="middle" class="mono" font-size="10.5">Effect&lt;Smoothie, never, <tspan style="fill:var(--muted)">never</tspan>&gt;</text>
+        <text x="610" y="79" text-anchor="middle" font-size="11">needs nothing now. Runnable.</text>
+        <rect x="512" y="162" width="196" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="610" y="182" text-anchor="middle" class="mono" font-size="10.5">Effect&lt;Smoothie, never, <tspan style="fill:var(--muted)">never</tspan>&gt;</text>
+        <text x="610" y="199" text-anchor="middle" font-size="11">same card, practice kitchen.</text>
+      </g>
+    </svg>
+    <figcaption>One recipe, two kitchens. Providing a layer shrinks the Needs line to <code>never</code>, meaning "nothing." Only then can the card run.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p><b>Step 1.</b> Describe the service. Just the <i>shape</i>, what a blender can do. No real blender yet.</p>
+<pre><code>import { Context, Effect } from "effect"
+
+class Blender extends Context.Service&lt;Blender, {
+  readonly blend: (stuff: string) =&gt; Effect.Effect&lt;string&gt;
+}&gt;()("Blender") {}</code></pre>
+  <p>Read it as: "There is a service called Blender. Any Blender must have a <code>blend</code> step."</p>
+  <p><b>Step 2.</b> Write a recipe that <i>asks</i> for a Blender.</p>
+<pre><code>const smoothie = Effect.gen(function* () {
+  const blender = yield* Blender                 // "hand me whatever Blender the kitchen has"
+  return yield* blender.blend("🥭 + 🧊")
+})
+// smoothie : Effect&lt;string, never, Blender&gt;
+//                                  ^ the "Needs" line, filled in by TypeScript</code></pre>
+  <p><b>Step 3.</b> Build a real one and a pretend one. These are <b>layers</b>.</p>
+<pre><code>import { Layer, Console } from "effect"
+
+const RealBlender = Layer.succeed(Blender, {
+  blend: (stuff) =&gt; Console.log("WHIRRRR " + stuff).pipe(Effect.as("🥤"))
+})
+
+const FakeBlender = Layer.succeed(Blender, {
+  blend: (_stuff) =&gt; Effect.succeed("🥤 (pretend)")
+})</code></pre>
+  <p><b>Step 4.</b> Provide one and run.</p>
+<pre><code>Effect.runPromise(smoothie.pipe(Effect.provide(RealBlender)))   // WHIRRRR 🥭 + 🧊  →  🥤
+Effect.runPromise(smoothie.pipe(Effect.provide(FakeBlender)))   // 🥤 (pretend)</code></pre>
+
+  <div class="demo">
+    <h3>Pick a kitchen</h3>
+    <p>Same <code>smoothie</code> card every time. Choose what the kitchen provides, then run it.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Which layer to provide">
+        <label><input type="radio" name="l5-layer" id="l5-real" value="real" checked><span>RealBlender</span></label>
+        <label><input type="radio" name="l5-layer" id="l5-fake" value="fake"><span>FakeBlender</span></label>
+        <label><input type="radio" name="l5-layer" id="l5-none" value="none"><span>nothing</span></label>
+      </span>
+      <button class="btn primary" id="l5-run">Run the card</button>
+    </div>
+    <div class="typeline" id="l5-type" aria-live="polite"></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;margin-top:.8rem">
+      <svg viewBox="0 0 120 200" aria-hidden="true" style="width:90px;height:auto"><use id="l5-who" href="#sam-happy"/></svg>
+      <pre class="log" id="l5-log" style="min-width:0"></pre>
+    </div>
+  </div>
+
+  <h2>Layers stack</h2>
+  <p>A real kitchen needs a blender <i>and</i> a fridge <i>and</i> a sink. Layers combine:</p>
+<pre><code>const Kitchen = Layer.mergeAll(RealBlender, RealFridge)
+Effect.runPromise(bigRecipe.pipe(Effect.provide(Kitchen)))</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 230" role="img" aria-label="Layers stack: an Electricity layer feeds a RealBlender layer and a RealFridge layer, which merge into a Kitchen layer, which the whole app is provided with so it needs nothing.">
+      <g font-size="12" style="fill:var(--ink)" text-anchor="middle">
+        <rect x="230" y="180" width="140" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="300" y="203">Electricity layer</text>
+        <rect x="90" y="110" width="150" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="165" y="133">RealBlender layer</text>
+        <rect x="360" y="110" width="150" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="435" y="133">RealFridge layer</text>
+        <rect x="230" y="40" width="140" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="300" y="63">Kitchen layer</text>
+        <rect x="440" y="10" width="150" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/><text x="515" y="30" font-weight="700">the whole app</text><text x="515" y="46" font-size="11">needs: never</text>
+        <path d="M260 180L200 148" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M340 180L400 148" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M200 110L262 78" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M400 110L338 78" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M370 52L438 40" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <text x="410" y="34" font-size="10" style="fill:var(--muted)">provide</text>
+        <text x="200" y="172" font-size="10" style="fill:var(--muted)">powers</text><text x="400" y="172" font-size="10" style="fill:var(--muted)">powers</text>
+        <text x="215" y="102" font-size="10" style="fill:var(--muted)">merge</text><text x="385" y="102" font-size="10" style="fill:var(--muted)">merge</text>
+      </g>
+    </svg>
+    <figcaption>A layer can itself need things. Layers are recipes for building appliances. We don't go deeper than this picture this month.</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. The smoothie recipe says "Needs: Blender." Does it say which blender? Why is that good?</summary>No. So the same recipe works with any blender: a real one today, a pretend one for practice, a new one when the old one breaks. The recipe never changes.</details>
+  <details><summary>2. What's the point of a pretend blender?</summary>Testing the recipe without the mess. You can check every step of the card in seconds, with no fruit and no cleanup.</details>
+  <details><summary>3. After <code>Effect.provide(RealBlender)</code>, what does the "Needs" line say? What word is that?</summary><code>never</code>, which means "nothing." The card is ready to run.</details>
+  <details><summary>4. You try to run the card without providing a blender. Who stops you, and when?</summary>Ty, the type checker, at compile time. Before the blender would have spun, before the program even starts.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The grown-up term is <b>dependency injection</b>. Don't say it. "The recipe asks, the kitchen provides" is exactly the same idea.</li>
+      <li><code>Context.Service&lt;Self, Shape&gt;()("Name")</code> has an odd double-parentheses shape. Tell students to copy it exactly; it's a TypeScript quirk, not an Effect idea.</li>
+      <li><code>Layer.succeed(Tag, impl)</code> is "here's a ready-made appliance." <code>Layer.effect(Tag, effect)</code> is "here's a recipe for building the appliance," for when building it can fail or needs other things.</li>
+      <li>In-class exercise: half the room writes a <code>Fridge</code> service with <code>take(item)</code> that can fail with <code>OutOf(item)</code> (Lesson 4!). The other half writes its two layers.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-4">← Lesson 4</a><a href="#lesson-6">Lesson 6: Fibers →</a></div>
+
+  <script>
+  (function () {
+    var type = K.$("#l5-type"), log = K.$("#l5-log"), who = K.$("#l5-who");
+    function choice() { return K.$("input[name=l5-layer]:checked").value; }
+    function render() {
+      var c = choice();
+      var r = c === "none" ? '<span class="slot-r">Blender</span>' : '<span class="slot-never">never</span>';
+      type.innerHTML = 'smoothie.pipe(' + (c === "none" ? "" : 'Effect.provide(' + (c === "real" ? "RealBlender" : "FakeBlender") + ')') + ')  <span class="slot-never">// </span>Effect&lt;<span class="slot-a">string</span>, <span class="slot-never">never</span>, ' + r + '&gt;';
+    }
+    K.$$("input[name=l5-layer]").forEach(function (i) { i.addEventListener("change", render); });
+    K.$("#l5-run").addEventListener("click", function () {
+      var c = choice(); K.clear(log);
+      if (c === "none") {
+        who.setAttribute("href", "#ty-stop");
+        K.log(log, "Ty (compile error):", "bad");
+        K.log(log, "  Type 'Blender' is not assignable to type 'never'.", "bad");
+        K.log(log, "  The card still says Needs: Blender. Nothing ran.", "dim");
+        return;
+      }
+      who.setAttribute("href", "#sam-busy");
+      K.log(log, "Sam: blender, please...  (yield* Blender)");
+      K.sleep(500).then(function () {
+        if (c === "real") { K.log(log, "WHIRRRR 🥭 + 🧊"); return K.sleep(900).then(function () { K.log(log, "→ 🥤", "ok"); }); }
+        K.log(log, "→ 🥤 (pretend)", "ok"); K.log(log, "no blades spun. Same recipe, practice kitchen.", "dim");
+      }).then(function () { who.setAttribute("href", "#sam-happy"); });
+    });
+    render();
+  })();
+  </script>
+</section>

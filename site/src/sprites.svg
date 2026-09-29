@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker>
+    <marker id="arrow-mango" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--mango)"/></marker>
+    <marker id="arrow-berry" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--berry)"/></marker>
+    <marker id="arrow-mint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--mint)"/></marker>
+    <marker id="arrow-sky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--sky)"/></marker>
+
+    <!-- ============ SAM, the one cook ============ -->
+    <symbol id="sam-base">
+      <rect x="42" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <rect x="64" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="47" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="73" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <rect x="34" y="88" width="52" height="64" rx="14" style="fill:var(--sam-shirt)"/>
+      <path d="M44 104h32v44q0 6-6 6H50q-6 0-6-6z" style="fill:var(--apron)"/>
+      <path d="M50 90v14M70 90v14" style="stroke:var(--apron);stroke-width:4;fill:none;stroke-linecap:round"/>
+      <circle cx="60" cy="66" r="24" style="fill:var(--sam-skin)"/>
+      <ellipse cx="60" cy="34" rx="30" ry="18" style="fill:var(--hat);stroke:var(--ink);stroke-width:1.5"/>
+      <rect x="36" y="40" width="48" height="14" rx="4" style="fill:var(--hat);stroke:var(--ink);stroke-width:1.5"/>
+      <circle cx="52" cy="64" r="2.6" style="fill:var(--ink)"/><circle cx="68" cy="64" r="2.6" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="sam-arms-down">
+      <path d="M38 100L30 138M82 100L90 138" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="29" cy="141" r="6.5" style="fill:var(--sam-skin)"/><circle cx="91" cy="141" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-crossed">
+      <path d="M38 100Q48 130 74 122M82 100Q72 130 46 122" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="75" cy="122" r="6.5" style="fill:var(--sam-skin)"/><circle cx="45" cy="122" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-hold">
+      <path d="M38 100L50 124M82 100L70 124" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="50" cy="127" r="6.5" style="fill:var(--sam-skin)"/><circle cx="70" cy="127" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arm-point">
+      <path d="M38 100L30 138M82 100L108 108" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="29" cy="141" r="6.5" style="fill:var(--sam-skin)"/><circle cx="110" cy="108" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-shrug">
+      <path d="M38 100L18 120M82 100L102 120" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="16" cy="122" r="6.5" style="fill:var(--sam-skin)"/><circle cx="104" cy="122" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="m-smile"><path d="M51 76q9 8 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-grin"><path d="M50 75q10 11 20 0z" style="fill:var(--ink)"/></symbol>
+    <symbol id="m-flat"><path d="M52 78h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-frown"><path d="M51 81q9-7 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-o"><circle cx="60" cy="78" r="3.5" style="fill:var(--ink)"/></symbol>
+    <symbol id="brows-bored"><path d="M46 56l11 3M74 56l-11 3" style="stroke:var(--ink);stroke-width:2.2;stroke-linecap:round"/></symbol>
+    <symbol id="sweat"><path d="M88 58q-5 7 0 11q5-4 0-11z" style="fill:var(--sky)"/></symbol>
+    <symbol id="mini-card"><rect x="40" y="110" width="40" height="26" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M44 117h32" style="stroke:var(--paper-red);stroke-width:1.5"/><path d="M44 123h32M44 129h32" style="stroke:var(--paper-rule);stroke-width:1.2"/></symbol>
+    <symbol id="mini-receipt"><path d="M46 108h28v30l-4 4-4-4-4 4-4-4-4 4-4-4-4 4z" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M50 116h20M50 122h20M50 128h14" style="stroke:var(--paper-rule);stroke-width:1.5"/></symbol>
+
+    <symbol id="sam-happy" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-down"/><use href="#m-smile"/></symbol>
+    <symbol id="sam-bored" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-crossed"/><use href="#m-flat"/><use href="#brows-bored"/><use href="#sweat"/></symbol>
+    <symbol id="sam-busy" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arm-point"/><use href="#m-grin"/><path d="M104 92l6-8M110 100l9-3M112 118l8 4" style="stroke:var(--ink);stroke-width:2;stroke-linecap:round"/></symbol>
+    <symbol id="sam-card" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-hold"/><use href="#mini-card"/><use href="#m-smile"/></symbol>
+    <symbol id="sam-shrug" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-shrug"/><use href="#m-flat"/></symbol>
+    <symbol id="sam-worried" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-down"/><use href="#m-o"/><use href="#sweat"/></symbol>
+
+    <!-- ============ MAYA, the customer ============ -->
+    <symbol id="maya-base">
+      <rect x="43" y="148" width="14" height="38" rx="5" style="fill:var(--pants)"/>
+      <rect x="63" y="148" width="14" height="38" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="48" cy="188" rx="12" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="72" cy="188" rx="12" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="86" cy="90" rx="7" ry="13" style="fill:var(--maya-hair)"/>
+      <rect x="36" y="100" width="48" height="56" rx="13" style="fill:var(--maya-hoodie)"/>
+      <path d="M46 104v28M74 104v28" style="stroke:var(--pants);stroke-width:5;stroke-linecap:round;fill:none"/>
+      <path d="M56 104v10M64 104v10" style="stroke:var(--paper);stroke-width:2;stroke-linecap:round;fill:none"/>
+      <circle cx="60" cy="78" r="23" style="fill:var(--maya-hair)"/>
+      <circle cx="60" cy="83" r="19" style="fill:var(--maya-skin)"/>
+      <circle cx="52" cy="82" r="2.5" style="fill:var(--ink)"/><circle cx="68" cy="82" r="2.5" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="maya-arms-down">
+      <path d="M40 112L32 144M80 112L88 144" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="31" cy="147" r="6" style="fill:var(--maya-skin)"/><circle cx="89" cy="147" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="maya-arms-hold">
+      <path d="M40 112L50 134M80 112L70 134" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="50" cy="137" r="6" style="fill:var(--maya-skin)"/><circle cx="70" cy="137" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="maya-arm-up">
+      <path d="M40 112L32 144M80 112L96 86" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="31" cy="147" r="6" style="fill:var(--maya-skin)"/><circle cx="97" cy="84" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="ym-smile"><path d="M51 92q9 8 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-grin"><path d="M50 91q10 11 20 0z" style="fill:var(--ink)"/></symbol>
+    <symbol id="ym-sad"><path d="M51 97q9-7 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-flat"><path d="M52 94h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-o"><circle cx="60" cy="94" r="3.5" style="fill:var(--ink)"/></symbol>
+    <symbol id="maya-mini-card"><rect x="40" y="120" width="40" height="26" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M44 127h32" style="stroke:var(--paper-red);stroke-width:1.5"/><path d="M44 133h32M44 139h32" style="stroke:var(--paper-rule);stroke-width:1.2"/></symbol>
+    <symbol id="maya-mini-receipt"><path d="M46 118h28v30l-4 4-4-4-4 4-4-4-4 4-4-4-4 4z" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M50 126h20M50 132h20M50 138h14" style="stroke:var(--paper-rule);stroke-width:1.5"/></symbol>
+
+    <symbol id="maya-happy" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-receipt" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-hold"/><use href="#maya-mini-receipt"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-card" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-hold"/><use href="#maya-mini-card"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-smoothie" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arm-up"/><use href="#ym-grin"/><use href="#smoothie" x="86" y="48" width="26" height="39"/></symbol>
+    <symbol id="maya-sad" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-sad"/><path d="M70 90q-3 6 0 8q3-2 0-8z" style="fill:var(--sky)"/></symbol>
+    <symbol id="maya-wave" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arm-up"/><use href="#ym-flat"/></symbol>
+    <symbol id="maya-surprised" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-o"/></symbol>
+
+    <!-- ============ TY, the type checker (kitchen manager) ============ -->
+    <symbol id="ty-base">
+      <rect x="42" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <rect x="64" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="47" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="73" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <rect x="34" y="88" width="52" height="64" rx="14" style="fill:var(--ty-cardigan)"/>
+      <path d="M49 88L60 110L71 88z" style="fill:var(--paper)"/>
+      <circle cx="60" cy="118" r="2" style="fill:var(--ink)"/><circle cx="60" cy="130" r="2" style="fill:var(--ink)"/>
+      <circle cx="60" cy="41" r="9" style="fill:var(--ty-hair)"/>
+      <circle cx="60" cy="62" r="24" style="fill:var(--ty-hair)"/>
+      <circle cx="60" cy="68" r="20" style="fill:var(--ty-skin)"/>
+      <circle cx="51" cy="68" r="7" style="fill:none;stroke:var(--ty-glass);stroke-width:2"/><circle cx="69" cy="68" r="7" style="fill:none;stroke:var(--ty-glass);stroke-width:2"/>
+      <path d="M58 68h4" style="stroke:var(--ty-glass);stroke-width:2"/>
+      <circle cx="51" cy="68" r="2.4" style="fill:var(--ink)"/><circle cx="69" cy="68" r="2.4" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="clipboard">
+      <rect x="6" y="104" width="30" height="38" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+      <rect x="15" y="100" width="12" height="7" rx="2" style="fill:var(--ink)"/>
+      <path d="M12 116h18M12 122h18M12 128h12" style="stroke:var(--paper-rule);stroke-width:1.5"/>
+    </symbol>
+    <symbol id="ty-arms-clip">
+      <path d="M38 100L24 124M82 100L90 138" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="91" cy="141" r="6.5" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="ty-arms-stop">
+      <path d="M38 100L24 124M82 100L100 80" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="103" cy="75" r="8.5" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="ty-arms-thumb">
+      <path d="M38 100L24 124M82 100L104 98" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="107" cy="98" r="7" style="fill:var(--ty-skin)"/>
+      <rect x="104" y="82" width="6" height="12" rx="3" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="tm-smile"><path d="M52 81q8 6 16 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="tm-flat"><path d="M52 82h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="clip-check"><path d="M12 134l6 6 12-14" style="stroke:var(--mint);stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round"/></symbol>
+    <symbol id="clip-x"><path d="M13 126l14 14M27 126l-14 14" style="stroke:var(--berry);stroke-width:3.5;stroke-linecap:round"/></symbol>
+
+    <symbol id="ty-look" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-clip"/><use href="#clipboard"/><use href="#tm-flat"/></symbol>
+    <symbol id="ty-check" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-thumb"/><use href="#clipboard"/><use href="#clip-check"/><use href="#tm-smile"/></symbol>
+    <symbol id="ty-stop" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-stop"/><use href="#clipboard"/><use href="#clip-x"/><use href="#tm-flat"/></symbol>
+
+    <!-- ============ PROPS ============ -->
+    <symbol id="card" viewBox="0 0 160 100">
+      <rect x="2" y="2" width="156" height="96" rx="6" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <path d="M2 24h156" style="stroke:var(--paper-red);stroke-width:2"/>
+      <path d="M2 46h156M2 68h156M2 90h156" style="stroke:var(--paper-rule);stroke-width:1.5"/>
+    </symbol>
+    <symbol id="card-labeled" viewBox="0 0 160 100">
+      <use href="#card"/>
+      <text x="10" y="18" class="hand" font-size="12" font-weight="700" style="fill:var(--ink)">MANGO SMOOTHIE</text>
+      <text x="10" y="41" font-size="10.5" font-weight="700" style="fill:var(--mint)">You get:</text>
+      <text x="10" y="63" font-size="10.5" font-weight="700" style="fill:var(--berry)">Can go wrong:</text>
+      <text x="10" y="85" font-size="10.5" font-weight="700" style="fill:var(--sky)">Needs:</text>
+    </symbol>
+    <symbol id="receipt" viewBox="0 0 100 130">
+      <path d="M4 2H96V114L88 122 80 114 72 122 64 114 56 122 48 114 40 122 32 114 24 122 16 114 8 122 4 118Z" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <text x="50" y="18" class="mono" font-size="11" text-anchor="middle" style="fill:var(--ink)">ORDER #42</text>
+      <path d="M12 26h76" style="stroke:var(--ink);stroke-width:1;stroke-dasharray:3 3"/>
+      <path d="M14 44h72M14 60h72M14 76h50" style="stroke:var(--paper-rule);stroke-width:2"/>
+    </symbol>
+    <symbol id="smoothie" viewBox="0 0 60 90">
+      <path d="M10 22L16 86H44L50 22Z" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <path d="M13 44L17 84H43L47 44Z" style="fill:var(--mango)"/>
+      <rect x="6" y="14" width="48" height="9" rx="4" style="fill:var(--mint);stroke:var(--ink);stroke-width:2"/>
+      <path d="M34 4L38 30" style="stroke:var(--berry);stroke-width:4;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="toaster" viewBox="0 0 120 90">
+      <rect x="10" y="40" width="100" height="46" rx="10" style="fill:var(--sky-soft);stroke:var(--ink);stroke-width:2"/>
+      <rect x="28" y="44" width="26" height="6" rx="2" style="fill:var(--ink)"/><rect x="66" y="44" width="26" height="6" rx="2" style="fill:var(--ink)"/>
+      <rect x="102" y="54" width="10" height="14" rx="3" style="fill:var(--ink)"/>
+      <circle cx="30" cy="70" r="4" style="fill:var(--mango)"/>
+    </symbol>
+    <symbol id="toaster-done" viewBox="0 0 120 90">
+      <rect x="30" y="18" width="22" height="30" rx="6" style="fill:#e0a463;stroke:var(--ink);stroke-width:2"/>
+      <rect x="68" y="18" width="22" height="30" rx="6" style="fill:#e0a463;stroke:var(--ink);stroke-width:2"/>
+      <use href="#toaster"/>
+    </symbol>
+    <symbol id="bell" viewBox="0 0 60 60">
+      <path d="M30 8q18 0 18 24v8h6v6H6v-6h6v-8q0-24 18-24z" style="fill:var(--mango);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/>
+      <circle cx="30" cy="51" r="4" style="fill:var(--ink)"/>
+      <path d="M6 20q-4 8 0 16M54 20q4 8 0 16" style="stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="blender" viewBox="0 0 80 120">
+      <rect x="12" y="84" width="56" height="30" rx="8" style="fill:var(--pants);stroke:var(--ink);stroke-width:2"/>
+      <path d="M20 84L14 22H66L60 84Z" style="fill:var(--sky-soft);stroke:var(--ink);stroke-width:2"/>
+      <path d="M18 50L21 82H59L62 50Z" style="fill:var(--mango)"/>
+      <rect x="10" y="12" width="60" height="11" rx="4" style="fill:var(--ink)"/>
+      <circle cx="40" cy="100" r="5" style="fill:var(--mint)"/>
+    </symbol>
+    <symbol id="bookmark" viewBox="0 0 40 90"><path d="M4 2H36V86L20 70 4 86Z" style="fill:var(--berry);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/></symbol>
+    <symbol id="book" viewBox="0 0 90 110">
+      <rect x="6" y="6" width="78" height="98" rx="4" style="fill:var(--sky);stroke:var(--ink);stroke-width:2"/>
+      <rect x="6" y="6" width="14" height="98" rx="4" style="fill:var(--pants);stroke:var(--ink);stroke-width:2"/>
+      <rect x="32" y="26" width="42" height="30" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+      <path d="M38 36h30M38 44h22" style="stroke:var(--paper-rule);stroke-width:2"/>
+    </symbol>
+    <symbol id="fire" viewBox="0 0 60 80">
+      <path d="M30 4C40 24 52 30 50 52 48 68 38 78 30 78 22 78 10 68 10 52 8 34 22 30 22 18 26 26 32 26 30 4Z" style="fill:var(--mango);stroke:var(--berry);stroke-width:2"/>
+      <path d="M30 40c6 10 10 14 8 22-1 8-5 12-8 12s-7-4-8-12c-2-8 4-10 8-22z" fill="#ffd75e"/>
+    </symbol>
+    <symbol id="clock" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="26" style="fill:var(--paper);stroke:var(--ink);stroke-width:2.5"/>
+      <path d="M30 30V14M30 30l11 7" style="stroke:var(--ink);stroke-width:3;stroke-linecap:round"/>
+      <circle cx="30" cy="30" r="2.5" style="fill:var(--berry)"/>
+    </symbol>
+    <symbol id="scissors" viewBox="0 0 60 60">
+      <circle cx="16" cy="44" r="8" style="fill:none;stroke:var(--berry);stroke-width:3"/><circle cx="44" cy="44" r="8" style="fill:none;stroke:var(--berry);stroke-width:3"/>
+      <path d="M22 38L46 6M38 38L14 6" style="stroke:var(--ink);stroke-width:3.5;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="mango" viewBox="0 0 60 60">
+      <path d="M30 10c14 0 24 12 22 26-2 12-14 18-24 16S6 40 10 24C13 14 20 10 30 10z" style="fill:var(--mango);stroke:var(--ink);stroke-width:2"/>
+      <path d="M32 10q6-6 12-6" style="stroke:var(--mint);stroke-width:4;fill:none;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="strawberry" viewBox="0 0 60 60">
+      <path d="M30 14c14 0 22 8 20 20S38 54 30 54 10 44 10 34s6-20 20-20z" style="fill:var(--berry);stroke:var(--ink);stroke-width:2"/>
+      <path d="M20 14q10-8 20 0l-10 6z" style="fill:var(--mint);stroke:var(--ink);stroke-width:1.5"/>
+      <circle cx="24" cy="30" r="1.6" style="fill:var(--paper)"/><circle cx="36" cy="28" r="1.6" style="fill:var(--paper)"/><circle cx="30" cy="42" r="1.6" style="fill:var(--paper)"/>
+    </symbol>
+  </defs>
+</svg>
