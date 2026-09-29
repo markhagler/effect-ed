@@ -1,0 +1,1924 @@
+<title>The Effect Kitchen</title>
+<meta name="description" content="Effect for TypeScript explained to middle schoolers with one kitchen, one cook, and a lot of smoothies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a sticky order-ticket rail of lesson tabs on top, one lesson shown at a time below,
+   text column ~72ch, figures and demos allowed to run wider. */
+:root {
+  --bg: #f3f6f8;          /* kitchen tile */
+  --surface: #ffffff;
+  --surface-2: #e9eef3;
+  --ink: #1b2734;
+  --muted: #5b6b7b;
+  --line: #d3dbe4;
+  --mango: #ef8a2a;       /* accent: the smoothie */
+  --mango-soft: #fde7d2;
+  --mint: #23996f;        /* success, "ready" */
+  --mint-soft: #d6f2e6;
+  --berry: #d3405a;       /* errors */
+  --berry-soft: #fadbe1;
+  --sky: #3273c9;         /* services, "needs" */
+  --sky-soft: #dbe7f8;
+  --code-bg: #eef2f6;
+  --paper: #fffdf7;       /* recipe cards and receipts */
+  --paper-rule: #b9c6d6;
+  --paper-red: #e05a5a;
+  --shadow: 0 2px 10px rgba(27,39,52,.08);
+  /* cast */
+  --sam-skin: #c98a5e; --sam-shirt: #3b7dd8; --apron: #fbfbf7; --hat: #ffffff;
+  --maya-skin: #7a4a2b; --maya-hoodie: #2aa9a0; --maya-hair: #1a1a1a;
+  --ty-skin: #f1c9a5; --ty-cardigan: #8e5bd1; --ty-hair: #8d8d99; --ty-glass: #1b2734;
+  --pants: #2c3e50; --shoe: #1b2734; --board: #ffffff;
+  --font-display: "Baloo 2", "Trebuchet MS", sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131d27; --surface: #1b2733; --surface-2: #233140; --ink: #e9eef3; --muted: #a2b1c0; --line: #33445a;
+    --mango: #f6a04c; --mango-soft: #4a3320; --mint: #3fc48f; --mint-soft: #1c3a30; --berry: #ef6c82; --berry-soft: #452230;
+    --sky: #6aa2ea; --sky-soft: #1f334d; --code-bg: #0f1821; --paper: #f4efe2; --paper-rule: #a9b6c6; --paper-red: #d85a5a;
+    --shadow: 0 2px 12px rgba(0,0,0,.35); --hat: #f4f4f4; --apron: #f1f1ea; --board: #1b2733; --ty-glass: #1b2734;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131d27; --surface: #1b2733; --surface-2: #233140; --ink: #e9eef3; --muted: #a2b1c0; --line: #33445a;
+  --mango: #f6a04c; --mango-soft: #4a3320; --mint: #3fc48f; --mint-soft: #1c3a30; --berry: #ef6c82; --berry-soft: #452230;
+  --sky: #6aa2ea; --sky-soft: #1f334d; --code-bg: #0f1821; --paper: #f4efe2; --paper-rule: #a9b6c6; --paper-red: #d85a5a;
+  --shadow: 0 2px 12px rgba(0,0,0,.35); --hat: #f4f4f4; --apron: #f1f1ea; --board: #1b2733; --ty-glass: #1b2734;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 17px/1.55 var(--font-body); margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; }
+h2 { font-size: 1.55rem; font-weight: 700; margin-block: 2.2rem .6rem; }
+h3 { font-size: 1.15rem; font-weight: 700; margin-block: 1.4rem .4rem; }
+p, li { max-width: 72ch; }
+a { color: var(--sky); }
+code { font-family: var(--font-mono); font-size: .9em; background: var(--code-bg); padding: .1em .35em; border-radius: 4px; }
+pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; overflow-x: auto; font-size: .88rem; line-height: 1.55; margin-block: 1rem; }
+pre code { background: none; padding: 0; font-size: 1em; }
+.tok-k { color: var(--sky); font-weight: 600; } .tok-s { color: var(--mint); } .tok-c { color: var(--muted); font-style: italic; } .tok-n { color: var(--mango); } .tok-t { color: var(--berry); }
+button { font: inherit; }
+figure { margin: 1.4rem 0; overflow-x: auto; }
+figure > svg[viewBox^="0 0 6"], figure > svg[viewBox^="0 0 7"] { min-width: 560px; }
+figure svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+figcaption { font-size: .92rem; color: var(--muted); margin-top: .5rem; max-width: 72ch; }
+.svg-scroll { overflow-x: auto; }
+svg text { font-family: var(--font-body); }
+svg .hand { font-family: var(--font-display); }
+svg .mono { font-family: var(--font-mono); }
+details { border: 1px solid var(--line); border-radius: 10px; padding: .6rem 1rem; margin-block: .6rem; background: var(--surface); }
+details > summary { cursor: pointer; font-weight: 700; font-family: var(--font-display); font-size: 1.05rem; }
+details[open] > summary { margin-bottom: .4rem; }
+summary::-webkit-details-marker { color: var(--mango); }
+
+/* top rail */
+.rail { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); }
+.rail-inner { max-width: 1100px; margin: 0 auto; padding: .55rem 16px; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--ink); display: flex; align-items: center; gap: .45rem; white-space: nowrap; }
+.brand svg { width: 28px; height: 28px; }
+.tabs { display: flex; gap: .35rem; flex-wrap: wrap; margin-left: auto; }
+.tab { border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); border-radius: 999px; padding: .25rem .7rem; text-decoration: none; font-size: .9rem; font-weight: 700; font-family: var(--font-display); }
+.tab[aria-current="page"] { background: var(--mango); border-color: var(--mango); color: #1b1b1b; }
+.tab:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+.tab .t-long { display: none; }
+@media (min-width: 1000px) { .tab .t-long { display: inline; } }
+
+main { max-width: 1100px; margin: 0 auto; padding-block: 1.5rem 4rem; padding-inline: 16px; }
+.lesson { display: grid; gap: .2rem; }
+.lesson[hidden] { display: none; }
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; color: var(--mango); font-weight: 800; }
+.bigidea { background: var(--mango-soft); border-left: 6px solid var(--mango); border-radius: 0 12px 12px 0; padding: .9rem 1.1rem; margin-block: 1rem 1.2rem; font-size: 1.15rem; max-width: 72ch; }
+.bigidea strong { font-family: var(--font-display); }
+
+/* comic strip */
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-block: 1rem; }
+.panel { background: var(--surface); border: 2px solid var(--ink); border-radius: 8px; padding: .6rem; display: grid; grid-template-rows: auto 1fr; gap: .4rem; }
+.panel svg { width: 100%; height: auto; display: block; }
+.panel .cap { font-size: .95rem; line-height: 1.4; }
+.panel .cap b { font-family: var(--font-display); }
+
+/* callouts */
+.note { border: 1px dashed var(--line); border-radius: 10px; padding: .8rem 1rem; background: var(--surface); max-width: 72ch; }
+.note.warn { border-color: var(--berry); background: var(--berry-soft); }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-block: 1rem; }
+.compare > div { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; min-width: 0; }
+.compare h3 { margin-top: 0; }
+
+/* the type line, big and readable */
+.typeline { font-family: var(--font-mono); font-size: clamp(1rem, 2.6vw, 1.35rem); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; overflow-x: auto; white-space: nowrap; }
+.slot-a { color: var(--mint); font-weight: 600; } .slot-e { color: var(--berry); font-weight: 600; } .slot-r { color: var(--sky); font-weight: 600; }
+.slot-never { color: var(--muted); font-style: italic; }
+
+/* demos */
+.demo { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; margin-block: 1.4rem; box-shadow: var(--shadow); }
+.demo h3 { margin-top: 0; display: flex; align-items: center; gap: .5rem; }
+.demo h3::before { content: "Try it"; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; background: var(--mint-soft); color: var(--mint); padding: .15rem .5rem; border-radius: 999px; }
+.controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-block: .6rem; }
+.btn { border: 2px solid var(--ink); background: var(--surface); color: var(--ink); border-radius: 999px; padding: .4rem .95rem; font-weight: 700; font-family: var(--font-display); cursor: pointer; }
+.btn.primary { background: var(--mango); border-color: var(--mango); color: #1b1b1b; }
+.btn.danger { background: var(--berry-soft); border-color: var(--berry); color: var(--ink); }
+.btn:disabled { opacity: .5; cursor: not-allowed; }
+.seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.seg label { padding: .35rem .8rem; cursor: pointer; font-weight: 700; font-family: var(--font-display); }
+.seg input { position: absolute; opacity: 0; width: 0; height: 0; }
+.seg input:checked + span { background: var(--ink); color: var(--bg); }
+.seg label span { display: block; padding: .35rem .8rem; margin: -.35rem -.8rem; }
+.check { display: inline-flex; gap: .4rem; align-items: center; font-weight: 700; font-family: var(--font-display); border: 2px solid var(--line); border-radius: 10px; padding: .35rem .7rem; cursor: pointer; background: var(--surface-2); }
+.check input { accent-color: var(--mango); width: 1.1em; height: 1.1em; }
+.log { font-family: var(--font-mono); font-size: .88rem; background: var(--code-bg); border-radius: 10px; padding: .8rem 1rem; min-height: 5.5em; white-space: pre-wrap; margin: 0; border: 1px solid var(--line); }
+.log .ok { color: var(--mint); } .log .bad { color: var(--berry); } .log .dim { color: var(--muted); }
+.stage { position: relative; }
+.stage svg { width: 100%; height: auto; display: block; }
+
+/* home */
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.5rem; align-items: center; margin-block: .5rem 1rem; }
+.hero .lede { font-size: 1.2rem; max-width: 56ch; }
+.hero svg { width: 100%; height: auto; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } }
+.cast { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.cast > div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .8rem; text-align: center; }
+.cast svg { width: 110px; height: auto; }
+.cast b { font-family: var(--font-display); font-size: 1.15rem; display: block; margin-top: .3rem; }
+.cast p { font-size: .95rem; margin: .2rem auto 0; color: var(--muted); }
+.menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .9rem; margin-block: 1rem; }
+.menu a { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: .8rem .9rem; }
+.menu a:hover { border-color: var(--mango); }
+.menu .num { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; color: var(--mango); line-height: 1; }
+.menu b { font-family: var(--font-display); font-size: 1.05rem; display: block; }
+.menu small { color: var(--muted); display: block; margin-top: .2rem; }
+
+/* cheat sheet */
+.sheet { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .95rem; }
+th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-display); background: var(--surface-2); }
+td:first-child { font-weight: 700; }
+
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); flex-wrap: wrap; }
+.pager a { font-family: var(--font-display); font-weight: 700; text-decoration: none; color: var(--ink); border: 2px solid var(--ink); border-radius: 999px; padding: .4rem 1rem; }
+.pager a:hover { background: var(--mango); border-color: var(--mango); }
+
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+.sr-only { position: absolute; left: -9999px; }
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="currentColor"/></marker>
+    <marker id="arrow-mango" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--mango)"/></marker>
+    <marker id="arrow-berry" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--berry)"/></marker>
+    <marker id="arrow-mint" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--mint)"/></marker>
+    <marker id="arrow-sky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" style="fill:var(--sky)"/></marker>
+
+    <!-- ============ SAM, the one cook ============ -->
+    <symbol id="sam-base">
+      <rect x="42" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <rect x="64" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="47" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="73" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <rect x="34" y="88" width="52" height="64" rx="14" style="fill:var(--sam-shirt)"/>
+      <path d="M44 104h32v44q0 6-6 6H50q-6 0-6-6z" style="fill:var(--apron)"/>
+      <path d="M50 90v14M70 90v14" style="stroke:var(--apron);stroke-width:4;fill:none;stroke-linecap:round"/>
+      <circle cx="60" cy="66" r="24" style="fill:var(--sam-skin)"/>
+      <ellipse cx="60" cy="34" rx="30" ry="18" style="fill:var(--hat);stroke:var(--ink);stroke-width:1.5"/>
+      <rect x="36" y="40" width="48" height="14" rx="4" style="fill:var(--hat);stroke:var(--ink);stroke-width:1.5"/>
+      <circle cx="52" cy="64" r="2.6" style="fill:var(--ink)"/><circle cx="68" cy="64" r="2.6" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="sam-arms-down">
+      <path d="M38 100L30 138M82 100L90 138" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="29" cy="141" r="6.5" style="fill:var(--sam-skin)"/><circle cx="91" cy="141" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-crossed">
+      <path d="M38 100Q48 130 74 122M82 100Q72 130 46 122" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="75" cy="122" r="6.5" style="fill:var(--sam-skin)"/><circle cx="45" cy="122" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-hold">
+      <path d="M38 100L50 124M82 100L70 124" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="50" cy="127" r="6.5" style="fill:var(--sam-skin)"/><circle cx="70" cy="127" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arm-point">
+      <path d="M38 100L30 138M82 100L108 108" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="29" cy="141" r="6.5" style="fill:var(--sam-skin)"/><circle cx="110" cy="108" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="sam-arms-shrug">
+      <path d="M38 100L18 120M82 100L102 120" style="stroke:var(--sam-shirt);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="16" cy="122" r="6.5" style="fill:var(--sam-skin)"/><circle cx="104" cy="122" r="6.5" style="fill:var(--sam-skin)"/>
+    </symbol>
+    <symbol id="m-smile"><path d="M51 76q9 8 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-grin"><path d="M50 75q10 11 20 0z" style="fill:var(--ink)"/></symbol>
+    <symbol id="m-flat"><path d="M52 78h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-frown"><path d="M51 81q9-7 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="m-o"><circle cx="60" cy="78" r="3.5" style="fill:var(--ink)"/></symbol>
+    <symbol id="brows-bored"><path d="M46 56l11 3M74 56l-11 3" style="stroke:var(--ink);stroke-width:2.2;stroke-linecap:round"/></symbol>
+    <symbol id="sweat"><path d="M88 58q-5 7 0 11q5-4 0-11z" style="fill:var(--sky)"/></symbol>
+    <symbol id="mini-card"><rect x="40" y="110" width="40" height="26" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M44 117h32" style="stroke:var(--paper-red);stroke-width:1.5"/><path d="M44 123h32M44 129h32" style="stroke:var(--paper-rule);stroke-width:1.2"/></symbol>
+    <symbol id="mini-receipt"><path d="M46 108h28v30l-4 4-4-4-4 4-4-4-4 4-4-4-4 4z" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M50 116h20M50 122h20M50 128h14" style="stroke:var(--paper-rule);stroke-width:1.5"/></symbol>
+
+    <symbol id="sam-happy" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-down"/><use href="#m-smile"/></symbol>
+    <symbol id="sam-bored" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-crossed"/><use href="#m-flat"/><use href="#brows-bored"/><use href="#sweat"/></symbol>
+    <symbol id="sam-busy" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arm-point"/><use href="#m-grin"/><path d="M104 92l6-8M110 100l9-3M112 118l8 4" style="stroke:var(--ink);stroke-width:2;stroke-linecap:round"/></symbol>
+    <symbol id="sam-card" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-hold"/><use href="#mini-card"/><use href="#m-smile"/></symbol>
+    <symbol id="sam-shrug" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-shrug"/><use href="#m-flat"/></symbol>
+    <symbol id="sam-worried" viewBox="0 0 120 200"><use href="#sam-base"/><use href="#sam-arms-down"/><use href="#m-o"/><use href="#sweat"/></symbol>
+
+    <!-- ============ MAYA, the customer ============ -->
+    <symbol id="maya-base">
+      <rect x="43" y="148" width="14" height="38" rx="5" style="fill:var(--pants)"/>
+      <rect x="63" y="148" width="14" height="38" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="48" cy="188" rx="12" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="72" cy="188" rx="12" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="86" cy="90" rx="7" ry="13" style="fill:var(--maya-hair)"/>
+      <rect x="36" y="100" width="48" height="56" rx="13" style="fill:var(--maya-hoodie)"/>
+      <path d="M46 104v28M74 104v28" style="stroke:var(--pants);stroke-width:5;stroke-linecap:round;fill:none"/>
+      <path d="M56 104v10M64 104v10" style="stroke:var(--paper);stroke-width:2;stroke-linecap:round;fill:none"/>
+      <circle cx="60" cy="78" r="23" style="fill:var(--maya-hair)"/>
+      <circle cx="60" cy="83" r="19" style="fill:var(--maya-skin)"/>
+      <circle cx="52" cy="82" r="2.5" style="fill:var(--ink)"/><circle cx="68" cy="82" r="2.5" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="maya-arms-down">
+      <path d="M40 112L32 144M80 112L88 144" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="31" cy="147" r="6" style="fill:var(--maya-skin)"/><circle cx="89" cy="147" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="maya-arms-hold">
+      <path d="M40 112L50 134M80 112L70 134" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="50" cy="137" r="6" style="fill:var(--maya-skin)"/><circle cx="70" cy="137" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="maya-arm-up">
+      <path d="M40 112L32 144M80 112L96 86" style="stroke:var(--maya-hoodie);stroke-width:10;stroke-linecap:round;fill:none"/>
+      <circle cx="31" cy="147" r="6" style="fill:var(--maya-skin)"/><circle cx="97" cy="84" r="6" style="fill:var(--maya-skin)"/>
+    </symbol>
+    <symbol id="ym-smile"><path d="M51 92q9 8 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-grin"><path d="M50 91q10 11 20 0z" style="fill:var(--ink)"/></symbol>
+    <symbol id="ym-sad"><path d="M51 97q9-7 18 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-flat"><path d="M52 94h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="ym-o"><circle cx="60" cy="94" r="3.5" style="fill:var(--ink)"/></symbol>
+    <symbol id="maya-mini-card"><rect x="40" y="120" width="40" height="26" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M44 127h32" style="stroke:var(--paper-red);stroke-width:1.5"/><path d="M44 133h32M44 139h32" style="stroke:var(--paper-rule);stroke-width:1.2"/></symbol>
+    <symbol id="maya-mini-receipt"><path d="M46 118h28v30l-4 4-4-4-4 4-4-4-4 4-4-4-4 4z" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/><path d="M50 126h20M50 132h20M50 138h14" style="stroke:var(--paper-rule);stroke-width:1.5"/></symbol>
+
+    <symbol id="maya-happy" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-receipt" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-hold"/><use href="#maya-mini-receipt"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-card" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-hold"/><use href="#maya-mini-card"/><use href="#ym-smile"/></symbol>
+    <symbol id="maya-smoothie" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arm-up"/><use href="#ym-grin"/><use href="#smoothie" x="86" y="48" width="26" height="39"/></symbol>
+    <symbol id="maya-sad" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-sad"/><path d="M70 90q-3 6 0 8q3-2 0-8z" style="fill:var(--sky)"/></symbol>
+    <symbol id="maya-wave" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arm-up"/><use href="#ym-flat"/></symbol>
+    <symbol id="maya-surprised" viewBox="0 0 120 200"><use href="#maya-base"/><use href="#maya-arms-down"/><use href="#ym-o"/></symbol>
+
+    <!-- ============ TY, the type checker (kitchen manager) ============ -->
+    <symbol id="ty-base">
+      <rect x="42" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <rect x="64" y="144" width="14" height="42" rx="5" style="fill:var(--pants)"/>
+      <ellipse cx="47" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <ellipse cx="73" cy="188" rx="13" ry="6" style="fill:var(--shoe)"/>
+      <rect x="34" y="88" width="52" height="64" rx="14" style="fill:var(--ty-cardigan)"/>
+      <path d="M49 88L60 110L71 88z" style="fill:var(--paper)"/>
+      <circle cx="60" cy="118" r="2" style="fill:var(--ink)"/><circle cx="60" cy="130" r="2" style="fill:var(--ink)"/>
+      <circle cx="60" cy="41" r="9" style="fill:var(--ty-hair)"/>
+      <circle cx="60" cy="62" r="24" style="fill:var(--ty-hair)"/>
+      <circle cx="60" cy="68" r="20" style="fill:var(--ty-skin)"/>
+      <circle cx="51" cy="68" r="7" style="fill:none;stroke:var(--ty-glass);stroke-width:2"/><circle cx="69" cy="68" r="7" style="fill:none;stroke:var(--ty-glass);stroke-width:2"/>
+      <path d="M58 68h4" style="stroke:var(--ty-glass);stroke-width:2"/>
+      <circle cx="51" cy="68" r="2.4" style="fill:var(--ink)"/><circle cx="69" cy="68" r="2.4" style="fill:var(--ink)"/>
+    </symbol>
+    <symbol id="clipboard">
+      <rect x="6" y="104" width="30" height="38" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+      <rect x="15" y="100" width="12" height="7" rx="2" style="fill:var(--ink)"/>
+      <path d="M12 116h18M12 122h18M12 128h12" style="stroke:var(--paper-rule);stroke-width:1.5"/>
+    </symbol>
+    <symbol id="ty-arms-clip">
+      <path d="M38 100L24 124M82 100L90 138" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="91" cy="141" r="6.5" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="ty-arms-stop">
+      <path d="M38 100L24 124M82 100L100 80" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="103" cy="75" r="8.5" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="ty-arms-thumb">
+      <path d="M38 100L24 124M82 100L104 98" style="stroke:var(--ty-cardigan);stroke-width:11;stroke-linecap:round;fill:none"/>
+      <circle cx="22" cy="128" r="6.5" style="fill:var(--ty-skin)"/><circle cx="107" cy="98" r="7" style="fill:var(--ty-skin)"/>
+      <rect x="104" y="82" width="6" height="12" rx="3" style="fill:var(--ty-skin)"/>
+    </symbol>
+    <symbol id="tm-smile"><path d="M52 81q8 6 16 0" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="tm-flat"><path d="M52 82h16" style="stroke:var(--ink);stroke-width:2.5;fill:none;stroke-linecap:round"/></symbol>
+    <symbol id="clip-check"><path d="M12 134l6 6 12-14" style="stroke:var(--mint);stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round"/></symbol>
+    <symbol id="clip-x"><path d="M13 126l14 14M27 126l-14 14" style="stroke:var(--berry);stroke-width:3.5;stroke-linecap:round"/></symbol>
+
+    <symbol id="ty-look" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-clip"/><use href="#clipboard"/><use href="#tm-flat"/></symbol>
+    <symbol id="ty-check" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-thumb"/><use href="#clipboard"/><use href="#clip-check"/><use href="#tm-smile"/></symbol>
+    <symbol id="ty-stop" viewBox="0 0 120 200"><use href="#ty-base"/><use href="#ty-arms-stop"/><use href="#clipboard"/><use href="#clip-x"/><use href="#tm-flat"/></symbol>
+
+    <!-- ============ PROPS ============ -->
+    <symbol id="card" viewBox="0 0 160 100">
+      <rect x="2" y="2" width="156" height="96" rx="6" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <path d="M2 24h156" style="stroke:var(--paper-red);stroke-width:2"/>
+      <path d="M2 46h156M2 68h156M2 90h156" style="stroke:var(--paper-rule);stroke-width:1.5"/>
+    </symbol>
+    <symbol id="card-labeled" viewBox="0 0 160 100">
+      <use href="#card"/>
+      <text x="10" y="18" class="hand" font-size="12" font-weight="700" style="fill:var(--ink)">MANGO SMOOTHIE</text>
+      <text x="10" y="41" font-size="10.5" font-weight="700" style="fill:var(--mint)">You get:</text>
+      <text x="10" y="63" font-size="10.5" font-weight="700" style="fill:var(--berry)">Can go wrong:</text>
+      <text x="10" y="85" font-size="10.5" font-weight="700" style="fill:var(--sky)">Needs:</text>
+    </symbol>
+    <symbol id="receipt" viewBox="0 0 100 130">
+      <path d="M4 2H96V114L88 122 80 114 72 122 64 114 56 122 48 114 40 122 32 114 24 122 16 114 8 122 4 118Z" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <text x="50" y="18" class="mono" font-size="11" text-anchor="middle" style="fill:var(--ink)">ORDER #42</text>
+      <path d="M12 26h76" style="stroke:var(--ink);stroke-width:1;stroke-dasharray:3 3"/>
+      <path d="M14 44h72M14 60h72M14 76h50" style="stroke:var(--paper-rule);stroke-width:2"/>
+    </symbol>
+    <symbol id="smoothie" viewBox="0 0 60 90">
+      <path d="M10 22L16 86H44L50 22Z" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+      <path d="M13 44L17 84H43L47 44Z" style="fill:var(--mango)"/>
+      <rect x="6" y="14" width="48" height="9" rx="4" style="fill:var(--mint);stroke:var(--ink);stroke-width:2"/>
+      <path d="M34 4L38 30" style="stroke:var(--berry);stroke-width:4;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="toaster" viewBox="0 0 120 90">
+      <rect x="10" y="40" width="100" height="46" rx="10" style="fill:var(--sky-soft);stroke:var(--ink);stroke-width:2"/>
+      <rect x="28" y="44" width="26" height="6" rx="2" style="fill:var(--ink)"/><rect x="66" y="44" width="26" height="6" rx="2" style="fill:var(--ink)"/>
+      <rect x="102" y="54" width="10" height="14" rx="3" style="fill:var(--ink)"/>
+      <circle cx="30" cy="70" r="4" style="fill:var(--mango)"/>
+    </symbol>
+    <symbol id="toaster-done" viewBox="0 0 120 90">
+      <rect x="30" y="18" width="22" height="30" rx="6" style="fill:#e0a463;stroke:var(--ink);stroke-width:2"/>
+      <rect x="68" y="18" width="22" height="30" rx="6" style="fill:#e0a463;stroke:var(--ink);stroke-width:2"/>
+      <use href="#toaster"/>
+    </symbol>
+    <symbol id="bell" viewBox="0 0 60 60">
+      <path d="M30 8q18 0 18 24v8h6v6H6v-6h6v-8q0-24 18-24z" style="fill:var(--mango);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/>
+      <circle cx="30" cy="51" r="4" style="fill:var(--ink)"/>
+      <path d="M6 20q-4 8 0 16M54 20q4 8 0 16" style="stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="blender" viewBox="0 0 80 120">
+      <rect x="12" y="84" width="56" height="30" rx="8" style="fill:var(--pants);stroke:var(--ink);stroke-width:2"/>
+      <path d="M20 84L14 22H66L60 84Z" style="fill:var(--sky-soft);stroke:var(--ink);stroke-width:2"/>
+      <path d="M18 50L21 82H59L62 50Z" style="fill:var(--mango)"/>
+      <rect x="10" y="12" width="60" height="11" rx="4" style="fill:var(--ink)"/>
+      <circle cx="40" cy="100" r="5" style="fill:var(--mint)"/>
+    </symbol>
+    <symbol id="bookmark" viewBox="0 0 40 90"><path d="M4 2H36V86L20 70 4 86Z" style="fill:var(--berry);stroke:var(--ink);stroke-width:2;stroke-linejoin:round"/></symbol>
+    <symbol id="book" viewBox="0 0 90 110">
+      <rect x="6" y="6" width="78" height="98" rx="4" style="fill:var(--sky);stroke:var(--ink);stroke-width:2"/>
+      <rect x="6" y="6" width="14" height="98" rx="4" style="fill:var(--pants);stroke:var(--ink);stroke-width:2"/>
+      <rect x="32" y="26" width="42" height="30" rx="3" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+      <path d="M38 36h30M38 44h22" style="stroke:var(--paper-rule);stroke-width:2"/>
+    </symbol>
+    <symbol id="fire" viewBox="0 0 60 80">
+      <path d="M30 4C40 24 52 30 50 52 48 68 38 78 30 78 22 78 10 68 10 52 8 34 22 30 22 18 26 26 32 26 30 4Z" style="fill:var(--mango);stroke:var(--berry);stroke-width:2"/>
+      <path d="M30 40c6 10 10 14 8 22-1 8-5 12-8 12s-7-4-8-12c-2-8 4-10 8-22z" fill="#ffd75e"/>
+    </symbol>
+    <symbol id="clock" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="26" style="fill:var(--paper);stroke:var(--ink);stroke-width:2.5"/>
+      <path d="M30 30V14M30 30l11 7" style="stroke:var(--ink);stroke-width:3;stroke-linecap:round"/>
+      <circle cx="30" cy="30" r="2.5" style="fill:var(--berry)"/>
+    </symbol>
+    <symbol id="scissors" viewBox="0 0 60 60">
+      <circle cx="16" cy="44" r="8" style="fill:none;stroke:var(--berry);stroke-width:3"/><circle cx="44" cy="44" r="8" style="fill:none;stroke:var(--berry);stroke-width:3"/>
+      <path d="M22 38L46 6M38 38L14 6" style="stroke:var(--ink);stroke-width:3.5;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="mango" viewBox="0 0 60 60">
+      <path d="M30 10c14 0 24 12 22 26-2 12-14 18-24 16S6 40 10 24C13 14 20 10 30 10z" style="fill:var(--mango);stroke:var(--ink);stroke-width:2"/>
+      <path d="M32 10q6-6 12-6" style="stroke:var(--mint);stroke-width:4;fill:none;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="strawberry" viewBox="0 0 60 60">
+      <path d="M30 14c14 0 22 8 20 20S38 54 30 54 10 44 10 34s6-20 20-20z" style="fill:var(--berry);stroke:var(--ink);stroke-width:2"/>
+      <path d="M20 14q10-8 20 0l-10 6z" style="fill:var(--mint);stroke:var(--ink);stroke-width:1.5"/>
+      <circle cx="24" cy="30" r="1.6" style="fill:var(--paper)"/><circle cx="36" cy="28" r="1.6" style="fill:var(--paper)"/><circle cx="30" cy="42" r="1.6" style="fill:var(--paper)"/>
+    </symbol>
+  </defs>
+</svg>
+
+
+<header class="rail">
+  <div class="rail-inner">
+    <a class="brand" href="#home" aria-label="The Effect Kitchen, home">
+      <svg viewBox="0 0 120 200" aria-hidden="true"><use href="#sam-happy"/></svg>
+      The Effect Kitchen
+    </a>
+    <nav class="tabs" aria-label="Lessons">
+      <a class="tab" href="#home">Home</a>
+      <a class="tab" href="#lesson-1">1<span class="t-long"> · Waiting</span></a>
+      <a class="tab" href="#lesson-2">2<span class="t-long"> · Promises</span></a>
+      <a class="tab" href="#lesson-3">3<span class="t-long"> · Effects</span></a>
+      <a class="tab" href="#lesson-4">4<span class="t-long"> · Errors</span></a>
+      <a class="tab" href="#lesson-5">5<span class="t-long"> · Services</span></a>
+      <a class="tab" href="#lesson-6">6<span class="t-long"> · Fibers</span></a>
+      <a class="tab" href="#lesson-7">7<span class="t-long"> · Cleanup</span></a>
+      <a class="tab" href="#cheat-sheet">Cheat sheet</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section id="home" class="lesson">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Effect for TypeScript, grades 7 and 8</div>
+      <h1>One kitchen. One cook. A lot of smoothies.</h1>
+      <p class="lede">Effect is a library that helps programmers write TypeScript that waits, fails, and cleans up without surprises. That sounds grown-up. It isn't. Every idea in it can be explained with a food truck, and that's what we're going to do.</p>
+      <p><a class="btn primary" href="#lesson-1">Start with Lesson 1</a></p>
+    </div>
+    <figure>
+      <svg viewBox="0 0 520 260" role="img" aria-label="Sam the cook stands behind a counter with a blender and a toaster. Maya the customer holds a recipe card. Ty the type checker inspects a clipboard.">
+        <rect x="150" y="150" width="240" height="70" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:2"/>
+        <rect x="140" y="142" width="260" height="12" rx="3" style="fill:var(--ink)"/>
+        <use href="#sam-happy" x="200" y="22" width="72" height="120"/>
+        <use href="#blender" x="300" y="80" width="42" height="63"/>
+        <use href="#toaster" x="150" y="96" width="64" height="48"/>
+        <use href="#maya-card" x="36" y="60" width="108" height="180"/>
+        <use href="#ty-look" x="400" y="60" width="108" height="180"/>
+        <text x="90" y="250" text-anchor="middle" class="hand" font-size="15" font-weight="700" style="fill:var(--ink)">Maya</text>
+        <text x="236" y="250" text-anchor="middle" class="hand" font-size="15" font-weight="700" style="fill:var(--ink)">Sam</text>
+        <text x="454" y="250" text-anchor="middle" class="hand" font-size="15" font-weight="700" style="fill:var(--ink)">Ty</text>
+      </svg>
+    </figure>
+  </div>
+
+  <h2>Meet the cast</h2>
+  <div class="cast">
+    <div>
+      <svg viewBox="0 0 120 200" aria-hidden="true"><use href="#sam-busy"/></svg>
+      <b>Sam, the cook</b>
+      <p>The only cook in the truck. Sam stands for the JavaScript engine: exactly one pair of hands, always doing one thing at a time.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 120 200" aria-hidden="true"><use href="#maya-receipt"/></svg>
+      <b>Maya, the customer</b>
+      <p>Orders smoothies, gets receipts, holds recipe cards, and sometimes walks off before her order is ready. Maya stands for the code that asks for things.</p>
+    </div>
+    <div>
+      <svg viewBox="0 0 120 200" aria-hidden="true"><use href="#ty-check"/></svg>
+      <b>Ty, the kitchen manager</b>
+      <p>Reads every recipe card before it reaches Sam. If a card forgot something, Ty stops it at the door. Ty stands for the TypeScript type checker.</p>
+    </div>
+  </div>
+
+  <h2>The menu</h2>
+  <p>Seven lessons. Each one adds a single new thing to the kitchen picture, so you never hold more than one new idea at a time.</p>
+  <div class="menu">
+    <a href="#lesson-1"><span class="num">1</span><span><b>Waiting Is Normal</b><small>One cook can't stand and stare at the toaster. Meet the bell and the ticket rail.</small></span></a>
+    <a href="#lesson-2"><span class="num">2</span><span><b>Promises: The Receipt</b><small>A receipt for a smoothie that isn't ready yet, and three things it can't tell you.</small></span></a>
+    <a href="#lesson-3"><span class="num">3</span><span><b>Effects: The Recipe Card</b><small>A plan, not an action. Three lines on the card. Nothing happens until you run it.</small></span></a>
+    <a href="#lesson-4"><span class="num">4</span><span><b>Errors You Can See</b><small>"Out of mango" goes on the card. "Kitchen fire" does not. Retry, timeout, catch.</small></span></a>
+    <a href="#lesson-5"><span class="num">5</span><span><b>Asking for Help</b><small>The recipe says "needs a blender". The kitchen supplies one, real or pretend.</small></span></a>
+    <a href="#lesson-6"><span class="num">6</span><span><b>Many Things at Once</b><small>Bookmarks in half-finished recipes. Racing. Stopping one cleanly.</small></span></a>
+    <a href="#lesson-7"><span class="num">7</span><span><b>Cleaning Up</b><small>Whatever you borrow, you give back, however the recipe ends.</small></span></a>
+    <a href="#cheat-sheet"><span class="num">★</span><span><b>Cheat Sheet</b><small>Promise and Effect side by side on one page.</small></span></a>
+  </div>
+
+  <h2>Why a kitchen?</h2>
+  <p>Because every hard word in this topic is really a kitchen word wearing a costume. "Asynchronous" is a toaster with a bell. A "Promise" is a receipt. An "Effect" is a recipe card. A "service" is a blender. A "fiber" is a bookmark. Once you can see the kitchen, the words stop being scary.</p>
+  <p class="note">The code on these pages uses Effect 4.0 (release candidate). Every snippet was type-checked and run against <code>effect@4.0.0-rc.118</code>. There is very little code on purpose. The point this month is the ideas.</p>
+</section>
+
+<section id="lesson-1" class="lesson" hidden>
+  <div class="eyebrow">Lesson 1</div>
+  <h1>Waiting Is Normal</h1>
+  <div class="bigidea"><strong>JavaScript is a kitchen with exactly one cook.</strong> Lots of things in a program involve waiting: for a file, for the internet, for a timer. If the cook stands there staring at the oven, nothing else gets done. So JavaScript has a trick for waiting without freezing.</div>
+
+  <h2>The story</h2>
+  <p>Picture a food truck with one cook, Sam. An order comes in: <b>toast and a smoothie</b>.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam stands with arms crossed, staring at a toaster, while a clock ticks.">
+        <use href="#sam-bored" x="20" y="10" width="108" height="180"/>
+        <use href="#toaster" x="140" y="120" width="84" height="63"/>
+        <use href="#clock" x="170" y="20" width="44" height="44"/>
+        <text x="192" y="86" text-anchor="middle" font-size="12" style="fill:var(--muted)">2 minutes...</text>
+        <text x="135" y="60" font-size="18" style="fill:var(--ink)">. . .</text>
+      </svg>
+      <div class="cap"><b>The wrong way.</b> Sam puts bread in the toaster and stands in front of it, arms crossed, for two minutes. The truck looks frozen.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam works at the blender while the toaster, now fitted with a bell, toasts on its own.">
+        <use href="#sam-busy" x="10" y="10" width="108" height="180"/>
+        <use href="#blender" x="120" y="60" width="52" height="78"/>
+        <use href="#toaster" x="160" y="130" width="72" height="54"/>
+        <use href="#bell" x="196" y="96" width="30" height="30"/>
+        <rect x="112" y="14" width="124" height="30" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="174" y="33" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"Ring when you're done."</text>
+      </svg>
+      <div class="cap"><b>The right way.</b> The toaster gets a bell. Sam says "ring when you're done," walks away, and starts the smoothie.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="The bell rings, toast pops up, and Sam comes back smiling.">
+        <use href="#sam-happy" x="20" y="10" width="108" height="180"/>
+        <use href="#toaster-done" x="140" y="110" width="90" height="68"/>
+        <use href="#bell" x="150" y="30" width="40" height="40"/>
+        <text x="205" y="40" font-size="14" font-weight="700" class="hand" style="fill:var(--mango)">DING!</text>
+        <path d="M148 40q-8 6 -4 16M192 40q8 6 4 16" style="stroke:var(--mango);stroke-width:2.5;fill:none;stroke-linecap:round"/>
+      </svg>
+      <div class="cap"><b>Ding!</b> Sam comes back for the toast. Sam never did two things at the same instant. Sam just never stood still.</div>
+    </div>
+  </div>
+  <p>That bell is the whole secret. The cook says: <i>"Toaster, when you're done, ring the bell and I'll come back."</i> In code, the "come back and do this" part is called a <b>callback</b>.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 720 250" role="img" aria-label="Two timelines. Blocking: toast takes minutes zero to two, then the smoothie takes minute two to three, total three minutes. Non-blocking: toast runs zero to two while the smoothie runs zero to one, total two minutes.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="120" y="18" class="hand" font-size="14" font-weight="700">Same two jobs, two ways</text>
+        <!-- axis -->
+        <line x1="160" y1="215" x2="700" y2="215" stroke="currentColor" stroke-width="1.5"/>
+        <g text-anchor="middle" style="fill:var(--muted)">
+          <text x="160" y="235">0 min</text><text x="340" y="235">1 min</text><text x="520" y="235">2 min</text><text x="700" y="235">3 min</text>
+        </g>
+        <line x1="160" y1="210" x2="160" y2="220" stroke="currentColor"/><line x1="340" y1="210" x2="340" y2="220" stroke="currentColor"/><line x1="520" y1="210" x2="520" y2="220" stroke="currentColor"/><line x1="700" y1="210" x2="700" y2="220" stroke="currentColor"/>
+        <!-- blocking -->
+        <use href="#sam-bored" x="10" y="30" width="48" height="80"/>
+        <text x="66" y="52" font-weight="700">Blocking</text>
+        <rect x="160" y="42" width="360" height="24" rx="5" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="340" y="59" text-anchor="middle">toast (Sam stands and waits)</text>
+        <rect x="520" y="76" width="180" height="24" rx="5" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="610" y="93" text-anchor="middle">smoothie</text>
+        <text x="66" y="93" style="fill:var(--berry)" font-weight="700">3 min</text>
+        <!-- non-blocking -->
+        <use href="#sam-busy" x="10" y="120" width="48" height="80"/>
+        <text x="66" y="142" font-weight="700">With a bell</text>
+        <rect x="160" y="132" width="360" height="24" rx="5" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5;stroke-dasharray:6 4"/>
+        <text x="340" y="149" text-anchor="middle">toast (toaster works, Sam is elsewhere)</text>
+        <use href="#bell" x="510" y="120" width="22" height="22"/>
+        <rect x="160" y="166" width="180" height="24" rx="5" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="250" y="183" text-anchor="middle">smoothie</text>
+        <text x="66" y="183" style="fill:var(--mint)" font-weight="700">2 min</text>
+      </g>
+    </svg>
+    <figcaption>Async doesn't make the toaster faster. It stops Sam from standing still while the toaster works. The dashed bar is time Sam is not spending on toast.</figcaption>
+  </figure>
+
+  <p>How does Sam know the bell rang? Sam has a <b>ticket rail</b>. Every time a bell rings, a ticket goes on the rail: "toast is ready, go butter it." Whenever Sam's hands are free, Sam takes the next ticket. Programmers call this ticket rail the <b>event loop</b>. You don't need to remember that name today. You need to remember: <i>one cook, a rail of tickets, hands never idle.</i></p>
+
+  <figure>
+    <svg viewBox="0 0 700 230" role="img" aria-label="Bells from the toaster and blender pin tickets onto a rail. Sam loops: hands free, take the next ticket, do it, back to hands free.">
+      <g font-size="12" style="fill:var(--ink)">
+        <!-- the rail -->
+        <rect x="200" y="20" width="480" height="8" rx="4" style="fill:var(--ink)"/>
+        <text x="200" y="14" class="hand" font-weight="700">The ticket rail</text>
+        <g transform="translate(230 28)">
+          <rect x="0" y="0" width="90" height="50" rx="4" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+          <text x="45" y="20" text-anchor="middle" font-size="11">toast ready:</text><text x="45" y="36" text-anchor="middle" font-size="11">butter it</text>
+        </g>
+        <g transform="translate(340 28)">
+          <rect x="0" y="0" width="90" height="50" rx="4" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+          <text x="45" y="20" text-anchor="middle" font-size="11">smoothie done:</text><text x="45" y="36" text-anchor="middle" font-size="11">pour it</text>
+        </g>
+        <g transform="translate(450 28)">
+          <rect x="0" y="0" width="90" height="50" rx="4" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5;stroke-dasharray:4 3"/>
+          <text x="45" y="30" text-anchor="middle" font-size="11" style="fill:var(--muted)">(next ticket)</text>
+        </g>
+        <!-- bells feeding the rail -->
+        <use href="#toaster" x="560" y="40" width="60" height="45"/>
+        <use href="#blender" x="630" y="36" width="34" height="51"/>
+        <use href="#bell" x="590" y="96" width="24" height="24"/>
+        <path d="M600 96V90" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        <text x="600" y="136" text-anchor="middle" font-size="11" style="fill:var(--muted)">a bell adds a ticket</text>
+        <!-- Sam's loop -->
+        <use href="#sam-happy" x="10" y="60" width="72" height="120"/>
+        <rect x="100" y="110" width="120" height="34" rx="17" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="160" y="131" text-anchor="middle" font-weight="700">Hands free?</text>
+        <rect x="260" y="110" width="150" height="34" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="335" y="131" text-anchor="middle">take the next ticket</text>
+        <rect x="450" y="160" width="100" height="34" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="500" y="181" text-anchor="middle">do it</text>
+        <path d="M220 127H258" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        <text x="239" y="120" text-anchor="middle" font-size="10">yes</text>
+        <path d="M335 110V90" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)" fill="none"/>
+        <path d="M410 127H500V158" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        <path d="M450 177H160V146" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        <text x="300" y="192" text-anchor="middle" font-size="11" style="fill:var(--muted)">back to "hands free?"</text>
+        <path d="M100 127H90" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 3" fill="none"/>
+        <text x="160" y="212" text-anchor="middle" font-size="11" style="fill:var(--muted)">no tickets? wait for a bell</text>
+      </g>
+    </svg>
+    <figcaption>The event loop. Bells add tickets to the rail. Sam works through them one at a time, so nothing ever happens "at the same time," and nothing waits idle either.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>console.log("1. put bread in")
+
+setTimeout(() =&gt; {
+  console.log("3. 🔔 toast ready")   // this runs LATER, when the bell rings
+}, 2000)
+
+console.log("2. make smoothie")     // this runs RIGHT AWAY, Sam didn't wait</code></pre>
+  <p>Run it and the numbers come out in order: 1, 2, then 3 two seconds later. The function inside <code>setTimeout</code> is the ticket Sam left for later. That's a callback.</p>
+
+  <div class="demo">
+    <h3>The freeze test</h3>
+    <p>The ball bounces and the counter ticks as long as Sam's hands are free. Make toast both ways and watch what happens to them. The blocking button <b>really freezes this page</b> for two seconds. That's the point.</p>
+    <div class="controls">
+      <button class="btn danger" id="l1-block">Make toast the blocking way (2 s)</button>
+      <button class="btn primary" id="l1-async">Make toast with a bell (2 s)</button>
+      <span style="font-family:var(--font-mono);font-weight:600" aria-live="off">ticks: <span id="l1-ticks">0</span></span>
+    </div>
+    <div class="stage" style="height:70px;background:var(--surface-2);border-radius:10px;position:relative;overflow:hidden">
+      <div id="l1-ball" style="position:absolute;left:24px;bottom:8px;width:34px;height:34px;border-radius:50%;background:var(--mango);animation:bounce .8s ease-in-out infinite"></div>
+      <div style="position:absolute;right:16px;top:22px;font-size:.9rem;color:var(--muted)">the rest of the kitchen</div>
+    </div>
+    <pre class="log" id="l1-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Sam is one person. Did Sam ever do two things at the exact same moment?</summary>No. Sam did one thing, then another, then another. The toaster did its own work, but the toaster isn't Sam. One cook, one thing at a time, always.</details>
+  <details><summary>2. Why does line "2" print before line "3", even though "3" is written above it?</summary>Line 3 is inside the ticket Sam left for later. Sam keeps going down the list (prints 2), and only comes back for the ticket when the bell rings two seconds later.</details>
+  <details><summary>3. A web page freezes when you click a button. In kitchen words, what did the programmer do wrong?</summary>They made Sam stand and stare at something instead of leaving a ticket. While Sam stares, no other ticket gets done, so the page can't even redraw itself.</details>
+  <details><summary>4. If Sam gets three bells at once, what happens?</summary>Three tickets go on the rail. Sam does them one at a time, in the order they arrived.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The word for "the cook stops and stares" is <b>synchronous</b> or <b>blocking</b>. The word for "leave a ticket, come back later" is <b>asynchronous</b>. Introduce those words only after the story is solid.</li>
+      <li>Resist saying "multithreading." JavaScript in the browser and in Node has one cook. Fibers (Lesson 6) will feel like cheating later, and it's worth having the one-cook rule firmly set first.</li>
+      <li>Callbacks get messy when you need "when this is done, do that, and when <i>that</i> is done, do this." Show a three-deep nested <code>setTimeout</code> on the board and ask if anyone wants to read it. That mess is why Lesson 2 exists.</li>
+      <li>The freeze demo uses a real busy-wait loop. Kids will ask why the ball stops but the toaster still "finishes." Answer: the ball is drawn by Sam. The toaster timer is not Sam.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#home">← Home</a><a href="#lesson-2">Lesson 2: Promises →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l1-log"), ticks = K.$("#l1-ticks"), n = 0;
+    setInterval(function () { n++; ticks.textContent = n; }, 100);
+    K.$("#l1-block").addEventListener("click", function () {
+      K.log(log, "put bread in (blocking)");
+      K.log(log, "Sam stares at the toaster...", "dim");
+      // Give the browser one frame to paint the two lines above, then really block.
+      setTimeout(function () {
+        var end = Date.now() + 2000; while (Date.now() < end) { /* Sam is standing here */ }
+        K.log(log, "toast ready. Did you see the ball and counter freeze?", "bad");
+      }, 30);
+    });
+    K.$("#l1-async").addEventListener("click", function () {
+      K.log(log, "put bread in, ring the bell when done");
+      K.log(log, "Sam goes to make a smoothie", "dim");
+      setTimeout(function () { K.log(log, "🔔 ding! toast ready. Nothing froze.", "ok"); }, 2000);
+    });
+  })();
+  </script>
+</section>
+
+<section id="lesson-2" class="lesson" hidden>
+  <div class="eyebrow">Lesson 2</div>
+  <h1>Promises: The Receipt</h1>
+  <div class="bigidea"><strong>A Promise is a receipt for a value that isn't ready yet.</strong> You order a smoothie, you get a receipt, and the receipt says "your smoothie will be here soon, or we'll tell you why not."</div>
+
+  <h2>The story</h2>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya orders a mango smoothie. Sam hands her a receipt.">
+        <use href="#maya-happy" x="10" y="20" width="102" height="170"/>
+        <use href="#sam-busy" x="120" y="10" width="108" height="180"/>
+        <rect x="6" y="4" width="162" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="87" y="22" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"One mango smoothie, please!"</text>
+        <use href="#receipt" x="196" y="86" width="30" height="39"/>
+      </svg>
+      <div class="cap"><b>She orders.</b> Sam doesn't hand her a smoothie. Sam hands her a receipt with a number on it.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya looks at the receipt while the blender is already running behind the counter.">
+        <use href="#maya-receipt" x="20" y="20" width="102" height="170"/>
+        <use href="#blender" x="150" y="50" width="56" height="84"/>
+        <path d="M146 60l-6-8M212 60l6-8M150 44l-4-8M208 44l4-8" style="stroke:var(--ink);stroke-width:2;stroke-linecap:round" fill="none"/>
+        <text x="178" y="160" text-anchor="middle" font-size="12" class="hand" font-weight="700" style="fill:var(--mango)">already blending</text>
+      </svg>
+      <div class="cap"><b>The receipt is not the smoothie.</b> It's a promise of one. And notice: the blender started the moment she ordered.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Two endings: Maya holding a smoothie, or Maya sad next to a sign saying out of mango.">
+        <use href="#maya-smoothie" x="0" y="20" width="102" height="170"/>
+        <use href="#maya-sad" x="130" y="20" width="102" height="170"/>
+        <rect x="122" y="6" width="114" height="26" rx="5" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="179" y="23" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Sorry, out of mango"</text>
+        <line x1="120" y1="20" x2="120" y2="190" stroke="currentColor" stroke-dasharray="4 4"/>
+      </svg>
+      <div class="cap"><b>Two endings.</b> Her number is called and here's the smoothie. Or: "Sorry, we're out of mango." Either way, the receipt is finished.</div>
+    </div>
+  </div>
+
+  <p>Three things can be true about that receipt at any moment:</p>
+  <ul>
+    <li><b>Pending</b>: still blending. You're holding the receipt, waiting.</li>
+    <li><b>Fulfilled</b>: your number is called, here's your smoothie. The receipt "turned into" the value.</li>
+    <li><b>Rejected</b>: "Sorry, we're out of mango." The receipt turned into a reason it failed.</li>
+  </ul>
+  <p>Once a receipt is fulfilled or rejected, it never changes again. A smoothie doesn't un-blend.</p>
+
+  <figure>
+    <svg viewBox="0 0 700 250" role="img" aria-label="A pending receipt becomes either a fulfilled receipt with a smoothie or a rejected receipt marked out of mango. Neither ever changes back.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">The three states of a receipt</text>
+        <!-- pending -->
+        <use href="#receipt" x="40" y="60" width="80" height="104"/>
+        <use href="#clock" x="62" y="96" width="36" height="36"/>
+        <text x="80" y="188" text-anchor="middle" font-weight="700">Pending</text>
+        <text x="80" y="204" text-anchor="middle" font-size="11" style="fill:var(--muted)">still blending</text>
+        <!-- fulfilled -->
+        <use href="#receipt" x="400" y="20" width="80" height="104"/>
+        <use href="#smoothie" x="424" y="48" width="32" height="48"/>
+        <text x="540" y="84" font-weight="700" style="fill:var(--mint)">Fulfilled</text>
+        <text x="540" y="100" font-size="11" style="fill:var(--muted)">turned into a smoothie</text>
+        <!-- rejected -->
+        <use href="#receipt" x="400" y="120" width="80" height="104"/>
+        <path d="M420 150l40 40M460 150l-40 40" style="stroke:var(--berry);stroke-width:5;stroke-linecap:round" fill="none"/>
+        <text x="540" y="180" font-weight="700" style="fill:var(--berry)">Rejected</text>
+        <text x="540" y="196" font-size="11" style="fill:var(--muted)">turned into a reason</text>
+        <!-- arrows -->
+        <path d="M130 100C250 100 300 60 392 62" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="250" y="66" text-anchor="middle" font-size="11">smoothie ready</text>
+        <path d="M130 120C250 120 300 170 392 172" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="250" y="160" text-anchor="middle" font-size="11">out of mango</text>
+        <!-- never changes -->
+        <text x="540" y="48" font-size="11" font-style="italic" style="fill:var(--muted)">both are final: never changes again</text>
+        <text x="80" y="224" text-anchor="middle" font-size="11" style="fill:var(--muted)">(the blender started</text>
+        <text x="80" y="238" text-anchor="middle" font-size="11" style="fill:var(--muted)">the moment you ordered)</text>
+      </g>
+    </svg>
+    <figcaption>A receipt moves from pending to exactly one of two final states, and then stays there. There is no arrow back.</figcaption>
+  </figure>
+
+  <h2>What you can do with a receipt</h2>
+  <p>You can write instructions on the back of it:</p>
+  <ul>
+    <li><code>.then(...)</code> means <i>"when it's ready, do this with it."</i></li>
+    <li><code>.catch(...)</code> means <i>"if it fails, do this instead."</i></li>
+  </ul>
+<pre><code>orderSmoothie("mango")
+  .then((smoothie) =&gt; console.log("Yum:", smoothie))
+  .catch((reason) =&gt; console.log("Oh no:", reason))</code></pre>
+
+  <div class="demo">
+    <h3>The order machine</h3>
+    <p>Pick a flavor and order. Watch the receipt change state, and watch which instruction on the back of it runs. Kiwi is out of stock today.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Flavor">
+        <label><input type="radio" name="l2-flavor" id="l2-mango" value="mango" checked><span>🥭 mango</span></label>
+        <label><input type="radio" name="l2-flavor" id="l2-kiwi" value="kiwi"><span>🥝 kiwi</span></label>
+      </span>
+      <button class="btn primary" id="l2-order">Order</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;align-items:start">
+      <svg viewBox="0 0 220 200" aria-hidden="true" style="width:100%;max-width:220px;height:auto">
+        <use id="l2-maya" href="#maya-happy" x="0" y="10" width="108" height="180"/>
+        <use href="#receipt" x="120" y="30" width="90" height="117"/>
+        <g id="l2-state">
+          <text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--muted)">(no order)</text>
+        </g>
+      </svg>
+      <pre class="log" id="l2-log" aria-live="polite" style="min-width:0"></pre>
+    </div>
+  </div>
+
+  <h2>async and await: writing it like a normal story</h2>
+  <p>Writing everything in <code>.then</code> chains gets awkward. So JavaScript lets you write it top to bottom:</p>
+<pre><code>async function lunch() {
+  const smoothie = await orderSmoothie("mango")   // wait here, but Sam stays busy elsewhere
+  console.log("Yum:", smoothie)
+}</code></pre>
+  <ul>
+    <li><code>async</code> on a function means: <i>"this function hands back a receipt, not the answer."</i></li>
+    <li><code>await</code> means: <i>"pause this story until the receipt is fulfilled, then continue."</i> The cook is <b>not</b> frozen while we wait. Other tickets still get done. It's only <i>this story</i> that pauses.</li>
+  </ul>
+  <p>If the receipt is rejected, <code>await</code> throws, and you catch it with a normal <code>try/catch</code>:</p>
+<pre><code>async function lunch() {
+  try {
+    const smoothie = await orderSmoothie("mango")
+    console.log("Yum:", smoothie)
+  } catch (reason) {
+    console.log("Oh no:", reason)
+  }
+}</code></pre>
+
+  <h2>Three things a receipt can't tell you</h2>
+  <figure>
+    <svg viewBox="0 0 700 220" role="img" aria-label="A receipt with three question marks pointing at it: what can go wrong, can I reorder from it, can I cancel it.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#receipt" x="280" y="30" width="130" height="169"/>
+        <text x="345" y="120" text-anchor="middle" font-size="12" class="mono">1 mango smoothie</text>
+        <use href="#maya-receipt" x="150" y="30" width="110" height="183"/>
+        <g>
+          <text x="470" y="60" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="52" font-weight="700">What can go wrong?</text>
+          <text x="490" y="68" font-size="11" style="fill:var(--muted)">It says "smoothie", never "might be out of mango".</text>
+          <path d="M466 52H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+        <g>
+          <text x="470" y="122" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="114" font-weight="700">Can I get another from it?</text>
+          <text x="490" y="130" font-size="11" style="fill:var(--muted)">No. One receipt, one smoothie, already started.</text>
+          <path d="M466 114H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+        <g>
+          <text x="470" y="184" class="hand" font-size="26" font-weight="800" style="fill:var(--berry)">?</text>
+          <text x="490" y="176" font-weight="700">Can I cancel it?</text>
+          <text x="490" y="192" font-size="11" style="fill:var(--muted)">No. Walk away and the smoothie still gets made.</text>
+          <path d="M466 176H420" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Hold up a real receipt and ask what's missing. In code, a <code>Promise&lt;Smoothie&gt;</code> tells you the happy answer and nothing about failures, reuse, or cancelling. Lesson 3 fixes all three.</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Is the receipt the smoothie? What is it, then?</summary>No. It's a promise of a smoothie: a placeholder that will turn into either the smoothie or a reason you didn't get one.</details>
+  <details><summary>2. When does the blender start: when you order, or when you read the receipt?</summary>When you order. Creating the Promise starts the work. Reading the receipt (calling <code>.then</code>) doesn't start or stop anything.</details>
+  <details><summary>3. What are the three states? Can a receipt go from Fulfilled back to Pending?</summary>Pending, fulfilled, rejected. No. Once settled, a Promise never changes again.</details>
+  <details><summary>4. Your friend says "await freezes the whole program." Use the kitchen to explain why they're wrong.</summary><code>await</code> pauses one story (one function) until its receipt is ready. Sam keeps taking other tickets off the rail meanwhile. The truck never freezes; only that one customer's story is waiting.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>A Promise is a real thing you can print. <code>console.log(orderSmoothie("mango"))</code> shows <code>Promise { &lt;pending&gt; }</code>. Kids love seeing the word "pending" for real.</li>
+      <li>Reinforce that <code>async/await</code> is only a nicer way to write <code>.then</code>. Nothing new happens underneath.</li>
+      <li>The "three things a receipt can't tell you" figure is the bridge to Effect. If you have to cut something from this lesson, don't cut that.</li>
+      <li>A fake <code>orderSmoothie</code> for the demo: <code>new Promise((resolve, reject) =&gt; setTimeout(() =&gt; flavor === "mango" ? resolve("mango smoothie") : reject("out of " + flavor), 1000))</code>.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-1">← Lesson 1</a><a href="#lesson-3">Lesson 3: Effects →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l2-log"), state = K.$("#l2-state"), maya = K.$("#l2-maya"), btn = K.$("#l2-order");
+    function setState(html) { state.innerHTML = html; }
+    function orderSmoothie(flavor) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(function () { flavor === "mango" ? resolve("mango smoothie 🥤") : reject("out of " + flavor); }, 1500);
+      });
+    }
+    btn.addEventListener("click", function () {
+      var flavor = K.$("input[name=l2-flavor]:checked").value;
+      btn.disabled = true; K.clear(log);
+      maya.setAttribute("href", "#maya-receipt");
+      K.log(log, "Maya: one " + flavor + " smoothie, please");
+      K.log(log, "Sam hands over a receipt. Blender starts NOW.", "dim");
+      setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--muted)">PENDING</text><text x="165" y="120" text-anchor="middle" font-size="18">⏳</text>');
+      orderSmoothie(flavor)
+        .then(function (s) {
+          setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--mint)">FULFILLED</text><use href="#smoothie" x="150" y="104" width="30" height="45"/>');
+          maya.setAttribute("href", "#maya-smoothie");
+          K.log(log, ".then ran  →  Yum: " + s, "ok");
+        })
+        .catch(function (r) {
+          setState('<text x="165" y="100" text-anchor="middle" font-size="13" font-weight="700" class="mono" style="fill:var(--berry)">REJECTED</text><text x="165" y="130" text-anchor="middle" font-size="22" style="fill:var(--berry)">✕</text>');
+          maya.setAttribute("href", "#maya-sad");
+          K.log(log, ".catch ran  →  Oh no: " + r, "bad");
+        })
+        .then(function () { K.log(log, "the receipt is settled. It will never change again.", "dim"); btn.disabled = false; });
+    });
+  })();
+  </script>
+</section>
+
+<section id="lesson-3" class="lesson" hidden>
+  <div class="eyebrow">Lesson 3</div>
+  <h1>Effects: The Recipe Card</h1>
+  <div class="bigidea"><strong>An Effect is a recipe card, not a meal.</strong> It describes what to do. Nothing happens until you hand the card to the kitchen and say "run it." And the card has three lines on it that a receipt never had.</div>
+
+  <h2>The story</h2>
+  <p>Remember the receipt? The blender started the moment you ordered. You couldn't reorder from it, couldn't cancel it, and it didn't say what could go wrong. Now imagine the counter hands you a <b>recipe card</b> instead.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam hands Maya a recipe card. Nothing is being cooked.">
+        <use href="#sam-card" x="120" y="10" width="108" height="180"/>
+        <use href="#maya-surprised" x="10" y="20" width="102" height="170"/>
+        <rect x="58" y="4" width="178" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="147" y="22" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Here's the recipe. Nothing's made."</text>
+      </svg>
+      <div class="cap"><b>A card is just paper.</b> Holding it makes no smoothie. The blender is off.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya holds a card while two photocopies of it lie on the counter.">
+        <use href="#maya-card" x="10" y="20" width="102" height="170"/>
+        <use href="#card" x="130" y="50" width="96" height="60"/>
+        <use href="#card" x="140" y="120" width="96" height="60"/>
+        <text x="178" y="42" text-anchor="middle" font-size="12" class="hand" font-weight="700" style="fill:var(--ink)">copies!</text>
+      </svg>
+      <div class="cap"><b>You can copy it.</b> Read it, photocopy it, staple it to another card, hand it around. Still no smoothie.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya hands the card to Sam who runs it at the blender. A smoothie appears.">
+        <use href="#maya-card" x="0" y="20" width="96" height="160"/>
+        <path d="M96 110H120" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="108" y="102" text-anchor="middle" font-size="10" class="mono" style="fill:var(--ink)">run</text>
+        <use href="#sam-busy" x="118" y="10" width="102" height="170"/>
+        <use href="#smoothie" x="200" y="120" width="32" height="48"/>
+      </svg>
+      <div class="cap"><b>Only handing it to the kitchen makes a smoothie.</b> Programmers say you <b>run</b> the effect.</div>
+    </div>
+  </div>
+
+  <p>That one difference fixes all three receipt problems:</p>
+  <div class="compare">
+    <div>
+      <h3>Receipt (Promise)</h3>
+      <ul><li>Starts the moment it's made</li><li>One use</li><li>Doesn't say what can go wrong</li><li>Doesn't say what it needs</li></ul>
+    </div>
+    <div>
+      <h3>Recipe card (Effect)</h3>
+      <ul><li>Starts only when you run it</li><li>Run it as many times as you like</li><li>Has a "Can go wrong" line</li><li>Has a "Needs" line</li></ul>
+    </div>
+  </div>
+
+  <h2>The three lines on the card</h2>
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="A recipe card with three lines: You get a Smoothie, Can go wrong OutOfMango, Needs a Blender. Each line points to one slot of the TypeScript type Effect of Smoothie, OutOfMango, Blender.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card-labeled" x="40" y="30" width="320" height="200"/>
+        <text x="248" y="112" font-size="13" class="mono">a Smoothie</text>
+        <text x="248" y="156" font-size="13" class="mono">OutOfMango</text>
+        <text x="248" y="200" font-size="13" class="mono">a Blender</text>
+        <use href="#smoothie" x="330" y="86" width="22" height="33"/>
+        <use href="#blender" x="328" y="170" width="26" height="39"/>
+        <!-- the type -->
+        <rect x="40" y="252" width="620" height="40" rx="8" style="fill:var(--surface);stroke:var(--line)"/>
+        <text x="60" y="278" font-size="18" class="mono">Effect&lt;<tspan style="fill:var(--mint)" font-weight="600">Smoothie</tspan>, <tspan style="fill:var(--berry)" font-weight="600">OutOfMango</tspan>, <tspan style="fill:var(--sky)" font-weight="600">Blender</tspan>&gt;</text>
+        <!-- leaders -->
+        <path d="M46 118V236Q46 246 60 246H150V256" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <path d="M52 162V232Q52 240 60 240H236V256" fill="none" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)"/>
+        <path d="M58 206V226Q58 234 66 234H330V256" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <!-- side labels -->
+        <text x="400" y="60" class="hand" font-size="14" font-weight="700">Read the type out loud:</text>
+        <text x="400" y="84" font-size="13">"An Effect that <tspan font-weight="700" style="fill:var(--mint)">gives you</tspan> a Smoothie,</text>
+        <text x="400" y="104" font-size="13"><tspan font-weight="700" style="fill:var(--berry)">might fail with</tspan> OutOfMango,</text>
+        <text x="400" y="124" font-size="13">and <tspan font-weight="700" style="fill:var(--sky)">needs</tspan> a Blender."</text>
+        <text x="400" y="168" class="hand" font-size="14" font-weight="700">Nothing on a line?</text>
+        <text x="400" y="190" font-size="13">Then it says <tspan class="mono" style="fill:var(--muted)">never</tspan>, which means</text>
+        <text x="400" y="210" font-size="13">"nothing here." <tspan class="mono">Effect&lt;number&gt;</tspan> is</text>
+        <text x="400" y="230" font-size="13">"a number, nothing wrong, needs nothing."</text>
+      </g>
+    </svg>
+    <figcaption>The three lines on the card are the three slots of the type. Say it as a sentence every time until it's automatic.</figcaption>
+  </figure>
+  <div class="typeline">Effect&lt;<span class="slot-a">Smoothie</span>, <span class="slot-e">OutOfMango</span>, <span class="slot-r">Blender</span>&gt;<br><span class="slot-never">// slot 1: you get · slot 2: can go wrong · slot 3: needs</span></div>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console } from "effect"
+
+// Making a card. NOTHING RUNS YET.
+const sayHi = Console.log("hi!")           // Effect&lt;void&gt;
+
+// Still nothing runs. We're just stapling two cards together into one.
+const sayHiTwice = Effect.andThen(sayHi, sayHi)
+
+// NOW it runs.
+Effect.runPromise(sayHiTwice)              // prints "hi!" twice</code></pre>
+  <p>Compare with a Promise: <code>console.log("hi!")</code> prints immediately. There is no "card" step.</p>
+
+  <div class="demo">
+    <h3>Receipt vs. card</h3>
+    <p>On the left, a receipt for one smoothie. On the right, a recipe card. Press each button a few times and count the smoothies.</p>
+    <div class="compare">
+      <div>
+        <h3>Receipt (Promise)</h3>
+        <div class="controls"><button class="btn" id="l3-await">await it again</button></div>
+        <div id="l3-cups-p" style="min-height:52px;display:flex;flex-wrap:wrap;gap:4px" aria-live="polite"></div>
+        <p style="font-size:.9rem;color:var(--muted)" id="l3-msg-p">One receipt was created when the page loaded. The blender already ran.</p>
+      </div>
+      <div>
+        <h3>Recipe card (Effect)</h3>
+        <div class="controls"><button class="btn primary" id="l3-run">run the card</button></div>
+        <div id="l3-cups-e" style="min-height:52px;display:flex;flex-wrap:wrap;gap:4px" aria-live="polite"></div>
+        <p style="font-size:.9rem;color:var(--muted)" id="l3-msg-e">The card is a plan. Nothing has run.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Writing a recipe with steps: Effect.gen</h2>
+  <p>Real recipes have several steps. <code>Effect.gen</code> lets you write them top to bottom, like the <code>async/await</code> story from Lesson 2. The magic word is <code>yield*</code>, which you read as <b>"do this step and hand me the result."</b></p>
+<pre><code>import { Effect, Console } from "effect"
+
+const getMango = Effect.succeed("🥭")          // a card that always gives a mango
+const getIce   = Effect.succeed("🧊")          // a card that always gives ice
+
+const smoothie = Effect.gen(function* () {
+  const mango = yield* getMango                 // do this step, hand me the mango
+  const ice   = yield* getIce                   // do this step, hand me the ice
+  yield* Console.log(`blending ${mango} + ${ice}`)
+  return "🥤"                                   // the "You get" line
+})
+// smoothie : Effect&lt;string&gt;   (gives a string, nothing can go wrong, needs nothing)
+
+Effect.runPromise(smoothie).then(console.log)   // blending 🥭 + 🧊  then  🥤</code></pre>
+  <p>The <code>function*</code> with a star is a <b>generator</b>. You don't need to know what that means this month. Treat <code>Effect.gen(function* () { ... })</code> as "here begins a recipe" and <code>yield*</code> as "do this step." And notice: <code>smoothie</code> is still just a card. You could run it a hundred times and get a hundred smoothies.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. You have <code>const s = makeSmoothie()</code> where <code>makeSmoothie</code> returns an Effect. Has a smoothie been made?</summary>No. You're holding a card. A smoothie is made only when something runs the card.</details>
+  <details><summary>2. Read this out loud as a sentence: <code>Effect&lt;Toast, BreadIsMoldy, Toaster&gt;</code>.</summary>"An Effect that gives you Toast, might fail with BreadIsMoldy, and needs a Toaster."</details>
+  <details><summary>3. What does <code>never</code> mean in the middle slot? In the last slot?</summary>Middle: nothing can go wrong. Last: it needs nothing, so it's ready to run.</details>
+  <details><summary>4. Why can you run the same Effect twice, but not "re-await" the same Promise to get a second smoothie?</summary>The Effect is a plan; running it twice does the plan twice. The Promise is the result of work that already happened; awaiting it again just hands you the same finished result.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The phrase to repeat: <b>"plan, not action."</b> Have students say "plan" when they see <code>Effect.</code> and "action" when they see <code>Effect.runPromise</code>.</li>
+      <li>Why want a card instead of the meal? Because cards can be checked before cooking. Ty can look at the card and say "you forgot to handle OutOfMango" before anyone turns on a blender. Lesson 4 shows it.</li>
+      <li><code>Effect.succeed(x)</code> is a card that just hands you <code>x</code>. <code>Effect.fail(e)</code> is a card that just fails with <code>e</code>. Those two plus <code>Effect.gen</code> are enough for this unit.</li>
+      <li><code>Effect.runPromise</code> gives back a Promise, so the card world plugs into the receipt world at the very edge of the program. Real programs call it once, at the door. Everything inside is cards.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-2">← Lesson 2</a><a href="#lesson-4">Lesson 4: Errors →</a></div>
+
+  <script>
+  (function () {
+    var cupsP = K.$("#l3-cups-p"), cupsE = K.$("#l3-cups-e"), msgP = K.$("#l3-msg-p"), msgE = K.$("#l3-msg-e"), nP = 0, nE = 0;
+    function cup(el) { var s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 60 90"); s.style.width = "30px"; s.style.height = "45px"; s.innerHTML = '<use href="#smoothie"/>'; el.appendChild(s); }
+    // The receipt: created once, resolved once.
+    var receipt = new Promise(function (r) { setTimeout(function () { r("smoothie"); }, 10); });
+    K.$("#l3-await").addEventListener("click", function () {
+      receipt.then(function () {
+        if (nP === 0) { nP = 1; cup(cupsP); msgP.textContent = "await #1: here's the smoothie the blender already made."; }
+        else { nP++; msgP.textContent = "await #" + nP + ": same smoothie as before. Still 1 cup. A receipt can't make a second one."; }
+      });
+    });
+    // The card: a plan you can run again and again.
+    var card = function () { return Promise.resolve("smoothie"); };
+    K.$("#l3-run").addEventListener("click", function () {
+      card().then(function () { nE++; cup(cupsE); msgE.textContent = "run #" + nE + ": the kitchen followed the card again. " + nE + " cup" + (nE > 1 ? "s" : "") + "."; });
+    });
+  })();
+  </script>
+</section>
+
+<section id="lesson-4" class="lesson" hidden>
+  <div class="eyebrow">Lesson 4</div>
+  <h1>Errors You Can See</h1>
+  <div class="bigidea"><strong>The card says what can go wrong, so the compiler makes you deal with it.</strong> Effect also separates "problems we expected" from "the kitchen caught fire," and gives you tools like retry and timeout that snap onto any card.</div>
+
+  <h2>The story</h2>
+  <p>Two very different things can go wrong at the smoothie counter.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam shrugs beside an empty mango crate and offers a strawberry. Maya is fine with it.">
+        <use href="#sam-shrug" x="110" y="10" width="108" height="180"/>
+        <use href="#maya-happy" x="0" y="20" width="102" height="170"/>
+        <rect x="150" y="150" width="60" height="34" rx="4" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="180" y="171" text-anchor="middle" font-size="10" style="fill:var(--muted)">mango: 0</text>
+        <use href="#strawberry" x="200" y="100" width="34" height="34"/>
+        <rect x="86" y="4" width="150" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="161" y="22" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"Out of mango. Strawberry?"</text>
+      </svg>
+      <div class="cap"><b>Out of mango.</b> Annoying, but normal. It's going to happen sometimes. A good card lists it, and a good cook has a plan: offer strawberry.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A fire in the kitchen. Sam looks worried and Ty holds up a hand to stop everything.">
+        <use href="#fire" x="80" y="100" width="50" height="66"/>
+        <use href="#fire" x="110" y="120" width="36" height="48"/>
+        <use href="#sam-worried" x="0" y="10" width="108" height="180"/>
+        <use href="#ty-stop" x="130" y="10" width="108" height="180"/>
+        <text x="120" y="24" text-anchor="middle" font-size="14" class="hand" font-weight="800" style="fill:var(--berry)">KITCHEN FIRE</text>
+      </svg>
+      <div class="cap"><b>Kitchen fire.</b> Nobody writes "fire" on a smoothie card. It's not a smoothie problem, it's a bug in the building. You don't handle it with a strawberry.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty reads a card whose error line says OutOfMango and stops it. After the cook adds a plan, Ty gives a thumbs up.">
+        <use href="#ty-stop" x="0" y="10" width="96" height="160"/>
+        <use href="#card" x="86" y="124" width="56" height="35"/>
+        <text x="90" y="149" font-size="7" class="mono" style="fill:var(--berry)">OutOfMango</text>
+        <line x1="120" y1="14" x2="120" y2="110" stroke="currentColor" stroke-dasharray="4 4"/>
+        <use href="#ty-check" x="144" y="10" width="96" height="160"/>
+        <text x="48" y="190" text-anchor="middle" font-size="10" style="fill:var(--berry)" font-weight="700">before: stop</text>
+        <text x="192" y="190" text-anchor="middle" font-size="10" style="fill:var(--mint)" font-weight="700">after: plan added ✓</text>
+      </svg>
+      <div class="cap"><b>Ty checks the card.</b> If the error line still lists something nobody planned for, Ty stops it at the door. Add the plan, and the card is cleared.</div>
+    </div>
+  </div>
+  <p>Effect calls the first kind an <b>error</b> (expected, written on the card) and the second kind a <b>defect</b> (unexpected, a bug). The compiler makes you deal with errors. Defects crash loudly, which is what you want, because hiding a fire is worse than seeing it.</p>
+
+  <h2>Name tags for errors</h2>
+  <p>Each expected error gets a <b>name tag</b> so you can tell them apart:</p>
+<pre><code>import { Data } from "effect"
+
+class OutOfMango extends Data.TaggedError("OutOfMango") {}
+class BlenderJammed extends Data.TaggedError("BlenderJammed")&lt;{ readonly speed: number }&gt; {}</code></pre>
+  <p>That's a whole error type. The string in quotes is the name tag. Now a card can list them:</p>
+<pre><code>import { Effect } from "effect"
+
+const getMango = Effect.gen(function* () {
+  if (Math.random() &lt; 0.3) {
+    return yield* Effect.fail(new OutOfMango())     // the "can go wrong" line
+  }
+  return "🥭"
+})
+// getMango : Effect&lt;string, OutOfMango&gt;
+//                           ^ TypeScript figured this out on its own</code></pre>
+  <p>Nobody wrote <code>OutOfMango</code> in the type. Ty <i>read the recipe</i> and filled in the "Can go wrong" line alone.</p>
+
+  <h2>The picture: a card going through the kitchen</h2>
+  <figure>
+    <svg viewBox="0 0 760 300" role="img" aria-label="Running the getMango card leads to success, or to the OutOfMango error, or to a defect. For the error, if the cook wrote a plan, a strawberry comes out; if not, the error stays on the card for whoever runs it. A defect crashes loudly.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card" x="20" y="110" width="96" height="60"/>
+        <text x="68" y="188" text-anchor="middle" font-weight="700" class="mono">getMango</text>
+        <rect x="150" y="122" width="70" height="36" rx="18" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="185" y="145" text-anchor="middle" font-weight="700">run it</text>
+        <path d="M116 140H148" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <!-- success -->
+        <path d="M220 130C260 60 300 50 340 50" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="300" y="40" text-anchor="middle" font-size="11" style="fill:var(--mint)">success</text>
+        <use href="#mango" x="346" y="34" width="32" height="32"/>
+        <text x="386" y="55">a mango. Done.</text>
+        <!-- error -->
+        <path d="M220 140H338" stroke="currentColor" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <text x="280" y="132" text-anchor="middle" font-size="11" style="fill:var(--berry)">error: OutOfMango</text>
+        <rect x="342" y="112" width="178" height="56" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="431" y="134" text-anchor="middle" font-weight="700">Did the cook write</text>
+        <text x="431" y="152" text-anchor="middle" font-weight="700">a plan for OutOfMango?</text>
+        <path d="M520 128C545 100 565 96 590 96" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="516" y="86" font-size="11">yes: catchTag</text>
+        <use href="#strawberry" x="596" y="80" width="30" height="30"/>
+        <text x="632" y="100">strawberry</text>
+        <path d="M520 152C545 180 565 184 590 184" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="518" y="178" font-size="11">no</text>
+        <text x="596" y="180" font-size="11">stays on the error line.</text>
+        <text x="596" y="196" font-size="11">Whoever runs it handles it.</text>
+        <use href="#ty-look" x="696" y="204" width="50" height="84"/>
+        <!-- defect -->
+        <path d="M220 150C260 230 300 240 340 240" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="300" y="262" text-anchor="middle" font-size="11">defect: fire</text>
+        <use href="#fire" x="346" y="212" width="28" height="38"/>
+        <text x="384" y="238" font-weight="700" style="fill:var(--berry)">crash loudly.</text>
+        <text x="384" y="256" font-size="11">This is a bug, not a smoothie problem.</text>
+      </g>
+    </svg>
+    <figcaption>Three ways out of "run it." Only the middle one is the cook's business. The error line on the card is the list of things the cook is expected to have a plan for.</figcaption>
+  </figure>
+
+  <h2>Catching one specific error</h2>
+<pre><code>const getFruit = getMango.pipe(
+  Effect.catchTag("OutOfMango", () =&gt; Effect.succeed("🍓"))
+)
+// getFruit : Effect&lt;string&gt;      &lt;-- OutOfMango is GONE from the error line</code></pre>
+  <p>Look at what happened to the type. Before: <code>Effect&lt;string, OutOfMango&gt;</code>. After: <code>Effect&lt;string&gt;</code>. Ty saw that we wrote a plan for <code>OutOfMango</code> and <b>crossed it off the card.</b> If a card still has errors on it when you reach <code>Effect.runPromise</code>, that's your reminder that you haven't planned for them.</p>
+  <p><code>Effect.catch</code> (no tag) is the "catch anything on the error line" version. It still doesn't catch defects. Fires are not on the error line.</p>
+
+  <h2>Two tools that snap onto any card</h2>
+  <p>Because a card is just a plan, you can wrap a plan around a plan.</p>
+<pre><code>// Retry: "if it fails, try again, up to 3 more times."
+const stubbornMango = Effect.retry(getMango, { times: 3 })
+
+// Timeout: "give up if it takes longer than 2 seconds."  The error line grows:
+const quickMango = Effect.timeout(getMango, "2 seconds")
+// quickMango : Effect&lt;string, OutOfMango | TimeoutError&gt;</code></pre>
+  <p>Try doing that to a Promise. You can't wrap a plan around a receipt, because the receipt already started.</p>
+
+  <div class="demo">
+    <h3>Build the card, watch the error line</h3>
+    <p>Snap tools onto <code>getMango</code> and watch the type change. Ty only lets a card through when its error line is empty.</p>
+    <div class="controls">
+      <label class="check"><input type="checkbox" id="l4-retry"> retry({ times: 3 })</label>
+      <label class="check"><input type="checkbox" id="l4-timeout"> timeout("2 seconds")</label>
+      <label class="check"><input type="checkbox" id="l4-catch"> catchTag("OutOfMango", 🍓)</label>
+    </div>
+    <div class="typeline" id="l4-type" aria-live="polite"></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;margin-top:.8rem">
+      <svg viewBox="0 0 120 200" aria-hidden="true" style="width:90px;height:auto"><use id="l4-ty" href="#ty-look"/></svg>
+      <p id="l4-say" style="margin:0"></p>
+    </div>
+    <pre class="log" id="l4-pipe" style="margin-top:.8rem"></pre>
+  </div>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. "Out of mango" versus "kitchen fire": which one belongs on the recipe card, and why?</summary>Out of mango. It's expected and specific to this recipe, so the cook should have a plan. A fire is a bug in the building, not part of any recipe.</details>
+  <details><summary>2. Before <code>catchTag</code>, the type was <code>Effect&lt;string, OutOfMango&gt;</code>. After, it was <code>Effect&lt;string&gt;</code>. Who crossed the error off, and how did they know they could?</summary>The type checker (Ty). It saw a handler for the exact name tag "OutOfMango," so that failure can no longer escape the card.</details>
+  <details><summary>3. Why can you wrap <code>retry</code> around an Effect but not around a Promise?</summary>An Effect is a plan that hasn't started, so "do this plan again if it fails" makes sense. A Promise has already started; there's nothing to re-run.</details>
+  <details><summary>4. <code>Effect.timeout</code> <i>adds</i> an error to the card. Is that a bad thing?</summary>No. It's honest. The card can now fail a new way, and the card says so.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The single most important moment in this unit is showing the error type <b>disappear</b> when you add <code>catchTag</code>. Do it live with hover-over types in the editor. Let them see the red squiggle when they forget.</li>
+      <li><code>Data.TaggedError("Name")</code> makes a class with a <code>_tag</code> field. The <code>_tag</code> is literally the name tag. <code>console.log(err._tag)</code> proves it.</li>
+      <li>Defects come from <code>throw</code> inside plain code, or <code>Effect.die</code>. You can catch them with <code>Effect.catchDefect</code>, but that's for the fire-alarm layer of a program, not recipes.</li>
+      <li>Ask students to write the "Can go wrong" line for logging into a game: WrongPassword, ServerDown, TooManyAttempts. That makes it click that errors are a list of known things, not "stuff happened."</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-3">← Lesson 3</a><a href="#lesson-5">Lesson 5: Services →</a></div>
+
+  <script>
+  (function () {
+    var boxes = { retry: K.$("#l4-retry"), timeout: K.$("#l4-timeout"), catch: K.$("#l4-catch") };
+    var type = K.$("#l4-type"), ty = K.$("#l4-ty"), say = K.$("#l4-say"), pipe = K.$("#l4-pipe");
+    function render() {
+      var errs = ["OutOfMango"], lines = ["getMango                                  // Effect<string, OutOfMango>"];
+      if (boxes.retry.checked) lines.push("  .pipe(Effect.retry({ times: 3 }))       // same error line, but 3 more tries first");
+      if (boxes.timeout.checked) { errs.push("TimeoutError"); lines.push("  .pipe(Effect.timeout(\"2 seconds\"))      // adds TimeoutError to the error line"); }
+      if (boxes.catch.checked) { errs = errs.filter(function (e) { return e !== "OutOfMango"; }); lines.push("  .pipe(Effect.catchTag(\"OutOfMango\", () => Effect.succeed(\"🍓\")))   // crosses OutOfMango off"); }
+      var eHtml = errs.length ? errs.map(function (e) { return '<span class="slot-e">' + e + '</span>'; }).join(" | ") : '<span class="slot-never">never</span>';
+      type.innerHTML = 'Effect&lt;<span class="slot-a">string</span>, ' + eHtml + '&gt;';
+      pipe.textContent = lines.join("\n");
+      if (errs.length) { ty.setAttribute("href", "#ty-look"); say.innerHTML = "<b>Ty:</b> the error line still says <code>" + errs.join("</code> and <code>") + "</code>. Whoever runs this card has to deal with that. Not ready for the door."; }
+      else { ty.setAttribute("href", "#ty-check"); say.innerHTML = "<b>Ty:</b> error line is empty. Nothing can escape this card. Ready to run."; }
+    }
+    Object.keys(boxes).forEach(function (k) { boxes[k].addEventListener("change", render); });
+    render();
+  })();
+  </script>
+</section>
+
+<section id="lesson-5" class="lesson" hidden>
+  <div class="eyebrow">Lesson 5</div>
+  <h1>Asking for Help: Services and Layers</h1>
+  <div class="bigidea"><strong>A recipe says what it needs. The kitchen supplies it.</strong> The smoothie recipe says "Needs: a blender." It does not say which blender, and it definitely doesn't build one. That's the third line on the card, and it's what makes recipes testable and swappable.</div>
+
+  <h2>The story</h2>
+  <p>The smoothie recipe says "blend for 30 seconds." It doesn't say "go buy a Blendtec 575." Any blender will do. On the day, the kitchen hands the cook whichever blender it has.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam reads a card that says Needs: Blender and holds out a hand for one.">
+        <use href="#sam-busy" x="0" y="10" width="108" height="180"/>
+        <use href="#card-labeled" x="120" y="30" width="112" height="70"/>
+        <text x="163" y="90" font-size="8" class="mono" style="fill:var(--ink)">a Blender</text>
+        <rect x="112" y="120" width="120" height="28" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="172" y="138" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Blender, please."</text>
+      </svg>
+      <div class="cap"><b>The recipe asks.</b> Sam holds out a hand: "blender, please." The recipe never says which blender.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Two blenders: a real one and a pretend cardboard one drawn with dashed lines.">
+        <use href="#blender" x="30" y="30" width="70" height="105"/>
+        <text x="65" y="160" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">real blender</text>
+        <text x="65" y="176" text-anchor="middle" font-size="10" style="fill:var(--muted)">spins real blades</text>
+        <g style="opacity:.75">
+          <rect x="148" y="104" width="50" height="26" rx="6" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+          <path d="M155 104L150 50H196L191 104Z" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+          <rect x="146" y="42" width="54" height="9" rx="3" style="fill:none;stroke:var(--ink);stroke-width:2;stroke-dasharray:5 3"/>
+        </g>
+        <text x="173" y="80" text-anchor="middle" font-size="11" class="hand" font-weight="700" style="fill:var(--ink)">whirrr</text>
+        <text x="173" y="160" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">pretend blender</text>
+        <text x="173" y="176" text-anchor="middle" font-size="10" style="fill:var(--muted)">no blades, no mess</text>
+      </svg>
+      <div class="cap"><b>The kitchen provides.</b> For a practice kitchen, a pretend blender that instantly hands back a smoothie. Same recipe, no mess. Programmers call this a <b>test</b>.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty stops a card at the door because the kitchen has no blender.">
+        <use href="#ty-stop" x="10" y="10" width="108" height="180"/>
+        <use href="#card" x="140" y="70" width="90" height="56"/>
+        <text x="146" y="118" font-size="8" class="mono" style="fill:var(--sky)">Needs: Blender</text>
+        <rect x="100" y="8" width="136" height="40" rx="6" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="168" y="24" text-anchor="middle" font-size="10" style="fill:var(--ink)">"Card says Needs: Blender.</text>
+        <text x="168" y="39" text-anchor="middle" font-size="10" style="fill:var(--ink)">Kitchen has none. Stop."</text>
+      </svg>
+      <div class="cap"><b>Ty checks the Needs line too.</b> Try to run a card that still needs something, and Ty stops it before Sam even sees it.</div>
+    </div>
+  </div>
+  <p>In Effect, a thing a recipe needs is called a <b>service</b>. The way the kitchen supplies it is called a <b>layer</b>.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 720 260" role="img" aria-label="A smoothie card needing a Blender is provided either the RealBlender layer or the FakeBlender layer. Either way the result is a card that needs nothing.">
+      <g font-size="12" style="fill:var(--ink)">
+        <use href="#card-labeled" x="20" y="66" width="176" height="110"/>
+        <text x="88" y="160" font-size="11" class="mono">Blender</text>
+        <text x="132" y="204" text-anchor="middle" class="mono" font-size="12">Effect&lt;Smoothie, never, <tspan style="fill:var(--sky)" font-weight="600">Blender</tspan>&gt;</text>
+        <!-- layers -->
+        <rect x="300" y="30" width="190" height="70" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <use href="#blender" x="312" y="38" width="36" height="54"/>
+        <text x="356" y="58" font-weight="700">RealBlender layer</text>
+        <text x="356" y="76" font-size="11">actually spins blades</text>
+        <rect x="300" y="150" width="190" height="70" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5;stroke-dasharray:6 4"/>
+        <g style="opacity:.8"><path d="M320 200L316 168H344L340 200Z" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 2"/><rect x="314" y="160" width="32" height="6" rx="2" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 2"/></g>
+        <text x="356" y="178" font-weight="700">FakeBlender layer</text>
+        <text x="356" y="196" font-size="11">just says "whirrr"</text>
+        <!-- provide arrows -->
+        <path d="M198 110C250 110 250 65 298 65" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <path d="M198 135C250 135 250 185 298 185" fill="none" style="stroke:var(--sky)" stroke-width="1.8" marker-end="url(#arrow-sky)"/>
+        <text x="254" y="127" text-anchor="middle" font-size="9.5" class="mono">Effect.provide(..)</text>
+        <!-- results -->
+        <path d="M490 65H508" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <path d="M490 185H508" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="512" y="42" width="196" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="610" y="62" text-anchor="middle" class="mono" font-size="10.5">Effect&lt;Smoothie, never, <tspan style="fill:var(--muted)">never</tspan>&gt;</text>
+        <text x="610" y="79" text-anchor="middle" font-size="11">needs nothing now. Runnable.</text>
+        <rect x="512" y="162" width="196" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="610" y="182" text-anchor="middle" class="mono" font-size="10.5">Effect&lt;Smoothie, never, <tspan style="fill:var(--muted)">never</tspan>&gt;</text>
+        <text x="610" y="199" text-anchor="middle" font-size="11">same card, practice kitchen.</text>
+      </g>
+    </svg>
+    <figcaption>One recipe, two kitchens. Providing a layer shrinks the Needs line to <code>never</code>, meaning "nothing." Only then can the card run.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p><b>Step 1.</b> Describe the service. Just the <i>shape</i>, what a blender can do. No real blender yet.</p>
+<pre><code>import { Context, Effect } from "effect"
+
+class Blender extends Context.Service&lt;Blender, {
+  readonly blend: (stuff: string) =&gt; Effect.Effect&lt;string&gt;
+}&gt;()("Blender") {}</code></pre>
+  <p>Read it as: "There is a service called Blender. Any Blender must have a <code>blend</code> step."</p>
+  <p><b>Step 2.</b> Write a recipe that <i>asks</i> for a Blender.</p>
+<pre><code>const smoothie = Effect.gen(function* () {
+  const blender = yield* Blender                 // "hand me whatever Blender the kitchen has"
+  return yield* blender.blend("🥭 + 🧊")
+})
+// smoothie : Effect&lt;string, never, Blender&gt;
+//                                  ^ the "Needs" line, filled in by TypeScript</code></pre>
+  <p><b>Step 3.</b> Build a real one and a pretend one. These are <b>layers</b>.</p>
+<pre><code>import { Layer, Console } from "effect"
+
+const RealBlender = Layer.succeed(Blender, {
+  blend: (stuff) =&gt; Console.log("WHIRRRR " + stuff).pipe(Effect.as("🥤"))
+})
+
+const FakeBlender = Layer.succeed(Blender, {
+  blend: (_stuff) =&gt; Effect.succeed("🥤 (pretend)")
+})</code></pre>
+  <p><b>Step 4.</b> Provide one and run.</p>
+<pre><code>Effect.runPromise(smoothie.pipe(Effect.provide(RealBlender)))   // WHIRRRR 🥭 + 🧊  →  🥤
+Effect.runPromise(smoothie.pipe(Effect.provide(FakeBlender)))   // 🥤 (pretend)</code></pre>
+
+  <div class="demo">
+    <h3>Pick a kitchen</h3>
+    <p>Same <code>smoothie</code> card every time. Choose what the kitchen provides, then run it.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Which layer to provide">
+        <label><input type="radio" name="l5-layer" id="l5-real" value="real" checked><span>RealBlender</span></label>
+        <label><input type="radio" name="l5-layer" id="l5-fake" value="fake"><span>FakeBlender</span></label>
+        <label><input type="radio" name="l5-layer" id="l5-none" value="none"><span>nothing</span></label>
+      </span>
+      <button class="btn primary" id="l5-run">Run the card</button>
+    </div>
+    <div class="typeline" id="l5-type" aria-live="polite"></div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;margin-top:.8rem">
+      <svg viewBox="0 0 120 200" aria-hidden="true" style="width:90px;height:auto"><use id="l5-who" href="#sam-happy"/></svg>
+      <pre class="log" id="l5-log" style="min-width:0"></pre>
+    </div>
+  </div>
+
+  <h2>Layers stack</h2>
+  <p>A real kitchen needs a blender <i>and</i> a fridge <i>and</i> a sink. Layers combine:</p>
+<pre><code>const Kitchen = Layer.mergeAll(RealBlender, RealFridge)
+Effect.runPromise(bigRecipe.pipe(Effect.provide(Kitchen)))</code></pre>
+  <figure>
+    <svg viewBox="0 0 600 230" role="img" aria-label="Layers stack: an Electricity layer feeds a RealBlender layer and a RealFridge layer, which merge into a Kitchen layer, which the whole app is provided with so it needs nothing.">
+      <g font-size="12" style="fill:var(--ink)" text-anchor="middle">
+        <rect x="230" y="180" width="140" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="300" y="203">Electricity layer</text>
+        <rect x="90" y="110" width="150" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="165" y="133">RealBlender layer</text>
+        <rect x="360" y="110" width="150" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="435" y="133">RealFridge layer</text>
+        <rect x="230" y="40" width="140" height="36" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="300" y="63">Kitchen layer</text>
+        <rect x="440" y="10" width="150" height="46" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/><text x="515" y="30" font-weight="700">the whole app</text><text x="515" y="46" font-size="11">needs: never</text>
+        <path d="M260 180L200 148" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M340 180L400 148" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M200 110L262 78" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M400 110L338 78" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <path d="M370 52L438 40" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <text x="410" y="34" font-size="10" style="fill:var(--muted)">provide</text>
+        <text x="200" y="172" font-size="10" style="fill:var(--muted)">powers</text><text x="400" y="172" font-size="10" style="fill:var(--muted)">powers</text>
+        <text x="215" y="102" font-size="10" style="fill:var(--muted)">merge</text><text x="385" y="102" font-size="10" style="fill:var(--muted)">merge</text>
+      </g>
+    </svg>
+    <figcaption>A layer can itself need things. Layers are recipes for building appliances. We don't go deeper than this picture this month.</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. The smoothie recipe says "Needs: Blender." Does it say which blender? Why is that good?</summary>No. So the same recipe works with any blender: a real one today, a pretend one for practice, a new one when the old one breaks. The recipe never changes.</details>
+  <details><summary>2. What's the point of a pretend blender?</summary>Testing the recipe without the mess. You can check every step of the card in seconds, with no fruit and no cleanup.</details>
+  <details><summary>3. After <code>Effect.provide(RealBlender)</code>, what does the "Needs" line say? What word is that?</summary><code>never</code>, which means "nothing." The card is ready to run.</details>
+  <details><summary>4. You try to run the card without providing a blender. Who stops you, and when?</summary>Ty, the type checker, at compile time. Before the blender would have spun, before the program even starts.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The grown-up term is <b>dependency injection</b>. Don't say it. "The recipe asks, the kitchen provides" is exactly the same idea.</li>
+      <li><code>Context.Service&lt;Self, Shape&gt;()("Name")</code> has an odd double-parentheses shape. Tell students to copy it exactly; it's a TypeScript quirk, not an Effect idea.</li>
+      <li><code>Layer.succeed(Tag, impl)</code> is "here's a ready-made appliance." <code>Layer.effect(Tag, effect)</code> is "here's a recipe for building the appliance," for when building it can fail or needs other things.</li>
+      <li>In-class exercise: half the room writes a <code>Fridge</code> service with <code>take(item)</code> that can fail with <code>OutOf(item)</code> (Lesson 4!). The other half writes its two layers.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-4">← Lesson 4</a><a href="#lesson-6">Lesson 6: Fibers →</a></div>
+
+  <script>
+  (function () {
+    var type = K.$("#l5-type"), log = K.$("#l5-log"), who = K.$("#l5-who");
+    function choice() { return K.$("input[name=l5-layer]:checked").value; }
+    function render() {
+      var c = choice();
+      var r = c === "none" ? '<span class="slot-r">Blender</span>' : '<span class="slot-never">never</span>';
+      type.innerHTML = 'smoothie.pipe(' + (c === "none" ? "" : 'Effect.provide(' + (c === "real" ? "RealBlender" : "FakeBlender") + ')') + ')  <span class="slot-never">// </span>Effect&lt;<span class="slot-a">string</span>, <span class="slot-never">never</span>, ' + r + '&gt;';
+    }
+    K.$$("input[name=l5-layer]").forEach(function (i) { i.addEventListener("change", render); });
+    K.$("#l5-run").addEventListener("click", function () {
+      var c = choice(); K.clear(log);
+      if (c === "none") {
+        who.setAttribute("href", "#ty-stop");
+        K.log(log, "Ty (compile error):", "bad");
+        K.log(log, "  Type 'Blender' is not assignable to type 'never'.", "bad");
+        K.log(log, "  The card still says Needs: Blender. Nothing ran.", "dim");
+        return;
+      }
+      who.setAttribute("href", "#sam-busy");
+      K.log(log, "Sam: blender, please...  (yield* Blender)");
+      K.sleep(500).then(function () {
+        if (c === "real") { K.log(log, "WHIRRRR 🥭 + 🧊"); return K.sleep(900).then(function () { K.log(log, "→ 🥤", "ok"); }); }
+        K.log(log, "→ 🥤 (pretend)", "ok"); K.log(log, "no blades spun. Same recipe, practice kitchen.", "dim");
+      }).then(function () { who.setAttribute("href", "#sam-happy"); });
+    });
+    render();
+  })();
+  </script>
+</section>
+
+<section id="lesson-6" class="lesson" hidden>
+  <div class="eyebrow">Lesson 6</div>
+  <h1>Many Things at Once: Fibers</h1>
+  <div class="bigidea"><strong>One cook can keep many recipes going by using bookmarks, and can cleanly stop any of them.</strong> Effect calls a bookmark in a running recipe a <b>fiber</b>. Fibers let you run recipes side by side, race them, and interrupt them, which Promises can't do.</div>
+
+  <h2>The story</h2>
+  <p>Remember: still one cook, Sam. Sam is making three smoothies for three customers. Sam does not grow extra arms.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam stands behind three recipe cards, each with a red bookmark tucked into it.">
+        <use href="#sam-happy" x="0" y="10" width="102" height="170"/>
+        <use href="#card" x="110" y="30" width="72" height="45"/><use href="#bookmark" x="150" y="18" width="14" height="32"/>
+        <use href="#card" x="120" y="90" width="72" height="45"/><use href="#bookmark" x="160" y="78" width="14" height="32"/>
+        <use href="#card" x="130" y="150" width="72" height="45"/><use href="#bookmark" x="170" y="138" width="14" height="32"/>
+        <text x="216" y="60" font-size="11" style="fill:var(--ink)">#1</text><text x="216" y="120" font-size="11" style="fill:var(--ink)">#2</text><text x="208" y="180" font-size="11" style="fill:var(--ink)">#3</text>
+      </svg>
+      <div class="cap"><b>Bookmarks.</b> Sam puts a bookmark in recipe 1 while it blends, starts recipe 2, bookmarks that, starts recipe 3. Three recipes in progress, one cook.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A bell rings and Sam returns to the bookmarked recipe number one.">
+        <use href="#bell" x="20" y="20" width="40" height="40"/>
+        <text x="70" y="44" font-size="14" class="hand" font-weight="700" style="fill:var(--mango)">DING! #1</text>
+        <use href="#sam-busy" x="0" y="30" width="102" height="170"/>
+        <use href="#card" x="120" y="70" width="90" height="56"/><use href="#bookmark" x="176" y="56" width="16" height="36"/>
+        <path d="M108 110H118" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="165" y="150" text-anchor="middle" font-size="11" style="fill:var(--muted)">"where was I? ah, step 4"</text>
+      </svg>
+      <div class="cap"><b>Each bookmark is a fiber.</b> It remembers where in the recipe we were, so Sam can pick it back up when the bell rings.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya waves goodbye and leaves. Sam pulls the bookmark out of recipe two with scissors.">
+        <use href="#maya-wave" x="130" y="20" width="102" height="170"/>
+        <text x="180" y="24" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Gotta go, bye!"</text>
+        <use href="#card" x="20" y="60" width="90" height="56"/><use href="#bookmark" x="76" y="46" width="16" height="36"/>
+        <use href="#scissors" x="50" y="112" width="40" height="40"/>
+        <text x="65" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">recipe #2: stopped</text>
+      </svg>
+      <div class="cap"><b>Customer 2 leaves.</b> With a receipt, too bad, the smoothie gets made anyway. With a fiber, Sam pulls the bookmark out. Effect calls this <b>interruption</b>.</div>
+    </div>
+  </div>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 720 260" role="img" aria-label="Three fibers on one timeline. Sam only works during the short get-fruit and pour steps. The long blending stretches overlap because the blenders do the work. Recipe two is interrupted before pouring.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">One cook, three fibers</text>
+        <line x1="120" y1="215" x2="700" y2="215" stroke="currentColor" stroke-width="1.5"/>
+        <g text-anchor="middle" font-size="11" style="fill:var(--muted)">
+          <text x="120" y="235">0 s</text><text x="236" y="235">1 s</text><text x="352" y="235">2 s</text><text x="468" y="235">3 s</text><text x="584" y="235">4 s</text><text x="700" y="235">5 s</text>
+        </g>
+        <!-- recipe 1 -->
+        <text x="20" y="62" font-weight="700">Recipe 1</text>
+        <rect x="120" y="46" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="149" y="61" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="178" y="46" width="348" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="352" y="61" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending (blender works, Sam is elsewhere)</text>
+        <rect x="526" y="46" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="555" y="61" text-anchor="middle" font-size="10">pour</text>
+        <use href="#bookmark" x="176" y="30" width="10" height="22"/>
+        <!-- recipe 2 -->
+        <text x="20" y="112" font-weight="700">Recipe 2</text>
+        <rect x="178" y="96" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="207" y="111" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="236" y="96" width="290" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="381" y="111" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending</text>
+        <use href="#scissors" x="512" y="86" width="30" height="30"/>
+        <text x="552" y="112" font-size="11" font-weight="700" style="fill:var(--berry)">interrupted</text>
+        <use href="#bookmark" x="234" y="80" width="10" height="22"/>
+        <!-- recipe 3 -->
+        <text x="20" y="162" font-weight="700">Recipe 3</text>
+        <rect x="236" y="146" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="265" y="161" text-anchor="middle" font-size="10">get fruit</text>
+        <rect x="294" y="146" width="348" height="22" rx="4" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:5 3"/><text x="468" y="161" text-anchor="middle" font-size="10" style="fill:var(--muted)">blending</text>
+        <rect x="642" y="146" width="58" height="22" rx="4" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="671" y="161" text-anchor="middle" font-size="10">pour</text>
+        <use href="#bookmark" x="292" y="130" width="10" height="22"/>
+        <!-- legend -->
+        <rect x="120" y="190" width="14" height="12" rx="3" style="fill:var(--mango);stroke:var(--ink);stroke-width:1"/><text x="140" y="200" font-size="11">Sam's hands are busy</text>
+        <rect x="290" y="190" width="14" height="12" rx="3" style="fill:var(--surface-2);stroke:var(--line);stroke-dasharray:3 2"/><text x="310" y="200" font-size="11">waiting on a machine (bookmark placed)</text>
+      </g>
+    </svg>
+    <figcaption>Sam only works during the orange bits. The gray stretches overlap, which is why three 3-second smoothies take about five seconds, not nine. Recipe 2 never gets its pour step.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p><b>Run several cards at once.</b> <code>Effect.all</code> takes a list of cards and gives back one card that produces a list of results. The <code>concurrency</code> option is "how many bookmarks may Sam have open at once."</p>
+<pre><code>import { Effect } from "effect"
+
+const makeSmoothie = (name: string) =&gt;
+  Effect.sleep("3 seconds").pipe(Effect.as(`${name} 🥤`))
+
+const three = Effect.all(
+  [makeSmoothie("mango"), makeSmoothie("berry"), makeSmoothie("kiwi")],
+  { concurrency: "unbounded" }      // as many bookmarks as needed
+)
+// three : Effect&lt;string[]&gt;
+
+Effect.runPromise(three).then(console.log)   // ~3 seconds, not 9</code></pre>
+  <p><b>Race.</b> Two cards start; the first to finish wins, and the loser is interrupted (its bookmark is pulled).</p>
+<pre><code>const fastest = Effect.race(makeSmoothie("mango"), makeSmoothie("berry"))</code></pre>
+  <p><b>A bookmark you can hold.</b> <code>Effect.forkChild</code> starts a card in the background and hands you the fiber. <code>Fiber.join</code> waits for it. <code>Fiber.interrupt</code> stops it.</p>
+<pre><code>import { Effect, Fiber, Console } from "effect"
+
+const program = Effect.gen(function* () {
+  const fiber = yield* Effect.forkChild(makeSmoothie("mango"))   // start it, keep the bookmark
+  yield* Console.log("customer is waiting...")
+  yield* Effect.sleep("1 second")
+  yield* Console.log("customer left!")
+  yield* Fiber.interrupt(fiber)                                  // pull the bookmark
+  yield* Console.log("stopped the mango smoothie")
+})
+
+Effect.runPromise(program)</code></pre>
+  <p>Try that with a Promise. There is no way to stop <code>orderSmoothie("mango")</code> once it's called.</p>
+
+  <div class="demo">
+    <h3>Three smoothies, one cook</h3>
+    <p>Each smoothie takes 3 seconds of blending. Pick how many bookmarks Sam may hold, start, and time it. While it runs, customer 2 can leave.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Concurrency">
+        <label><input type="radio" name="l6-c" id="l6-c1" value="1"><span>concurrency: 1</span></label>
+        <label><input type="radio" name="l6-c" id="l6-c2" value="2"><span>2</span></label>
+        <label><input type="radio" name="l6-c" id="l6-cu" value="unbounded" checked><span>"unbounded"</span></label>
+      </span>
+      <button class="btn primary" id="l6-start">Start</button>
+      <button class="btn danger" id="l6-leave" disabled>Customer 2 left! (interrupt)</button>
+      <span style="font-family:var(--font-mono);font-weight:600">elapsed: <span id="l6-time">0.0</span> s</span>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 700 150" aria-label="Live progress of three smoothie fibers" role="img">
+        <g font-size="12" style="fill:var(--ink)" id="l6-bars">
+          <text x="10" y="30">mango</text><rect x="70" y="16" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b0" x="70" y="16" width="0" height="22" rx="5" style="fill:var(--mango)"/><text id="l6-s0" x="640" y="31" font-size="11"></text>
+          <text x="10" y="80">berry</text><rect x="70" y="66" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b1" x="70" y="66" width="0" height="22" rx="5" style="fill:var(--berry)"/><text id="l6-s1" x="640" y="81" font-size="11"></text>
+          <text x="10" y="130">kiwi</text><rect x="70" y="116" width="560" height="22" rx="5" style="fill:var(--surface-2);stroke:var(--line)"/><rect id="l6-b2" x="70" y="116" width="0" height="22" rx="5" style="fill:var(--mint)"/><text id="l6-s2" x="640" y="131" font-size="11"></text>
+        </g>
+      </svg>
+    </div>
+    <pre class="log" id="l6-log" aria-live="polite"></pre>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 700 200" role="img" aria-label="A race: mango and berry fibers start together. Berry finishes first, so mango is interrupted and the result is berry.">
+      <g font-size="12" style="fill:var(--ink)">
+        <text x="20" y="20" class="hand" font-size="14" font-weight="700">Effect.race: first one wins, loser is interrupted</text>
+        <rect x="20" y="40" width="120" height="34" rx="17" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><text x="80" y="62" text-anchor="middle" font-weight="700">race card</text>
+        <path d="M140 50C200 50 200 40 260 40" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="200" y="36" text-anchor="middle" font-size="10">start</text>
+        <path d="M140 64C200 64 200 110 260 110" fill="none" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="200" y="104" text-anchor="middle" font-size="10">start</text>
+        <rect x="264" y="26" width="120" height="28" rx="6" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/><text x="324" y="45" text-anchor="middle">mango fiber</text>
+        <rect x="264" y="96" width="120" height="28" rx="6" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/><text x="324" y="115" text-anchor="middle">berry fiber</text>
+        <path d="M384 110H470" stroke="currentColor" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)" fill="none"/><text x="427" y="104" text-anchor="middle" font-size="10" style="fill:var(--mint)">done first!</text>
+        <use href="#smoothie" x="474" y="90" width="26" height="39"/>
+        <path d="M384 40H440" stroke="currentColor" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <use href="#scissors" x="444" y="24" width="30" height="30"/><text x="480" y="44" font-size="11" style="fill:var(--berry)">interrupted, cleans up</text>
+        <path d="M500 110H560" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)" fill="none"/>
+        <rect x="564" y="94" width="120" height="32" rx="6" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/><text x="624" y="115" text-anchor="middle" font-weight="700">result: berry</text>
+        <text x="20" y="170" font-size="11" style="fill:var(--muted)">With Promise.race, the loser keeps running. Nobody tells the mango blender to stop.</text>
+      </g>
+    </svg>
+    <figcaption>Race keeps the first result and pulls the other bookmark. The interrupted fiber still runs its cleanup (Lesson 7).</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Did Sam ever do two things at the exact same instant? Then how did three smoothies take three seconds?</summary>No. Sam only did the short steps. The blenders did the long waiting parts, all overlapping, while Sam held three bookmarks.</details>
+  <details><summary>2. What is a fiber, in kitchen words?</summary>A bookmark in a half-finished recipe: it remembers where Sam was, so Sam can come back to it, or pull it out.</details>
+  <details><summary>3. A customer leaves. What happens to their smoothie with a Promise? With a fiber?</summary>Promise: it gets made anyway; nothing can stop it. Fiber: Sam interrupts it, the recipe stops at its next step, and any cleanup it promised still runs.</details>
+  <details><summary>4. In <code>Effect.all</code> with <code>concurrency: 2</code>, how long do three 3-second smoothies take?</summary>About 6 seconds. Two run together (3 s), then the third runs alone (3 s). Try it in the demo above.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The word for "many things in progress at once" is <b>concurrency</b>. It's not "many things happening at the same instant," which is parallelism and needs more cooks. Say "in progress," never "at the same time," and you'll avoid a year of confusion.</li>
+      <li><code>Effect.forkChild</code> makes the fiber a <i>child</i> of the current one. If the parent finishes or is interrupted, the child is interrupted too. Effect 4 also has <code>forkScoped</code> and <code>forkDetach</code> for other lifetimes; skip them.</li>
+      <li>Leaving out <code>concurrency</code> means one at a time.</li>
+      <li>Interruption is polite. A fiber isn't killed mid-instruction; it stops at the next step boundary and runs its cleanup. Compare pulling the plug to pressing the off button.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-5">← Lesson 5</a><a href="#lesson-7">Lesson 7: Cleaning up →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l6-log"), time = K.$("#l6-time"), start = K.$("#l6-start"), leave = K.$("#l6-leave");
+    var names = ["mango", "berry", "kiwi"], DUR = 3000, timer = null, fibers = [];
+    function bar(i) { return K.$("#l6-b" + i); } function status(i) { return K.$("#l6-s" + i); }
+    start.addEventListener("click", function () {
+      var limit = K.$("input[name=l6-c]:checked").value, max = limit === "unbounded" ? 3 : +limit;
+      K.clear(log); start.disabled = true; leave.disabled = false;
+      var t0 = Date.now(), running = 0, next = 0, done = 0;
+      fibers = names.map(function () { return { started: 0, state: "queued" }; });
+      names.forEach(function (n, i) { bar(i).setAttribute("width", 0); status(i).textContent = "waiting for a bookmark"; status(i).style.fill = "var(--muted)"; });
+      K.log(log, "Effect.all([...], { concurrency: " + (limit === "unbounded" ? '"unbounded"' : limit) + " })");
+      function launch() {
+        while (running < max && next < 3) {
+          var i = next++; fibers[i].started = Date.now(); fibers[i].state = "running"; running++;
+          status(i).textContent = "blending..."; K.log(log, "bookmark placed in " + names[i] + " recipe", "dim");
+        }
+      }
+      function finish(i, how) {
+        fibers[i].state = how; running--; done++;
+        if (how === "done") { bar(i).setAttribute("width", 560); status(i).textContent = "🥤 done"; status(i).style.fill = "var(--mint)"; K.log(log, names[i] + " 🥤 ready", "ok"); }
+        else { status(i).textContent = "✂ interrupted"; status(i).style.fill = "var(--berry)"; K.log(log, names[i] + " interrupted. Bookmark pulled, blender switched off.", "bad"); }
+        if (done === 3) { clearInterval(timer); start.disabled = false; leave.disabled = true; K.log(log, "all settled in " + ((Date.now() - t0) / 1000).toFixed(1) + " s"); }
+        else launch();
+      }
+      leave.onclick = function () {
+        if (fibers[1].state === "running") finish(1, "interrupted");
+        else if (fibers[1].state === "queued") { fibers[1].state = "interrupted"; done++; next = Math.max(next, 2); status(1).textContent = "✂ never started"; status(1).style.fill = "var(--berry)"; K.log(log, "berry was still queued. Interrupted before it began.", "bad"); if (done === 3) { clearInterval(timer); start.disabled = false; } launch(); }
+        leave.disabled = true;
+      };
+      launch();
+      timer = setInterval(function () {
+        var now = Date.now(); time.textContent = ((now - t0) / 1000).toFixed(1);
+        fibers.forEach(function (f, i) {
+          if (f.state !== "running") return;
+          var p = Math.min(1, (now - f.started) / DUR); bar(i).setAttribute("width", Math.round(560 * p));
+          if (p >= 1) finish(i, "done");
+        });
+      }, 50);
+    });
+  })();
+  </script>
+</section>
+
+<section id="lesson-7" class="lesson" hidden>
+  <div class="eyebrow">Lesson 7</div>
+  <h1>Cleaning Up</h1>
+  <div class="bigidea"><strong>Whatever you borrow, you give back, even when things go wrong.</strong> Effect has a built-in rule for "get a thing, use it, always put it back," and it holds no matter how the recipe ends: success, error, or interruption.</div>
+
+  <h2>The story</h2>
+  <p>Maya checks a book out of the library. Three ways her afternoon can go.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya happily reads a book, then returns it.">
+        <use href="#maya-happy" x="10" y="20" width="102" height="170"/>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">returned ✓</text>
+      </svg>
+      <div class="cap"><b>She reads it and returns it.</b> The happy ending.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Juice spilled on the book. Maya is upset but still returns it.">
+        <use href="#maya-sad" x="10" y="20" width="102" height="170"/>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <ellipse cx="160" cy="100" rx="18" ry="10" style="fill:var(--mango);opacity:.8"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">still returned ✓</text>
+      </svg>
+      <div class="cap"><b>She spills juice on chapter three.</b> An error. She still has to return it.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A phone call says come home now. Maya still returns the book on the way out.">
+        <use href="#maya-wave" x="10" y="20" width="102" height="170"/>
+        <rect x="8" y="4" width="120" height="26" rx="6" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="68" y="21" text-anchor="middle" font-size="11" style="fill:var(--ink)">📞 "Come home NOW."</text>
+        <use href="#book" x="130" y="50" width="60" height="73"/>
+        <path d="M195 90H220" stroke="currentColor" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+        <text x="175" y="150" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">still returned ✓</text>
+      </svg>
+      <div class="cap"><b>She's called home mid-chapter.</b> An interruption. She <i>still</i> returns the book on the way out.</div>
+    </div>
+  </div>
+  <p>The return is not optional. It doesn't care why she stopped reading. Kitchen version: Sam turns on the blender. Whether the smoothie succeeds, the fruit was rotten, or the customer left and the recipe was interrupted, <b>the blender gets turned off.</b> A blender left running overnight is how kitchens burn down. Effect calls this pattern <b>acquire and release</b>, and the guarantee is: <i>release always runs.</i></p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 260" role="img" aria-label="Acquire turns the blender on, use blends the fruit, and all three exits from use, success, error and interrupted, go through release which turns the blender off.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="20" y="100" width="150" height="50" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="95" y="120" text-anchor="middle" font-weight="700">acquire</text><text x="95" y="138" text-anchor="middle" font-size="11">turn blender ON</text>
+        <path d="M170 125H218" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="222" y="100" width="150" height="50" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="297" y="120" text-anchor="middle" font-weight="700">use</text><text x="297" y="138" text-anchor="middle" font-size="11">blend the fruit</text>
+        <!-- three exits -->
+        <path d="M372 110C420 60 440 50 500 50" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="440" y="44" text-anchor="middle" font-size="11" style="fill:var(--mint)">success 🥤</text>
+        <path d="M372 125H500" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)" fill="none"/>
+        <text x="440" y="118" text-anchor="middle" font-size="11" style="fill:var(--berry)">error (rotten fruit)</text>
+        <path d="M372 140C420 200 440 200 500 200" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="428" y="228" text-anchor="middle" font-size="11">interrupted (customer left)</text>
+        <use href="#scissors" x="405" y="168" width="22" height="22"/>
+        <!-- release -->
+        <rect x="504" y="30" width="170" height="190" rx="10" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:2"/>
+        <text x="589" y="112" text-anchor="middle" font-weight="700" font-size="14">release</text>
+        <text x="589" y="132" text-anchor="middle" font-size="11">turn blender OFF</text>
+        <text x="589" y="152" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">always</text>
+        <use href="#blender" x="574" y="160" width="30" height="45"/>
+        <path d="M589 220V240" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <text x="589" y="256" text-anchor="middle" font-size="11">done, blender is OFF no matter what</text>
+      </g>
+    </svg>
+    <figcaption>Every arrow out of "use" goes through "release." There is no path that skips it.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console } from "effect"
+
+const blenderOn  = Console.log("blender ON  🔛")
+const blenderOff = Console.log("blender OFF ⏹️")
+
+const useBlender = Effect.acquireRelease(
+  blenderOn,            // acquire
+  () =&gt; blenderOff      // release: ALWAYS runs
+)
+
+const smoothie = Effect.gen(function* () {
+  yield* useBlender
+  yield* Console.log("blending...")
+  yield* Effect.fail(new Error("rotten fruit!"))   // uh oh
+  yield* Console.log("pouring")                    // never reached
+})
+
+Effect.runPromise(Effect.scoped(smoothie)).catch(() =&gt; {})
+// blender ON  🔛
+// blending...
+// blender OFF ⏹️        &lt;-- ran anyway</code></pre>
+  <p>Delete the <code>Effect.fail</code> line and you'll see ON, blending, pouring, OFF. Put it back: ON, blending, OFF. Either way, OFF.</p>
+
+  <div class="demo">
+    <h3>Three endings, one release</h3>
+    <p>Choose how the recipe ends, then run it. Watch the last line of the log and the blender.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="How the recipe ends">
+        <label><input type="radio" name="l7-end" id="l7-ok" value="ok" checked><span>success</span></label>
+        <label><input type="radio" name="l7-end" id="l7-err" value="err"><span>rotten fruit (error)</span></label>
+        <label><input type="radio" name="l7-end" id="l7-int" value="int"><span>customer left (interrupt)</span></label>
+      </span>
+      <button class="btn primary" id="l7-run">Run</button>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start">
+      <svg viewBox="0 0 80 140" aria-hidden="true" style="width:70px;height:auto">
+        <use href="#blender" x="0" y="0" width="80" height="120"/>
+        <text id="l7-lamp" x="40" y="136" text-anchor="middle" font-size="12" font-weight="700" class="mono" style="fill:var(--muted)">OFF</text>
+      </svg>
+      <pre class="log" id="l7-log" style="min-width:0" aria-live="polite"></pre>
+    </div>
+  </div>
+
+  <h2>What's Effect.scoped?</h2>
+  <p>The library book has a <i>due date</i>: how long you're allowed to keep it. Effect calls that window a <b>scope</b>. <code>Effect.acquireRelease</code> adds "Needs: a Scope" to the card's third line, because the card needs to know <i>when</i> to return things. <code>Effect.scoped</code> says "the scope is this recipe: return everything when it ends." Layers (Lesson 5) also make scopes, so a blender acquired in a layer is returned when the app shuts down.</p>
+  <p>You don't need to understand scopes deeply this month. You need: <b>acquireRelease borrows, scoped sets the due date, release always happens.</b></p>
+
+  <h2>Why this is a big deal</h2>
+  <p>With a Promise, there's no "interrupted" path at all, so people forget cleanup on the "customer left" case, because that case doesn't exist for them. Then a real program runs for a week and has ten thousand blenders still on. Effect makes the interrupted path a first-class thing, and cleanup runs on it too.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Name the three ways a recipe can end. Which of them skips the release step?</summary>Success, error, interruption. None of them skip release.</details>
+  <details><summary>2. Why is "turn the blender off" not just the last line of the recipe?</summary>Because if a line before it fails or gets interrupted, the last line is never reached. Release has to be attached to the borrowing, not written at the end.</details>
+  <details><summary>3. In library words, what's a scope?</summary>The due date: the window of time you're allowed to hold what you borrowed.</details>
+  <details><summary>4. A friend says "I'll just put cleanup in the <code>.catch</code> of my Promise." What case did they forget?</summary>The interrupted case. Promises don't have one, so their cleanup never runs when a customer walks away.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li><code>acquireRelease(acquire, release)</code> returns the acquired thing, so you can do <code>const blender = yield* useBlender</code> and then use it. The example throws it away for simplicity.</li>
+      <li><code>Effect.ensuring(cleanup)</code> is the simpler cousin: "after this card, always run cleanup." <code>Effect.addFinalizer</code> registers cleanup from inside a <code>gen</code> block.</li>
+      <li>A closer for the unit: draw the full smoothie card on the board with all three lines filled in, a retry and timeout wrapped around it, a Blender layer provided, and acquireRelease keeping the blender safe. Then ask: "What can go wrong that we haven't written down?" The answer, "a defect, and we'd see it loudly," is the whole philosophy in one sentence.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-6">← Lesson 6</a><a href="#cheat-sheet">Cheat sheet →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l7-log"), lamp = K.$("#l7-lamp"), btn = K.$("#l7-run");
+    btn.addEventListener("click", function () {
+      var end = K.$("input[name=l7-end]:checked").value; btn.disabled = true; K.clear(log);
+      K.log(log, "blender ON  🔛"); lamp.textContent = "ON"; lamp.style.fill = "var(--mint)";
+      K.sleep(700).then(function () { K.log(log, "blending..."); return K.sleep(900); })
+        .then(function () {
+          if (end === "ok") { K.log(log, "pouring 🥤", "ok"); }
+          else if (end === "err") { K.log(log, "✕ Error: rotten fruit!  (the recipe stops here)", "bad"); }
+          else { K.log(log, "✂ interrupted: customer left  (the recipe stops here)", "bad"); }
+          return K.sleep(700);
+        })
+        .then(function () { K.log(log, "blender OFF ⏹️   ← release ran anyway", "ok"); lamp.textContent = "OFF"; lamp.style.fill = "var(--muted)"; btn.disabled = false; });
+    });
+  })();
+  </script>
+</section>
+
+<section id="cheat-sheet" class="lesson" hidden>
+  <div class="eyebrow">Reference</div>
+  <h1>Promise vs. Effect, on one page</h1>
+  <p>Everything from the seven lessons, side by side. The receipt on the left, the recipe card on the right.</p>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>Question</th><th>Promise (the receipt)</th><th>Effect (the recipe card)</th></tr></thead>
+      <tbody>
+        <tr><td>What is it?</td><td>A value that isn't ready yet</td><td>A plan for getting a value</td></tr>
+        <tr><td>When does it start?</td><td>The moment you make it</td><td>Only when you run it</td></tr>
+        <tr><td>Can you run it twice?</td><td>No. One receipt, one smoothie</td><td>Yes, as many times as you like</td></tr>
+        <tr><td>Does the type say what can go wrong?</td><td>No: <code>Promise&lt;Smoothie&gt;</code></td><td>Yes: <code>Effect&lt;Smoothie, OutOfMango&gt;</code></td></tr>
+        <tr><td>Does the type say what it needs?</td><td>No</td><td>Yes: <code>Effect&lt;Smoothie, OutOfMango, Blender&gt;</code></td></tr>
+        <tr><td>Can you cancel it?</td><td>No</td><td>Yes. Interrupt the fiber; cleanup still runs</td></tr>
+        <tr><td>Write steps top to bottom</td><td><code>async</code> / <code>await</code></td><td><code>Effect.gen</code> / <code>yield*</code></td></tr>
+        <tr><td>"Do this when it succeeds"</td><td><code>.then(f)</code></td><td><code>Effect.map</code> / <code>Effect.andThen</code></td></tr>
+        <tr><td>"Do this if it fails"</td><td><code>.catch(f)</code>, catches everything, mystery box</td><td><code>Effect.catchTag("Name", f)</code> for one error, <code>Effect.catch</code> for all listed errors</td></tr>
+        <tr><td>Try again on failure</td><td>Write a loop yourself</td><td><code>Effect.retry(card, { times: 3 })</code></td></tr>
+        <tr><td>Give up after a while</td><td>Hard: a second Promise and a timer</td><td><code>Effect.timeout(card, "2 seconds")</code></td></tr>
+        <tr><td>Several at once</td><td><code>Promise.all([...])</code></td><td><code>Effect.all([...], { concurrency: n })</code></td></tr>
+        <tr><td>First one wins</td><td><code>Promise.race([...])</code>, loser keeps running</td><td><code>Effect.race(a, b)</code>, loser is interrupted</td></tr>
+        <tr><td>Always clean up</td><td><code>try { } finally { }</code>, no interrupt case</td><td><code>Effect.acquireRelease</code>: success, error, and interrupt</td></tr>
+        <tr><td>Ask for a helper</td><td>Import it or pass it in by hand</td><td><code>yield* Blender</code>, then <code>Effect.provide(layer)</code></td></tr>
+        <tr><td>Turn it into the other</td><td>(a Promise is already running)</td><td><code>Effect.runPromise(card)</code> at the door of the program</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Reading an Effect type out loud</h2>
+  <div class="typeline">Effect&lt;<span class="slot-a">Smoothie</span>, <span class="slot-e">OutOfMango</span>, <span class="slot-r">Blender</span>&gt;</div>
+  <p>"An Effect that <b style="color:var(--mint)">gives you</b> a Smoothie, <b style="color:var(--berry)">might fail with</b> OutOfMango, and <b style="color:var(--sky)">needs</b> a Blender."</p>
+  <ul>
+    <li><code>never</code> in slot 2: nothing can go wrong.</li>
+    <li><code>never</code> in slot 3: needs nothing. Ready to run.</li>
+    <li>Trailing <code>never</code>s can be left off: <code>Effect&lt;number&gt;</code> means <code>Effect&lt;number, never, never&gt;</code>.</li>
+  </ul>
+
+  <h2>The five lines of Effect 4 you actually need this month</h2>
+<pre><code>import { Effect, Console, Context, Layer, Data, Fiber } from "effect"
+
+Effect.gen(function* () { const x = yield* step; return x })   // a recipe with steps
+class OutOfMango extends Data.TaggedError("OutOfMango") {}     // a named error
+class Blender extends Context.Service&lt;Blender, { ... }&gt;()("Blender") {}   // a needed thing
+Layer.succeed(Blender, { ... })                                 // a way to provide it
+Effect.runPromise(card.pipe(Effect.provide(layer)))            // the door out of the kitchen</code></pre>
+
+  <h2>Kitchen word, programmer word</h2>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>Kitchen picture</th><th>Programmer word</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>One cook</td><td>single-threaded</td><td>JavaScript does one instruction at a time. Always.</td></tr>
+        <tr><td>Standing and staring at the toaster</td><td>blocking / synchronous</td><td>Waiting in a way that freezes everything else.</td></tr>
+        <tr><td>Leaving a ticket and walking away</td><td>asynchronous</td><td>Waiting in a way that lets other work happen.</td></tr>
+        <tr><td>The ticket you leave</td><td>callback</td><td>A function to run later, when something finishes.</td></tr>
+        <tr><td>The ticket rail</td><td>event loop</td><td>The list the cook checks whenever hands are free.</td></tr>
+        <tr><td>A receipt for a smoothie</td><td>Promise</td><td>A value that isn't ready yet. Starts the moment it's made.</td></tr>
+        <tr><td>A recipe card</td><td>Effect</td><td>A plan for producing a value. Does nothing until run.</td></tr>
+        <tr><td>"You get" / "Can go wrong" / "Needs"</td><td>Success / Error / Requirements</td><td>The three slots of the Effect type.</td></tr>
+        <tr><td>Nothing on that line</td><td><code>never</code></td><td>Nothing can go wrong, or nothing is needed.</td></tr>
+        <tr><td>Out of mango</td><td>error</td><td>A known failure, written on the card, must be handled.</td></tr>
+        <tr><td>Kitchen fire</td><td>defect</td><td>A bug. Not on the card. Crashes loudly on purpose.</td></tr>
+        <tr><td>A name tag on a problem</td><td>tagged error</td><td>An error class with a <code>_tag</code> string.</td></tr>
+        <tr><td>An appliance the recipe asks for</td><td>service</td><td>A described capability, like "a Blender that can blend."</td></tr>
+        <tr><td>The kitchen supplying the appliance</td><td>layer</td><td>A way to build or provide a service.</td></tr>
+        <tr><td>Ty, the kitchen manager</td><td>the type checker</td><td>Reads every card before it can run. Stops incomplete ones.</td></tr>
+        <tr><td>A bookmark in a half-done recipe</td><td>fiber</td><td>A running Effect that can be paused, resumed, or stopped.</td></tr>
+        <tr><td>Pulling the bookmark out</td><td>interruption</td><td>Stopping a fiber cleanly; its cleanup still runs.</td></tr>
+        <tr><td>Borrow it, always return it</td><td>acquire / release</td><td>Get a resource and guarantee cleanup on every ending.</td></tr>
+        <tr><td>The due date</td><td>scope</td><td>The window during which a borrowed resource is held.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pager"><a href="#lesson-7">← Lesson 7</a><a href="#home">Home →</a></div>
+</section>
+
+</main>
+
+<script>
+(function () {
+  // Router: one section visible at a time, chosen by a plain #anchor.
+  var ids = ["home","lesson-1","lesson-2","lesson-3","lesson-4","lesson-5","lesson-6","lesson-7","cheat-sheet"];
+  function show() {
+    var id = (location.hash || "#home").slice(1);
+    if (ids.indexOf(id) < 0) id = "home";
+    ids.forEach(function (x) { var el = document.getElementById(x); if (el) el.hidden = (x !== id); });
+    document.querySelectorAll(".tab").forEach(function (t) {
+      if (t.getAttribute("href") === "#" + id) t.setAttribute("aria-current", "page"); else t.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+    document.dispatchEvent(new CustomEvent("lesson-shown", { detail: id }));
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+  // Tiny TypeScript highlighter, enough for the snippets on this page.
+  var kw = /\b(import|from|const|let|class|extends|function|return|yield|new|if|else|readonly|async|await|try|catch|finally|throw|typeof|export)\b/;
+  var re = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d+(?:\.\d+)?\b)|(\b[A-Z][A-Za-z0-9_]*\b)|(\b(?:import|from|const|let|class|extends|function|return|yield|new|if|else|readonly|async|await|try|catch|finally|throw|typeof|export)\b)/g;
+  function esc(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  document.querySelectorAll("pre code").forEach(function (el) {
+    var src = el.textContent, out = "", last = 0, m;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      var cls = m[1] ? "tok-c" : m[2] ? "tok-s" : m[3] ? "tok-n" : m[4] ? "tok-t" : "tok-k";
+      out += '<span class="' + cls + '">' + esc(m[0]) + "</span>";
+      last = m.index + m[0].length;
+    }
+    el.innerHTML = out + esc(src.slice(last));
+  });
+
+  // Helpers shared by the demos.
+  window.K = {
+    $: function (s, r) { return (r || document).querySelector(s); },
+    $$: function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); },
+    log: function (el, msg, cls) { var s = document.createElement("span"); if (cls) s.className = cls; s.textContent = msg + "\n"; el.appendChild(s); el.scrollTop = el.scrollHeight; },
+    clear: function (el) { el.textContent = ""; },
+    sleep: function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  };
+})();
+</script>
