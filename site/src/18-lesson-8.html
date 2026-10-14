@@ -1,0 +1,287 @@
+<section id="lesson-8" class="lesson" hidden>
+  <div class="eyebrow">Lesson 8</div>
+  <h1>The Kitchen Routine</h1>
+  <div class="bigidea"><strong>A schedule is a little plan for <i>when</i> to do something again.</strong> It lives on its own, separate from any recipe card, so you can snap the same schedule onto any card. Snap it on with <code>retry</code> to try again after a failure, or with <code>repeat</code> to go again after a success.</div>
+
+  <h2>The story</h2>
+  <p>Sam is waiting for a box of mangoes. The truck is late.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam looks worried next to the closed back door. The clock is ticking and no box has arrived.">
+        <use href="#sam-worried" x="0" y="20" width="102" height="170"/>
+        <use href="#l8-door" x="140" y="40" width="80" height="150"/>
+        <use href="#l8-clock" x="96" y="6" width="34" height="34"/>
+        <rect x="100" y="54" width="62" height="26" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="131" y="72" text-anchor="middle" font-size="12" style="fill:var(--ink)">📦 ...?</text>
+      </svg>
+      <div class="cap"><b>The mangoes are late.</b> Sam could stand at the back door and stare, or check it every two seconds forever. Both are bad plans.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty points at a routine chart taped to the wall. It says: delivery late, check again in 1 minute, then 2, then 4, after 3 extra checks call the farm. Wipe the counter every 10 minutes.">
+        <use href="#ty-look" x="0" y="24" width="96" height="160"/>
+        <g style="fill:var(--shoe)" font-size="10">
+          <rect x="98" y="10" width="136" height="180" rx="4" style="fill:var(--paper);stroke:var(--ink);stroke-width:1.5"/>
+          <rect x="150" y="4" width="32" height="12" rx="2" style="fill:var(--mango);opacity:.6"/>
+          <text x="166" y="34" text-anchor="middle" class="hand" font-size="14" font-weight="700">ROUTINE</text>
+          <text x="106" y="56" font-weight="700" style="fill:var(--paper-red)">Delivery late?</text>
+          <text x="106" y="72">check again in</text>
+          <text x="106" y="86">1 min, then 2, then 4.</text>
+          <text x="106" y="102">After 3 extra checks,</text>
+          <text x="106" y="116">call the farm.</text>
+          <line x1="106" y1="128" x2="226" y2="128" style="stroke:var(--paper-rule)" stroke-width="1.5"/>
+          <text x="106" y="148" font-weight="700" style="fill:var(--paper-red)">All shift long:</text>
+          <text x="106" y="164">wipe the counter</text>
+          <text x="106" y="178">every 10 min.</text>
+        </g>
+      </svg>
+      <div class="cap"><b>Ty tapes a routine to the wall.</b> It doesn't say <i>how</i> to check the door or wipe a counter. Only <i>when to go again, and when to stop.</i></div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam happily wipes the counter with a sponge while the mango box waits by the open door.">
+        <use href="#sam-happy" x="0" y="20" width="102" height="170"/>
+        <use href="#l8-sponge" x="92" y="120" width="48" height="32"/>
+        <line x1="90" y1="156" x2="150" y2="156" stroke="currentColor" stroke-width="2"/>
+        <use href="#l8-door" x="172" y="62" width="64" height="120"/>
+        <use href="#l8-box" x="150" y="126" width="64" height="56"/>
+        <text x="128" y="30" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">knock 3: not yet</text>
+        <text x="128" y="48" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">knock 4: 📦 here!</text>
+        <text x="128" y="78" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">🧽 wipe, again</text>
+      </svg>
+      <div class="cap"><b>Sam follows the chart.</b> Knock again because it went wrong. Wipe again because it went right. Same idea, any card.</div>
+    </div>
+  </div>
+  <p>There are two kinds of "again" on that chart. <b>Again because it went wrong:</b> the box wasn't there, so check later. That's <code>retry</code>, from Lesson 4. <b>Again because it went right:</b> the counter is clean, and in 10 minutes it gets wiped again. That's called <b>repeat</b>. And the routine chart itself has a programmer name: a <b>schedule</b>.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="Run the card. If it worked and we used retry, we're done. If it failed with retry, or worked with repeat, ask the schedule. Yes means wait, then run the card again. No means stop.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="20" y="120" width="130" height="50" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="85" y="141" text-anchor="middle" font-weight="700">run the card</text><text x="85" y="159" text-anchor="middle" font-size="11">knock on the door</text>
+        <path d="M150 145H186" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <polygon points="190,145 255,107 320,145 255,183" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="255" y="142" text-anchor="middle" font-size="11">how did</text><text x="255" y="156" text-anchor="middle" font-size="11">it go?</text>
+        <!-- worked + retry: done -->
+        <path d="M255 107V42H416" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="335" y="34" text-anchor="middle" font-size="11" style="fill:var(--mint)">worked + retry</text>
+        <rect x="420" y="20" width="220" height="44" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="530" y="47" text-anchor="middle" font-weight="700">done: hand over the value</text>
+        <!-- to the schedule -->
+        <path d="M320 145H396" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="358" y="136" text-anchor="middle" font-size="10" style="fill:var(--berry)">failed + retry</text>
+        <text x="358" y="162" text-anchor="middle" font-size="10" style="fill:var(--mint)">worked + repeat</text>
+        <rect x="400" y="112" width="170" height="66" rx="10" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:2"/>
+        <text x="485" y="134" text-anchor="middle" font-weight="700">ask the schedule:</text>
+        <text x="485" y="151" text-anchor="middle" font-size="11">go again?</text>
+        <text x="485" y="167" text-anchor="middle" font-size="11">how long to wait first?</text>
+        <!-- yes: wait, loop back -->
+        <path d="M430 178V226" fill="none" style="stroke:var(--mango)" stroke-width="1.8" marker-end="url(#arrow-mango)"/>
+        <text x="436" y="206" font-size="11" style="fill:var(--mango)">yes</text>
+        <rect x="330" y="230" width="140" height="44" rx="8" style="fill:var(--surface);stroke:var(--mango);stroke-width:1.5"/>
+        <use href="#l8-clock" x="342" y="238" width="28" height="28"/>
+        <text x="420" y="257" text-anchor="middle" font-weight="700">wait</text>
+        <path d="M330 252H85V174" fill="none" style="stroke:var(--mango)" stroke-width="1.8" marker-end="url(#arrow-mango)"/>
+        <text x="208" y="244" text-anchor="middle" font-size="11" style="fill:var(--mango)">then run it again</text>
+        <!-- no: stop -->
+        <path d="M545 178V226" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="551" y="206" font-size="11">no, that's enough</text>
+        <rect x="500" y="230" width="180" height="44" rx="8" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="590" y="257" text-anchor="middle" font-weight="700">stop: report how it ended</text>
+      </g>
+    </svg>
+    <figcaption>The card does the work. The schedule only answers one question, over and over: "Again? And how long should I wait first?"</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console, Schedule, Data } from "effect"
+
+class NotHereYet extends Data.TaggedError("NotHereYet") {}
+
+// Again on SUCCESS: repeat
+const wipe = Console.log("🧽 wipe the counter")
+const wipeThreeTimes = Effect.repeat(wipe, Schedule.recurs(2))   // 1 + 2 more
+
+// Again on FAILURE: retry
+let knocks = 0
+const checkDelivery = Effect.gen(function* () {
+  knocks++
+  if (knocks &lt; 4) {
+    yield* Console.log(`knock ${knocks}... not here yet`)
+    return yield* Effect.fail(new NotHereYet())
+  }
+  yield* Console.log(`knock ${knocks}... 📦 here!`)
+  return "mangoes"
+})
+const keepChecking = Effect.retry(checkDelivery, Schedule.spaced("100 millis"))
+
+const program = Effect.gen(function* () {
+  yield* wipeThreeTimes
+  const box = yield* keepChecking
+  yield* Console.log(`got ${box}`)
+})
+
+Effect.runPromise(program)
+// 🧽 wipe the counter
+// 🧽 wipe the counter
+// 🧽 wipe the counter
+// knock 1... not here yet
+// knock 2... not here yet
+// knock 3... not here yet
+// knock 4... 📦 here!
+// got mangoes</code></pre>
+  <p><code>Schedule.recurs(2)</code> means "2 more times." The card always runs once first, so that's 3 wipes. <code>Schedule.spaced("100 millis")</code> means "wait 100 milliseconds, then go again." It has no limit, so the knocking only stops because the box finally showed up.</p>
+
+  <h2>Three rules for the chart</h2>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>The chart says</th><th>In code</th><th>The waits</th></tr></thead>
+      <tbody>
+        <tr><td>"Every 10 minutes"</td><td><code>Schedule.spaced("10 minutes")</code></td><td>10, 10, 10, 10 ... forever</td></tr>
+        <tr><td>"1 minute, then 2, then 4"</td><td><code>Schedule.exponential("1 minute")</code></td><td>1, 2, 4, 8 ... doubling forever</td></tr>
+        <tr><td>"At most 3 more times"</td><td><code>Schedule.recurs(3)</code></td><td>no waiting, but stops after 3</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Notice that the first two never stop on their own. A schedule that says "doubling forever" is a schedule for a very patient cook.</p>
+
+  <h2>Two rules at once</h2>
+  <p>Ty's real chart says <i>both</i> "1, then 2, then 4" <i>and</i> "give up after 3 extra checks." You can glue two schedules together with <code>Schedule.max</code>:</p>
+<pre><code>const routine = Schedule.max([
+  Schedule.exponential("100 millis"),   // wait 100, 200, 400 ...
+  Schedule.recurs(3)                    // ...but only 3 more tries
+])
+
+const patient = Effect.retry(checkDelivery, routine).pipe(
+  Effect.catchTag("NotHereYet", () =&gt; Console.log("gave up, call the farm 📞"))
+)
+// knock at 0 ms... not here yet
+// knock at 100 ms... not here yet
+// knock at 300 ms... not here yet
+// knock at 700 ms... not here yet
+// gave up, call the farm 📞</code></pre>
+  <p>(Here the truck never comes, and each knock prints the time.) Read <code>Schedule.max</code> as <b>"follow both rules."</b> Sam only goes again if <i>both</i> rules say yes, so the moment <code>recurs(3)</code> says "that's enough," it stops. And when the two rules want different waits, Sam waits the longer one, the <i>max</i>.</p>
+  <p>Look at the gaps: 100, then 200, then 400. That's the doubling. After the last try, the error <code>NotHereYet</code> is still on the card's "Can go wrong" line, because a schedule can give up. So we wrote a plan for it with <code>catchTag</code>, just like Lesson 4.</p>
+
+  <div class="demo">
+    <h3>Tape a routine to the wall</h3>
+    <p>Pick a routine and whether Sam is knocking (retry) or wiping (repeat), then run it. Each dot is one run of the card. Watch the gaps.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Which schedule">
+        <label><input type="radio" name="l8-s" value="spaced" checked><span>spaced</span></label>
+        <label><input type="radio" name="l8-s" value="exp"><span>exponential</span></label>
+        <label><input type="radio" name="l8-s" value="recurs"><span>recurs(3)</span></label>
+        <label><input type="radio" name="l8-s" value="both"><span>max: both</span></label>
+      </span>
+    </div>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Retry or repeat">
+        <label><input type="radio" name="l8-m" value="retry" checked><span>retry: knock</span></label>
+        <label><input type="radio" name="l8-m" value="repeat"><span>repeat: wipe</span></label>
+      </span>
+      <span class="seg" role="radiogroup" aria-label="When the truck shows up" id="l8-arrive">
+        <label><input type="radio" name="l8-a" value="2"><span>📦 on knock 2</span></label>
+        <label><input type="radio" name="l8-a" value="4"><span>on knock 4</span></label>
+        <label><input type="radio" name="l8-a" value="0" checked><span>never</span></label>
+      </span>
+      <button class="btn primary" id="l8-run">Run</button>
+    </div>
+    <pre class="log" id="l8-code" style="min-height:0"></pre>
+    <div class="stage">
+      <svg viewBox="0 0 700 160" role="img" aria-label="Timeline of runs. Each dot is one run; green worked, red failed." id="l8-tl">
+        <line x1="40" y1="120" x2="666" y2="120" stroke="currentColor" stroke-width="1.5"/>
+        <text x="40" y="154" font-size="11" text-anchor="middle" style="fill:var(--muted)">0 ms</text>
+        <text id="l8-end" x="660" y="154" font-size="11" text-anchor="end" style="fill:var(--muted)"></text>
+        <g id="l8-gaps" font-size="10" style="fill:var(--mango)"></g>
+        <g id="l8-dots" font-size="10" font-weight="700"></g>
+      </svg>
+    </div>
+    <pre class="log" id="l8-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Sam wipes the counter, and it works. Which one makes Sam wipe again: <code>retry</code> or <code>repeat</code>?</summary><code>repeat</code>. It goes again after a <i>success</i>. <code>retry</code> would stop right there, because the wipe didn't fail.</details>
+  <details><summary>2. With <code>Effect.retry(card, Schedule.recurs(3))</code>, what is the most times the card can run?</summary>4 times: the first run, plus 3 more. The schedule only counts the "agains."</details>
+  <details><summary>3. Why does a kitchen use "wait 1, then 2, then 4" for a late truck instead of "check every second"?</summary>Checking every second wastes the cook's time and bugs whoever you're asking. Short waits first catch a truck that's only a little late; longer waits later stop you from pestering when it's very late. Real servers use this so a thousand phones don't all knock at once.</details>
+  <details><summary>4. A friend writes <code>Effect.retry(card, Schedule.spaced("1 second"))</code> and the card fails every single time. What happens? How would you fix it?</summary>It knocks once a second, forever. <code>spaced</code> never says stop. Fix: follow two rules, like <code>Schedule.max([Schedule.spaced("1 second"), Schedule.recurs(5)])</code>, then plan for the error that comes out when it gives up.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>The key idea is <b>separation</b>: the card says <i>what</i> to do, the schedule says <i>when</i> to do it again. Same split as Lesson 3 (plan vs. running). Ask: "Could we tape the delivery chart next to a different card, like calling a friend back?" Yes, that's the point.</li>
+      <li><code>retry</code> only goes again on <b>failure</b>; on success it hands back the value right away. <code>repeat</code> only goes again on <b>success</b>; the first failure stops it and the error comes out. <code>repeat</code> gives back the schedule's output (for <code>recurs</code>, a count), not the card's value. Mention it only if asked.</li>
+      <li>"Doubling waits" is called <b>exponential backoff</b> by grown-ups. Servers use it so that a thousand phones don't all knock at the same second. <code>Schedule.jittered</code> adds a little randomness for the same reason. Mention it, don't teach it.</li>
+      <li><code>Schedule.min([a, b])</code> is the opposite of <code>max</code>: keep going while <i>either</i> rule says yes, and wait the <i>shorter</i> gap. Handy for "doubling, but never more than 10 seconds."</li>
+      <li>Shortcuts students may see in real code: <code>Effect.retry(card, { schedule, times: 3 })</code> and <code>Schedule.upTo({ times: 3 })</code>, which add a limit without writing <code>max</code>. Lesson 4's <code>{ times: 3 }</code> is the same idea with no waiting between tries.</li>
+      <li>Waiting in a schedule is a fiber waiting (Lesson 6). The cook isn't frozen; other bookmarks keep going.</li>
+      <li>In Lesson 14 we'll test schedules without actually waiting, by fast-forwarding a pretend clock.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-7">← Lesson 7</a><a href="#lesson-9">Lesson 9: Shared state →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l8-log"), code = K.$("#l8-code"), btn = K.$("#l8-run"), dots = K.$("#l8-dots"), gaps = K.$("#l8-gaps"), endLbl = K.$("#l8-end");
+    var SVG = "http://www.w3.org/2000/svg", CAP = 8;
+    var S = {
+      spaced: { code: 'Schedule.spaced("300 millis")', next: function () { return 300; } },
+      exp:    { code: 'Schedule.exponential("50 millis")', next: function (n) { return 50 * Math.pow(2, n - 1); } },
+      recurs: { code: "Schedule.recurs(3)", next: function (n) { return n <= 3 ? 0 : null; } },
+      both:   { code: 'Schedule.max([Schedule.exponential("50 millis"), Schedule.recurs(3)])', next: function (n) { return n <= 3 ? 50 * Math.pow(2, n - 1) : null; } }
+    };
+    function val(name) { return K.$("input[name=" + name + "]:checked").value; }
+    function el(tag, attrs, text) { var e = document.createElementNS(SVG, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+    function showCode() {
+      var mode = val("l8-m"), s = S[val("l8-s")];
+      code.textContent = mode === "retry" ? "Effect.retry(checkDelivery, " + s.code + ")" : "Effect.repeat(wipe, " + s.code + ")";
+      K.$$("#l8-arrive input").forEach(function (i) { i.disabled = mode === "repeat"; });
+      K.$("#l8-arrive").style.opacity = mode === "repeat" ? ".4" : "1";
+    }
+    K.$$("input[name=l8-s], input[name=l8-m]").forEach(function (i) { i.addEventListener("change", showCode); });
+    showCode();
+    // Work out the whole plan first (the schedule is just math), then play it back in real time.
+    function plan(s, mode, arrive) {
+      var runs = [], t = 0, end;
+      for (var n = 1; ; n++) {
+        var ok = mode === "repeat" || arrive === n;
+        runs.push({ t: t, ok: ok, d: 0 });
+        if (mode === "retry" && ok) { end = "got"; break; }
+        var d = s.next(n);
+        if (d === null) { end = "stop"; break; }
+        if (n >= CAP) { end = "cap"; break; }
+        runs[runs.length - 1].d = d; t += d;
+      }
+      return { runs: runs, end: end, total: t };
+    }
+    btn.addEventListener("click", function () {
+      var mode = val("l8-m"), s = S[val("l8-s")], p = plan(s, mode, +val("l8-a"));
+      var span = Math.max(p.total, 600), x = function (t) { return 40 + 620 * t / span; };
+      btn.disabled = true; K.clear(log); dots.textContent = ""; gaps.textContent = ""; endLbl.textContent = span + " ms";
+      var i = 0, seen = {};
+      function step() {
+        var r = p.runs[i], k = seen[r.t] = (seen[r.t] || 0) + 1, y = 120 - 20 * (k - 1);
+        dots.appendChild(el("circle", { cx: x(r.t), cy: y, r: 9, style: "fill:var(" + (r.ok ? "--mint" : "--berry") + ");stroke:var(--ink);stroke-width:1.2" }));
+        dots.appendChild(el("text", { x: x(r.t), y: y + 3.5, "text-anchor": "middle", style: "fill:var(--shoe)" }, String(i + 1)));
+        var who = mode === "retry" ? "knock " + (i + 1) + " at " + r.t + " ms... " : "🧽 wipe " + (i + 1) + " at " + r.t + " ms";
+        if (mode === "retry") K.log(log, who + (r.ok ? "📦 here!" : "not here yet"), r.ok ? "ok" : "bad"); else K.log(log, who, "ok");
+        if (i === p.runs.length - 1) return finish();
+        var d = r.d, x1 = x(r.t), x2 = x(r.t + d);
+        if (d > 0) {
+          gaps.appendChild(el("path", { d: "M" + (x1 + 10) + " 92Q" + (x1 + x2) / 2 + " " + (x2 - x1 > 60 ? 62 : 78) + " " + (x2 - 10) + " 92", fill: "none", style: "stroke:var(--mango)", "stroke-width": 1.5 }));
+          if (x2 - x1 >= 34) gaps.appendChild(el("text", { x: (x1 + x2) / 2, y: x2 - x1 > 60 ? 70 : 82, "text-anchor": "middle" }, "+" + d));
+          K.log(log, "   schedule: again, after " + d + " ms", "dim");
+        } else K.log(log, "   schedule: again, right away", "dim");
+        i++; K.sleep(d).then(step);
+      }
+      function finish() {
+        if (p.end === "got") K.log(log, "got mangoes. retry stops the moment it works.", "ok");
+        else if (p.end === "stop" && mode === "retry") { K.log(log, "   schedule: no, that's enough", "dim"); K.log(log, "NotHereYet comes out → catchTag: gave up, call the farm 📞", "bad"); }
+        else if (p.end === "stop") { K.log(log, "   schedule: no, that's enough", "dim"); K.log(log, "repeat is done: " + p.runs.length + " wipes.", "ok"); }
+        else K.log(log, "(The demo stops at " + CAP + ". This schedule never says stop, so the real kitchen would keep going forever.)", "dim");
+        btn.disabled = false;
+      }
+      step();
+    });
+  })();
+  </script>
+</section>

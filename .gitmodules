@@ -1,4 +1,4 @@
-[submodule "reference/effect-smol"]
-	path = reference/effect-smol
-	url = https://github.com/Effect-TS/effect-smol
+[submodule "reference/effect"]
+	path = reference/effect
+	url = https://github.com/Effect-TS/effect
 	shallow = true

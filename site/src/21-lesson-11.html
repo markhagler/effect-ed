@@ -1,0 +1,340 @@
+<section id="lesson-11" class="lesson" hidden>
+  <div class="eyebrow">Lesson 11</div>
+  <h1>The Conveyor Belt, Streams</h1>
+  <div class="bigidea"><strong>A recipe card hands you one thing. A stream hands you many things, one after another, maybe forever.</strong> And a stream is still a plan: nothing moves until you run it.</div>
+
+  <h2>The story</h2>
+  <p>Sam's kitchen gets a new toy: a sushi-style conveyor belt. Fruit rides along it, one piece at a time.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam stands next to a conveyor belt carrying a mango, a strawberry and a bruised mango, under three station signs: wash, toss, only 5.">
+        <use href="#sam-happy" x="0" y="34" width="84" height="140"/>
+        <g font-size="10" font-weight="700" text-anchor="middle" style="fill:var(--ink)">
+          <rect x="84" y="22" width="44" height="22" rx="5" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="106" y="37">wash</text>
+          <rect x="136" y="22" width="44" height="22" rx="5" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/><text x="158" y="37">toss</text>
+          <rect x="188" y="22" width="48" height="22" rx="5" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/><text x="212" y="37">only 5</text>
+          <path d="M106 44V128M158 44V128M212 44V128" style="stroke:var(--line);stroke-width:1.5;stroke-dasharray:3 3"/>
+        </g>
+        <use href="#l11-belt" x="80" y="148" width="158" height="26"/>
+        <use href="#mango" x="96" y="124" width="28" height="28"/>
+        <use href="#strawberry" x="144" y="124" width="28" height="28"/>
+        <use href="#l11-bruised" x="192" y="124" width="28" height="28"/>
+        <text x="160" y="194" text-anchor="middle" font-size="11" class="hand" style="fill:var(--ink)">fruit rides this way →</text>
+      </svg>
+      <div class="cap"><b>Sam builds a fruit belt.</b> Three stations: wash every fruit, toss the bruised ones, and "only the first 5, please."</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya stands at the end of the belt and says next one please. A dotted arrow points back up the belt: she pulls, the belt clicks forward.">
+        <use href="#l11-belt" x="2" y="148" width="148" height="26"/>
+        <use href="#mango" x="100" y="124" width="28" height="28"/>
+        <path d="M80 132H92M76 140H90" style="stroke:var(--muted);stroke-width:2;stroke-linecap:round"/>
+        <use href="#maya-happy" x="138" y="30" width="96" height="160"/>
+        <rect x="6" y="10" width="140" height="28" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <path d="M128 38L146 52L118 38" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round"/>
+        <text x="76" y="29" text-anchor="middle" font-size="12" class="hand" style="fill:var(--ink)">"Next one, please!"</text>
+        <path d="M140 100H24" style="stroke:var(--mint);stroke-width:2;stroke-dasharray:5 4;fill:none" marker-end="url(#arrow-mint)"/>
+        <text x="80" y="92" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">pull</text>
+      </svg>
+      <div class="cap"><b>Maya reaches, the belt clicks forward.</b> She doesn't reach, nothing moves.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya holds a tray with five fruit. A sign says that's 5, stop. The fruit bin at the start is still full.">
+        <use href="#l11-bin" x="4" y="96" width="70" height="62"/>
+        <text x="39" y="176" text-anchor="middle" font-size="10" style="fill:var(--muted)">still full!</text>
+        <use href="#l11-belt" x="62" y="140" width="60" height="14"/>
+        <rect x="20" y="14" width="138" height="30" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <use href="#maya-happy" x="146" y="40" width="90" height="150"/>
+        <use href="#l11-tray" x="114" y="122" width="94" height="24"/>
+        <use href="#mango" x="122" y="112" width="16" height="16"/><use href="#strawberry" x="137" y="112" width="16" height="16"/><use href="#mango" x="152" y="112" width="16" height="16"/><use href="#strawberry" x="167" y="112" width="16" height="16"/><use href="#mango" x="182" y="112" width="16" height="16"/>
+        <text x="89" y="34" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--ink)">"That's 5! STOP." 🛑</text>
+      </svg>
+      <div class="cap"><b>After five, the belt stops for good.</b> The bin behind it never runs out, and it doesn't matter.</div>
+    </div>
+  </div>
+  <p>Programmers call a belt like this a <b>stream</b>. Because the person at the end does the reaching, they say it is <b>pull-based</b>: the end <i>pulls</i> fruit, the belt doesn't shove it.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 230" role="img" aria-label="Fruit flows left to right from a fruit bin that never runs out, through a wash station (Stream.map), a toss station (Stream.filter), an only 5 station (Stream.take 5), to Maya's tray (Stream.runCollect). A dotted arrow runs back from the tray to the bin: ready for the next one.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="10" y="70" width="105" height="60" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="62" y="96" text-anchor="middle" font-weight="700">🧺 fruit bin</text><text x="62" y="114" text-anchor="middle" font-size="10">(never runs out)</text>
+        <path d="M115 100H140" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="144" y="70" width="115" height="60" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="201" y="96" text-anchor="middle" font-weight="700">wash station</text><text x="201" y="114" text-anchor="middle" font-size="11" class="mono">Stream.map</text>
+        <path d="M259 100H284" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="288" y="70" width="115" height="60" rx="8" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="345" y="96" text-anchor="middle" font-weight="700">toss station</text><text x="345" y="114" text-anchor="middle" font-size="11" class="mono">Stream.filter</text>
+        <path d="M403 100H428" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="432" y="70" width="115" height="60" rx="8" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="489" y="96" text-anchor="middle" font-weight="700">only 5, please</text><text x="489" y="114" text-anchor="middle" font-size="11" class="mono">Stream.take(5)</text>
+        <path d="M547 100H572" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="576" y="70" width="114" height="60" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:2"/>
+        <text x="633" y="96" text-anchor="middle" font-weight="700">Maya's tray</text><text x="633" y="114" text-anchor="middle" font-size="10" class="mono">Stream.runCollect</text>
+        <!-- fruit riding along the top -->
+        <use href="#mango" x="112" y="34" width="26" height="26"/>
+        <use href="#mango" x="256" y="34" width="26" height="26"/><use href="#l11-drops" x="276" y="30" width="14" height="14"/>
+        <use href="#l11-bruised" x="335" y="140" width="22" height="22" opacity=".8"/>
+        <text x="365" y="156" font-size="10" style="fill:var(--berry)">tossed</text>
+        <use href="#strawberry" x="400" y="34" width="26" height="26"/><use href="#l11-drops" x="420" y="30" width="14" height="14"/>
+        <text x="560" y="52" text-anchor="middle" font-size="10" style="fill:var(--muted)">fruit moves →</text>
+        <!-- the ask goes back -->
+        <path d="M633 130V196H62V134" fill="none" style="stroke:var(--mint)" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrow-mint)"/>
+        <text x="348" y="216" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--mint)">← "ready for the next one!" (the asking moves this way)</text>
+      </g>
+    </svg>
+    <figcaption>Fruit moves left to right. The <i>asking</i> moves right to left (the dotted arrow). No ask, no move.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Console, Effect, Stream } from "effect"
+
+const belt = Stream.make("🥭", "🍓", "🍌", "🥝")   // four fruit on the belt
+// belt : Stream&lt;string, never, never&gt;
+
+const washed = belt.pipe(
+  Stream.map((fruit) =&gt; fruit + "💧")               // the wash station
+)
+
+const program = Effect.gen(function* () {
+  const tray = yield* Stream.runCollect(washed)     // run the belt, keep everything
+  yield* Console.log(tray)
+})
+
+Effect.runPromise(program)
+// [ '🥭💧', '🍓💧', '🍌💧', '🥝💧' ]</code></pre>
+  <p><code>Stream.make</code> puts fruit on the belt. Have an array already? <code>Stream.fromIterable(["🥭", "🍓"])</code> does the same. <code>.pipe(...)</code> adds stations, in order. <code>Stream.runCollect</code> is Maya with a tray: she runs the belt to the end and hands back an array of everything that arrived.</p>
+
+  <h2>The same three lines</h2>
+  <p>Look at that type: <code>Stream&lt;string, never, never&gt;</code>. Three slots, the same three lines as a recipe card (Lesson 3):</p>
+  <div class="typeline">Stream&lt;<span class="slot-a">A</span>, <span class="slot-e">E</span>, <span class="slot-r">R</span>&gt;</div>
+  <div class="sheet">
+    <table>
+      <thead><tr><th>Line</th><th>On a card <code>Effect&lt;A, E, R&gt;</code></th><th>On a belt <code>Stream&lt;A, E, R&gt;</code></th></tr></thead>
+      <tbody>
+        <tr><td><span class="slot-a">You get</span></td><td>one <code>A</code></td><td>many <code>A</code>s, one at a time</td></tr>
+        <tr><td><span class="slot-e">Can go wrong</span></td><td><code>E</code></td><td><code>E</code> (a fruit falls off and the belt stops)</td></tr>
+        <tr><td><span class="slot-r">Needs</span></td><td><code>R</code></td><td><code>R</code> (services, like Lesson 5)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>And running it turns the belt back into a card: <code>Stream.runCollect(washed)</code> is an <code>Effect&lt;Array&lt;string&gt;, never, never&gt;</code>. You <code>yield*</code> it like any other card.</p>
+
+  <h2>An endless belt</h2>
+  <p>Now a fruit bin that <i>never</i> runs out. We add a little window, <code>Stream.tap</code>, so we can watch every time the belt moves.</p>
+<pre><code>const endlessBelt = Stream.iterate(1, (n) =&gt; n + 1)   // fruit #1, #2, #3, ... forever
+
+const firstFive = endlessBelt.pipe(
+  Stream.tap((n) =&gt; Console.log(`belt moves: fruit #${n}`)),  // a window to watch the belt
+  Stream.filter((n) =&gt; n % 3 !== 0),          // toss station: every 3rd fruit is bruised
+  Stream.map((n) =&gt; `  washed fruit #${n} 💧`), // wash station
+  Stream.take(5)                              // "only the first 5, please"
+)
+
+const program = Effect.gen(function* () {
+  yield* Stream.runForEach(firstFive, (fruit) =&gt; Console.log(fruit))
+  yield* Console.log("belt stopped. done! 🎉")
+})
+
+Effect.runPromise(program)
+// belt moves: fruit #1
+//   washed fruit #1 💧
+// belt moves: fruit #2
+//   washed fruit #2 💧
+// belt moves: fruit #3        &lt;-- bruised, tossed
+// belt moves: fruit #4
+//   washed fruit #4 💧
+// belt moves: fruit #5
+//   washed fruit #5 💧
+// belt moves: fruit #6        &lt;-- bruised, tossed
+// belt moves: fruit #7
+//   washed fruit #7 💧
+// belt stopped. done! 🎉</code></pre>
+  <p>An endless belt, and the program <b>finishes</b>. Count the "belt moves" lines: seven. Fruit #8 never moves, because nobody asked for it. That's pull-based. <code>Stream.runForEach</code> is a different Maya: instead of filling a tray, she does something with each fruit as it arrives.</p>
+  <p>Try the same thing with a plain array and you'd have to build the whole endless array first. You'd be waiting forever.</p>
+
+  <div class="demo">
+    <h3>The fruit belt</h3>
+    <p>Turn stations on or off, then pull. Every third fruit is bruised. Watch the "pulled from bin" counter: it only goes up when Maya asks.</p>
+    <div class="controls">
+      <label class="check"><input type="checkbox" id="l11-map" checked> wash (map)</label>
+      <label class="check"><input type="checkbox" id="l11-filter" checked> toss bruised (filter)</label>
+      <label class="check"><input type="checkbox" id="l11-take" checked> only 5 (take)</label>
+    </div>
+    <div class="controls">
+      <button class="btn" id="l11-one">Maya reaches once</button>
+      <button class="btn primary" id="l11-run">Run the belt</button>
+      <button class="btn danger" id="l11-stop" disabled>Maya walks away</button>
+      <button class="btn" id="l11-reset">Reset</button>
+      <span style="font-family:var(--font-mono);font-weight:600">pulled from bin: <span id="l11-pulled">0</span> · on tray: <span id="l11-got">0</span></span>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 700 190" role="img" aria-label="A fruit bin, a conveyor belt under three stations, and Maya's tray at the end.">
+        <g font-size="11" style="fill:var(--ink)">
+          <use href="#l11-bin" x="6" y="78" width="80" height="70"/>
+          <text x="46" y="166" text-anchor="middle" font-size="10" style="fill:var(--muted)">endless bin</text>
+          <rect x="88" y="112" width="490" height="24" rx="12" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:2"/>
+          <path d="M104 124H562" style="stroke:var(--line);stroke-width:2;stroke-dasharray:8 8;fill:none"/>
+          <circle cx="100" cy="124" r="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><circle cx="566" cy="124" r="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+          <g id="l11-st-map">
+            <rect x="155" y="14" width="90" height="40" rx="7" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+            <text x="200" y="31" text-anchor="middle" font-weight="700">wash</text><text x="200" y="46" text-anchor="middle" font-size="10" class="mono">map</text>
+            <path d="M200 54V108" style="stroke:var(--sky);stroke-width:1.5;stroke-dasharray:3 3"/>
+          </g>
+          <g id="l11-st-filter">
+            <rect x="285" y="14" width="90" height="40" rx="7" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+            <text x="330" y="31" text-anchor="middle" font-weight="700">toss bruised</text><text x="330" y="46" text-anchor="middle" font-size="10" class="mono">filter</text>
+            <path d="M330 54V108" style="stroke:var(--berry);stroke-width:1.5;stroke-dasharray:3 3"/>
+            <text x="330" y="170" text-anchor="middle" font-size="16">🗑️</text>
+          </g>
+          <g id="l11-st-take">
+            <rect x="415" y="14" width="90" height="40" rx="7" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+            <text x="460" y="31" text-anchor="middle" font-weight="700">only 5</text><text id="l11-take-n" x="460" y="46" text-anchor="middle" font-size="10" class="mono">take(5): 0/5</text>
+            <path d="M460 54V108" style="stroke:var(--mango);stroke-width:1.5;stroke-dasharray:3 3"/>
+          </g>
+          <use href="#l11-tray" x="582" y="128" width="112" height="28"/>
+          <text x="638" y="172" text-anchor="middle" font-weight="700">Maya's tray</text>
+          <g id="l11-trayg"></g>
+          <g id="l11-fruit" transform="translate(110 112)" visibility="hidden">
+            <use id="l11-fruit-use" href="#mango" x="-16" y="-32" width="32" height="32"/>
+            <use id="l11-fruit-drops" href="#l11-drops" x="8" y="-40" width="16" height="16" display="none"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <pre class="log" id="l11-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. An Effect hands you one thing. What does a stream hand you?</summary>Many things, one after another, maybe forever.</details>
+  <details><summary>2. Which station tosses bruised fruit, <code>map</code> or <code>filter</code>? Which one washes?</summary><code>filter</code> tosses (it keeps or drops each fruit). <code>map</code> washes (it changes each fruit into a new one).</details>
+  <details><summary>3. The belt is endless, but the program above stops. Why? How many fruit actually moved?</summary><code>take(5)</code> stops asking after five, and nothing upstream moves without being asked. Seven fruit moved: five kept, two bruised ones tossed. Fruit #8 never moved.</details>
+  <details><summary>4. You write <code>const belt = Stream.make("🥭", "🍓")</code> and nothing prints, nothing moves. Is that a bug?</summary>No. A stream is a plan, like a recipe card. Nothing moves until a <code>run...</code> function, like <code>Stream.runCollect</code>, runs it.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>"Pull-based" vs "push-based": a Promise or an event listener <i>pushes</i> values at you whether you're ready or not. A pull-based stream waits for the consumer. That's also how backpressure from Lesson 10 shows up here: a slow Maya just means a slow belt, never a pile of fruit on the floor.</li>
+      <li>A sharp kid may ask "is it really one fruit at a time?" Honest answer: under the hood Effect moves fruit in small batches (it calls them <b>chunks</b>) to be fast. The rules still behave like one at a time: <code>take(5)</code> gives exactly five, and an endless belt still stops.</li>
+      <li>Other ways to build a belt: <code>Stream.range(1, 10)</code>, <code>Stream.tick("1 second")</code> (an endless belt that clicks once a second), <code>Stream.fromSchedule(...)</code> using the schedules from Lesson 8, <code>Stream.fromEffectSchedule(card, schedule)</code> for "check the oven every 30 seconds."</li>
+      <li><code>Stream.mapEffect(f, { concurrency: 4 })</code> is a station that runs a whole recipe card per fruit, several at once (Lesson 6's bookmarks, still one cook).</li>
+      <li><code>Stream.fromQueue(shelf)</code> turns Lesson 10's order shelf into a belt: whatever lands on the shelf rides the belt. <code>Stream.fromPubSub</code> does the same for a PubSub.</li>
+      <li>A <b>Sink</b> is the grown-up word for "whoever is at the end of the belt." <code>Stream.run(stream, Sink.sum)</code> adds up numbers. <code>runCollect</code>, <code>runForEach</code>, <code>runFold</code>, <code>runDrain</code> are the common ones.</li>
+      <li>Async iterables (<code>for await</code>) are JavaScript's built-in belt. <code>Stream.fromAsyncIterable</code> and <code>Stream.toAsyncIterable</code> convert both ways.</li>
+      <li>In v4, <code>runCollect</code> gives a plain <code>Array</code>. Older Effect (v2/v3) gave a <code>Chunk</code>, so old blog posts may look different.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-10">← Lesson 10: Queues</a><a href="#lesson-12">Lesson 12: Schema →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l11-log"), fruit = K.$("#l11-fruit"), fruitUse = K.$("#l11-fruit-use"), drops = K.$("#l11-fruit-drops");
+    var trayG = K.$("#l11-trayg"), pulledEl = K.$("#l11-pulled"), gotEl = K.$("#l11-got"), takeN = K.$("#l11-take-n");
+    var mapC = K.$("#l11-map"), filC = K.$("#l11-filter"), takeC = K.$("#l11-take");
+    var oneB = K.$("#l11-one"), runB = K.$("#l11-run"), stopB = K.$("#l11-stop"), resetB = K.$("#l11-reset");
+    var SVGNS = "http://www.w3.org/2000/svg", LIMIT = 5, PX_MS = 2.2;
+    var n, pulled, tray, done, busy, stopReq;
+
+    function kind(i) { return i % 3 === 0 ? "l11-bruised" : (i % 2 ? "mango" : "strawberry"); }
+    function emoji(i) { return i % 3 === 0 ? "🤢" : (i % 2 ? "🥭" : "🍓"); }
+    function place(x, y, op) { fruit.setAttribute("transform", "translate(" + x + " " + y + ")"); fruit.style.opacity = op == null ? 1 : op; }
+    function move(x0, x1, y0, y1, fade) {
+      var ms = Math.max(Math.abs(x1 - x0), Math.abs(y1 - y0)) * PX_MS, t0 = performance.now();
+      return new Promise(function (res) {
+        function step(t) {
+          var p = Math.min(1, (t - t0) / ms);
+          place(x0 + (x1 - x0) * p, y0 + (y1 - y0) * p, fade ? 1 - p : 1);
+          if (p < 1 && !stopReq) requestAnimationFrame(step); else res();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+    function stations() {
+      K.$("#l11-st-map").style.opacity = mapC.checked ? 1 : .25;
+      K.$("#l11-st-filter").style.opacity = filC.checked ? 1 : .25;
+      K.$("#l11-st-take").style.opacity = takeC.checked ? 1 : .25;
+    }
+    function counters() {
+      pulledEl.textContent = pulled; gotEl.textContent = tray.length;
+      takeN.textContent = takeC.checked ? "take(5): " + Math.min(tray.length, LIMIT) + "/5" : "(off)";
+      while (trayG.firstChild) trayG.removeChild(trayG.firstChild);
+      var shown = tray.slice(-10);
+      shown.forEach(function (i, k) {
+        var u = document.createElementNS(SVGNS, "use");
+        u.setAttribute("href", "#" + kind(i));
+        u.setAttribute("x", 590 + (k % 5) * 19); u.setAttribute("y", 112 - Math.floor(k / 5) * 19);
+        u.setAttribute("width", 18); u.setAttribute("height", 18);
+        trayG.appendChild(u);
+      });
+      if (tray.length > 10) {
+        var t = document.createElementNS(SVGNS, "text");
+        t.setAttribute("x", 690); t.setAttribute("y", 80); t.setAttribute("text-anchor", "end"); t.setAttribute("font-size", "11");
+        t.textContent = "+" + (tray.length - 10) + " more"; trayG.appendChild(t);
+      }
+    }
+    function setBusy(b) {
+      busy = b; oneB.disabled = b || done; runB.disabled = b || done; stopB.disabled = !b; resetB.disabled = b;
+      mapC.disabled = filC.disabled = takeC.disabled = b || pulled > 0;
+    }
+    function reset() {
+      n = 0; pulled = 0; tray = []; done = false; stopReq = false; fruit.setAttribute("visibility", "hidden");
+      stations(); counters(); K.clear(log);
+      K.log(log, "Nothing has moved yet. A stream is a plan: pull to start the belt.", "dim");
+      setBusy(false);
+    }
+
+    // Maya reaches once: the belt keeps moving until ONE fruit lands on her tray
+    // (bruised ones may get tossed on the way), or the belt is finished.
+    async function deliverOne() {
+      while (true) {
+        if (stopReq) return false;
+        if (takeC.checked && tray.length >= LIMIT) return false;
+        n++; pulled++; counters();
+        var i = n, bruised = i % 3 === 0;
+        fruitUse.setAttribute("href", "#" + kind(i)); drops.setAttribute("display", "none");
+        fruit.setAttribute("visibility", "visible"); place(110, 112);
+        K.log(log, "belt moves: fruit #" + i + " " + emoji(i) + (bruised ? " (bruised)" : ""));
+        await move(110, 200, 112, 112); if (stopReq) return false;
+        if (mapC.checked) { drops.setAttribute("display", "inline"); await K.sleep(150); }
+        await move(200, 330, 112, 112); if (stopReq) return false;
+        if (bruised && filC.checked) {
+          K.log(log, "  tossed fruit #" + i + " 🗑️", "bad");
+          await move(330, 330, 112, 160, true); fruit.setAttribute("visibility", "hidden");
+          continue;   // nothing reached Maya yet, so the belt keeps moving
+        }
+        await move(330, 460, 112, 112); if (stopReq) return false;
+        await move(460, 610, 112, 112); if (stopReq) return false;
+        fruit.setAttribute("visibility", "hidden");
+        tray.push(i); counters();
+        var msg = "  " + (mapC.checked ? "washed fruit #" + i + " 💧" : "fruit #" + i + " (not washed)");
+        if (bruised) msg += "  ← bruised! nobody tossed it";
+        K.log(log, msg, bruised ? "bad" : "ok");
+        if (takeC.checked && tray.length === LIMIT) {
+          done = true;
+          K.log(log, 'take(5): "That\'s 5!" belt stopped. done! 🎉  (fruit pulled: ' + pulled + ")", "ok");
+        }
+        return true;
+      }
+    }
+    function stopped() {
+      if (stopReq) { fruit.setAttribute("visibility", "hidden"); K.log(log, "✂ Maya walked away. The belt stops: nobody is asking. (fruit pulled: " + pulled + ")", "bad"); }
+      stopReq = false; setBusy(false);
+    }
+
+    oneB.addEventListener("click", function () {
+      setBusy(true);
+      deliverOne().then(stopped);
+    });
+    runB.addEventListener("click", function () {
+      setBusy(true);
+      if (!takeC.checked) K.log(log, "No take station: this belt never ends. Press \"Maya walks away\" to stop.", "dim");
+      (async function () { while (await deliverOne()) {} })().then(stopped);
+    });
+    stopB.addEventListener("click", function () { stopReq = true; });
+    resetB.addEventListener("click", reset);
+    [mapC, filC, takeC].forEach(function (c) { c.addEventListener("change", reset); });
+    reset();
+  })();
+  </script>
+</section>

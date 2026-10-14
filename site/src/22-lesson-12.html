@@ -1,0 +1,232 @@
+<section id="lesson-12" class="lesson" hidden>
+  <div class="eyebrow">Lesson 12</div>
+  <h1>Checking the Delivery</h1>
+  <div class="bigidea"><strong>Anything that comes from outside the kitchen gets checked at the back door.</strong> Effect lets you write down what a delivery <i>should</i> look like, once. That one description does two jobs: it checks the real delivery while the kitchen is running, and it tells Ty what a good delivery looks like.</div>
+
+  <h2>The story</h2>
+  <p>Every morning a truck pulls up to the back door with crates of fruit. Sam didn't pack those crates. Sam has never met the driver.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A delivery truck parks at the back door. Sam looks worried at a crate labeled mango with a question mark.">
+        <use href="#l12-truck" x="96" y="70" width="140" height="88"/>
+        <use href="#sam-worried" x="0" y="26" width="98" height="164"/>
+        <use href="#l12-crate" x="128" y="140" width="64" height="48"/>
+        <text x="160" y="168" text-anchor="middle" class="hand" font-size="12" font-weight="700" style="fill:var(--ink)">mango?</text>
+        <rect x="70" y="8" width="160" height="40" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="150" y="24" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Who packed this?</text>
+        <text x="150" y="39" text-anchor="middle" font-size="11" style="fill:var(--ink)">Is it really 12 mangoes?"</text>
+      </svg>
+      <div class="cap"><b>A truck at the back door.</b> The crate says "mango." It might be full of bananas. It might be empty.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty holds up a stop hand next to a clock. Ty checked the recipe cards before opening, and the truck arrives later.">
+        <use href="#ty-stop" x="4" y="26" width="98" height="164"/>
+        <use href="#clock" x="150" y="64" width="44" height="44"/>
+        <use href="#card-labeled" x="112" y="128" width="96" height="60"/>
+        <text x="172" y="124" text-anchor="middle" font-size="10.5" font-weight="700" style="fill:var(--mint)">checked ✓ at 7:00</text>
+        <rect x="96" y="8" width="138" height="40" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="165" y="24" text-anchor="middle" font-size="11" style="fill:var(--ink)">"I check cards before</text>
+        <text x="165" y="39" text-anchor="middle" font-size="11" style="fill:var(--ink)">opening. Trucks come later!"</text>
+      </svg>
+      <div class="cap"><b>Ty can't help here.</b> Ty checks the recipe cards <i>before</i> the kitchen opens. The truck arrives <i>after</i>, while the kitchen is running.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam holds a packing list. One crate goes on the shelf with a check mark. Another crate gets a rejection slip that says fruit, expected mango or berry.">
+        <use href="#sam-happy" x="0" y="34" width="94" height="156"/>
+        <use href="#l12-list" x="72" y="70" width="52" height="70"/>
+        <path d="M104 52H232" style="stroke:var(--ink);stroke-width:3"/>
+        <use href="#l12-crate" x="140" y="20" width="44" height="32"/>
+        <text x="196" y="44" font-size="14" font-weight="700" style="fill:var(--mint)">✓</text>
+        <text x="168" y="68" text-anchor="middle" font-size="10.5" font-weight="700" style="fill:var(--mint)">on the shelf</text>
+        <use href="#l12-crate" x="140" y="102" width="60" height="45"/>
+        <use href="#l12-slip" x="128" y="140" width="104" height="56"/>
+        <text x="180" y="176" text-anchor="middle" class="mono" font-size="8.5" style="fill:var(--ink)">fruit: expected</text>
+        <text x="180" y="187" text-anchor="middle" class="mono" font-size="8.5" style="fill:var(--ink)">mango | berry</text>
+      </svg>
+      <div class="cap"><b>The packing list.</b> Sam checks each box on the list. A good crate goes on the shelf. A bad one gets a slip saying <i>exactly</i> which box was wrong.</div>
+    </div>
+  </div>
+  <p>The packing list taped by the back door says: <b>Crate of fruit. fruit:</b> the word "mango" or the word "berry". <b>count:</b> a whole number above 0. An inspector checks each box on the list against the real crate. If everything matches, the crate goes on the shelf, and from then on everyone can trust it. If anything is wrong, the crate stays on the truck with a <b>rejection slip</b> that says which box was wrong: "fruit: expected mango or berry."</p>
+  <p>Programmers call that packing list a <b>schema</b>. Checking a delivery against it is called <b>decoding</b>.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 250" role="img" aria-label="A delivery of unknown stuff goes to the inspector, who checks it against the packing list. If every box matches it goes on the shelf as a Crate Ty trusts. If a box is wrong it gets a rejection slip. Ty reads the same packing list as a type.">
+      <g font-size="12" style="fill:var(--ink)">
+        <!-- delivery -->
+        <rect x="16" y="120" width="140" height="62" rx="8" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="86" y="145" text-anchor="middle" font-weight="700">🚚 delivery</text>
+        <text x="86" y="164" text-anchor="middle" font-size="11">(unknown stuff)</text>
+        <path d="M156 151H222" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <!-- inspector -->
+        <rect x="226" y="116" width="170" height="70" rx="10" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:2"/>
+        <text x="311" y="144" text-anchor="middle" font-weight="700" font-size="13">inspector</text>
+        <text x="311" y="164" text-anchor="middle" font-size="11">checks the packing list</text>
+        <!-- packing list -->
+        <rect x="226" y="14" width="170" height="56" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="311" y="37" text-anchor="middle" font-weight="700">📋 packing list</text>
+        <text x="311" y="56" text-anchor="middle" font-size="11">(the schema)</text>
+        <path d="M311 70V112" style="stroke:var(--sky)" stroke-width="1.8" stroke-dasharray="5 4" fill="none"/>
+        <path d="M396 42H484" style="stroke:var(--sky)" stroke-width="1.8" stroke-dasharray="5 4" fill="none"/>
+        <rect x="488" y="14" width="196" height="56" rx="8" style="fill:var(--surface);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="586" y="37" text-anchor="middle" font-weight="700">Ty reads the same list</text>
+        <text x="586" y="56" text-anchor="middle" font-size="11">as a type: typeof Crate.Type</text>
+        <!-- outcomes -->
+        <path d="M396 136C430 120 450 112 484 112" fill="none" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)"/>
+        <text x="426" y="104" text-anchor="middle" font-size="11" style="fill:var(--mint)">every box matches</text>
+        <rect x="488" y="90" width="196" height="56" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:2"/>
+        <text x="586" y="113" text-anchor="middle" font-weight="700">✅ on the shelf</text>
+        <text x="586" y="132" text-anchor="middle" font-size="11">a Crate Ty trusts</text>
+        <path d="M396 168C430 190 450 206 484 206" fill="none" style="stroke:var(--berry)" stroke-width="1.8" marker-end="url(#arrow-berry)"/>
+        <text x="436" y="218" text-anchor="middle" font-size="11" style="fill:var(--berry)">a box is wrong</text>
+        <rect x="488" y="178" width="196" height="56" rx="8" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:2"/>
+        <text x="586" y="201" text-anchor="middle" font-weight="700">❌ rejection slip</text>
+        <text x="586" y="220" text-anchor="middle" font-size="11">which box, what was expected</text>
+      </g>
+    </svg>
+    <figcaption>One packing list. The inspector uses it at the door; Ty uses it to check the cards.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Console, Schema } from "effect"
+
+// The packing list: what a crate of fruit SHOULD look like.
+const Crate = Schema.Struct({
+  fruit: Schema.Literals(["mango", "berry"]),     // the word "mango" or the word "berry"
+  count: Schema.Int.check(Schema.isGreaterThan(0)) // a whole number above 0
+})
+
+// Same description, second job: a type Ty can read.
+type Crate = typeof Crate.Type
+// { readonly fruit: "mango" | "berry"; readonly count: number }
+
+// The inspector at the back door.
+const inspect = Schema.decodeUnknownEffect(Crate)
+// inspect : (delivery: unknown) =&gt; Effect&lt;Crate, SchemaError&gt;
+
+const backDoor = (delivery: unknown) =&gt;
+  Effect.gen(function* () {
+    const crate = yield* inspect(delivery)        // check every box first
+    yield* Console.log(`✅ on the shelf: ${crate.count} ${crate.fruit}`)
+  }).pipe(
+    Effect.catchTag("SchemaError", (err) =&gt; Console.log(`❌ rejected: ${err.message}`))
+  )
+
+const morning = Effect.gen(function* () {
+  yield* backDoor({ fruit: "mango", count: 12 })
+  yield* backDoor({ fruit: "banana", count: 12 })
+  yield* backDoor(JSON.parse('{ "fruit": "berry", "count": 0 }'))
+})
+
+Effect.runPromise(morning)
+// ✅ on the shelf: 12 mango
+// ❌ rejected: Expected "mango" | "berry"
+//   at ["fruit"]
+// ❌ rejected: Expected a value greater than 0
+//   at ["count"]</code></pre>
+  <p>Read the inspector's card out loud: "You get: a Crate. Can go wrong: SchemaError. Needs: nothing." It's a recipe card like any other, so <code>Effect.catchTag</code> from Lesson 4 works on it. <code>unknown</code> is TypeScript's word for "a sealed box, nobody knows what's inside." The inspector is the only one allowed to open it.</p>
+
+  <div class="demo">
+    <h3>Be the inspector</h3>
+    <p>Here is a delivery written as JSON, the text format most deliveries from the internet use. Edit it, or pick a truck, then press Check. The inspector follows the same packing list as the code above.</p>
+    <div class="controls">
+      <button class="btn" data-l12-truck='{ "fruit": "mango", "count": 12 }'>good crate</button>
+      <button class="btn" data-l12-truck='{ "fruit": "banana", "count": 12 }'>bananas</button>
+      <button class="btn" data-l12-truck='{ "fruit": "berry", "count": 0 }'>empty</button>
+      <button class="btn" data-l12-truck='{ "fruit": "mango", "count": "12" }'>"12" as words</button>
+      <button class="btn" data-l12-truck='{ "fruit": "kiwi", "count": 2.5 }'>kiwi, 2.5</button>
+      <button class="btn" data-l12-truck='{ "count": 3, "driver": "Lou" }'>no fruit, extra box</button>
+    </div>
+    <label for="l12-box" class="sr-only">Delivery JSON</label>
+    <textarea id="l12-box" rows="3" spellcheck="false" style="width:100%;font-family:var(--font-mono);font-size:.9rem;background:var(--code-bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem 1rem;resize:vertical">{ "fruit": "mango", "count": 12 }</textarea>
+    <div class="controls">
+      <label class="check"><input type="checkbox" id="l12-all"> report every wrong box (<code>errors: "all"</code>)</label>
+      <button class="btn primary" id="l12-run">Check</button>
+    </div>
+    <pre class="log" id="l12-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>What Ty sees</h2>
+  <p>Once a crate is past the door, Ty knows its exact shape and helps you again:</p>
+<pre><code>const crate = yield* inspect(delivery)
+crate.count + 1              // fine: Ty knows count is a number
+crate.colour                 // ❌ Ty: there is no "colour" on the packing list
+crate.fruit === "kiwi"       // ❌ Ty: fruit can only be "mango" or "berry"</code></pre>
+  <p>You never wrote <code>type Crate = { ... }</code> by hand. It came from the packing list, so the check and the type can't drift apart.</p>
+
+  <h2>The rejection slip</h2>
+  <p>By default the inspector stops at the first wrong box. Ask for <code>{ errors: "all" }</code> to get every one:</p>
+<pre><code>Effect.runPromise(
+  inspect({ fruit: "kiwi", count: 2.5 }, { errors: "all" }).pipe(
+    Effect.catchTag("SchemaError", (err) =&gt; Console.log(`❌ ${err.message}`))
+  )
+)
+// ❌ Expected "mango" | "berry"
+//   at ["fruit"]
+// Expected an integer
+//   at ["count"]</code></pre>
+  <p>Each line says what was expected, then <code>at</code> says which box. That's the whole slip.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Why can't Ty check the delivery trucks the way Ty checks recipe cards?</summary>Ty checks cards before the kitchen opens. Deliveries arrive later, while the kitchen is running, so Ty never sees what's inside them. Something has to check them at the door, at run time.</details>
+  <details><summary>2. Name the two jobs one packing list does.</summary>It checks the real delivery at the back door (the runtime check), and it gives Ty the type of a good crate (<code>typeof Crate.Type</code>).</details>
+  <details><summary>3. A delivery arrives as <code>{ fruit: "mango", count: "12" }</code>. Does it go on the shelf? Which box is wrong?</summary>No. <code>"12"</code> in quotes is words, not a number. The slip says <code>Expected number</code>, <code>at ["count"]</code>.</details>
+  <details><summary>4. What's on the "Can go wrong" line of <code>inspect(delivery)</code>, and how do you cross it off?</summary><code>SchemaError</code>. Cross it off with <code>Effect.catchTag("SchemaError", ...)</code>, just like the named errors in Lesson 4.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li><b>Decoding</b> is outside to inside. <b>Encoding</b> is the reverse trip, inside to outside, for when you send data away (save a file, answer a web request). <code>Schema.encodeEffect(Crate)</code> does it. For this schema both sides look the same; they differ once a schema transforms data, like turning the text <code>"2026-10-11"</code> into a real date. Mention, don't teach.</li>
+      <li><code>Schema.Struct</code> builds a plain object. <code>Schema.Class</code> builds a class from the same field list, for when you want methods on your crates. Same checking, different container.</li>
+      <li><code>Schema.TaggedError</code> is the schema-backed cousin of Lesson 4's <code>Data.TaggedError</code>: same <code>_tag</code>, same <code>catchTag</code>, but the error itself has a packing list, so it can be safely sent over a network and checked on the other side. Effect's own guides recommend it for errors in real apps.</li>
+      <li>Extra boxes that aren't on the list are quietly dropped from the result by default. Pass <code>{ onExcessProperty: "error" }</code> to reject them instead.</li>
+      <li><code>Schema.fromJsonString(Crate)</code> checks raw JSON text in one step, including "that wasn't JSON at all" (<code>Expected a valid JSON string</code>). <code>Schema.decodeUnknownSync</code> is the version that throws instead of returning a recipe card; it's for the edges of a program, like <code>runPromise</code>.</li>
+      <li>The slip doesn't repeat the bad value by default, on purpose: deliveries can contain passwords.</li>
+      <li>Kids may have heard of <b>zod</b> or <b>valibot</b>. Same idea, different libraries. Many of them, Effect Schema included, speak a shared format called Standard Schema (<code>Schema.toStandardSchemaV1</code>), so form libraries can use any of them.</li>
+      <li>Grown-up words: this is <b>validation</b> or <b>parsing</b> at a <b>trust boundary</b>. "The back door" is fine.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-11">← Lesson 11: Streams</a><a href="#lesson-13">Lesson 13: Logs and spans →</a></div>
+
+  <script>
+  (function () {
+    var box = K.$("#l12-box"), log = K.$("#l12-log"), all = K.$("#l12-all"), btn = K.$("#l12-run");
+    K.$$("[data-l12-truck]").forEach(function (b) {
+      b.addEventListener("click", function () { box.value = b.getAttribute("data-l12-truck"); check(); });
+    });
+
+    // A hand-written mini inspector that mirrors the Crate schema and Effect's real messages.
+    function inspect(input, every) {
+      var issues = [];
+      function add(msg, key) { issues.push(msg + (key ? '\n  at ["' + key + '"]' : "")); return !every; }
+      if (input === null || typeof input !== "object" || Array.isArray(input)) { add("Expected object"); return issues; }
+      var has = function (k) { return Object.prototype.hasOwnProperty.call(input, k); };
+      if (!has("fruit")) { if (add("Missing key", "fruit")) return issues; }
+      else if (input.fruit !== "mango" && input.fruit !== "berry") { if (add('Expected "mango" | "berry"', "fruit")) return issues; }
+      if (!has("count")) { add("Missing key", "count"); }
+      else if (typeof input.count !== "number") { add("Expected number", "count"); }
+      else {
+        if (!Number.isInteger(input.count) && add("Expected an integer", "count")) return issues;
+        if (!(input.count > 0)) add("Expected a value greater than 0", "count");
+      }
+      return issues;
+    }
+
+    function check() {
+      K.clear(log);
+      var text = box.value, delivery;
+      K.log(log, "🚚 delivery arrived, inspecting...", "dim");
+      try { delivery = JSON.parse(text); }
+      catch (e) { K.log(log, "❌ rejected: Expected a valid JSON string", "bad"); K.log(log, "   (that isn't JSON at all; check the quotes and braces)", "dim"); return; }
+      var issues = inspect(delivery, all.checked);
+      if (issues.length) { K.log(log, "❌ rejected: " + issues.join("\n"), "bad"); return; }
+      K.log(log, "✅ on the shelf: " + delivery.count + " " + delivery.fruit, "ok");
+      K.log(log, "   crate = " + JSON.stringify({ fruit: delivery.fruit, count: delivery.count }) + "   (Ty trusts this now)", "dim");
+      var extra = Object.keys(delivery).filter(function (k) { return k !== "fruit" && k !== "count"; });
+      if (extra.length) K.log(log, "   extra boxes dropped: " + extra.join(", "), "dim");
+    }
+    btn.addEventListener("click", check);
+  })();
+  </script>
+</section>

@@ -1,0 +1,249 @@
+<section id="lesson-9" class="lesson" hidden>
+  <div class="eyebrow">Lesson 9</div>
+  <h1>The Whiteboard, Shared State</h1>
+  <div class="bigidea"><strong>When several bookmarks share one number, keep it on a whiteboard where "read it, change it, write it back" is one step nobody can cut into.</strong> Effect calls that whiteboard a <b>Ref</b>. It fixes a sneaky bug where sales go missing even though nobody made a mistake you can see.</div>
+
+  <h2>The story</h2>
+  <p>The kitchen has a whiteboard by the door. On it: <b>Smoothies sold today: 0.</b> Every time a smoothie goes out, the tally goes up by one. Remember Lesson 6: Sam is one cook with several bookmarks, and three orders are in progress.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam looks at the whiteboard, which says 0, three times, once for each order.">
+        <use href="#sam-card" x="0" y="40" width="96" height="160"/>
+        <use href="#l9-whiteboard" x="118" y="14" width="114" height="86"/>
+        <text x="175" y="78" text-anchor="middle" class="hand" font-size="30" font-weight="800" style="fill:var(--ink)">0</text>
+        <path d="M92 80Q105 66 118 60" stroke="currentColor" stroke-width="1.6" stroke-dasharray="3 3" fill="none" marker-end="url(#arrow)"/>
+        <g font-size="11" style="fill:var(--ink)">
+          <rect x="108" y="118" width="126" height="66" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+          <text x="171" y="137" text-anchor="middle">order 1 looks: <tspan font-weight="700">0</tspan></text>
+          <text x="171" y="155" text-anchor="middle">order 2 looks: <tspan font-weight="700">0</tspan></text>
+          <text x="171" y="173" text-anchor="middle">order 3 looks: <tspan font-weight="700">0</tspan></text>
+        </g>
+      </svg>
+      <div class="cap"><b>Three orders, three looks.</b> Each order checks the board and remembers "0."</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam is busy pouring three smoothies, with a bookmark in each order, still remembering 0.">
+        <use href="#sam-busy" x="0" y="40" width="96" height="160"/>
+        <ellipse cx="74" cy="24" rx="44" ry="18" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <circle cx="62" cy="48" r="4" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="74" y="28" text-anchor="middle" class="hand" font-size="12" style="fill:var(--ink)">it said 0...</text>
+        <use href="#smoothie" x="112" y="100" width="36" height="54"/>
+        <use href="#smoothie" x="152" y="100" width="36" height="54"/>
+        <use href="#smoothie" x="192" y="100" width="36" height="54"/>
+        <use href="#bookmark" x="124" y="56" width="14" height="32"/>
+        <use href="#bookmark" x="164" y="56" width="14" height="32"/>
+        <use href="#bookmark" x="204" y="56" width="14" height="32"/>
+        <text x="170" y="178" text-anchor="middle" font-size="11" style="fill:var(--muted)">pouring, bookmark in each</text>
+      </svg>
+      <div class="cap"><b>Bookmarks while pouring.</b> Pouring takes a while. Sam's memory of "0" gets older and older.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Three smoothies are out, but the whiteboard says 1 because each order wrote 0 plus 1. Maya is surprised.">
+        <use href="#maya-surprised" x="0" y="40" width="96" height="160"/>
+        <use href="#l9-whiteboard" x="118" y="14" width="114" height="86"/>
+        <text x="175" y="78" text-anchor="middle" class="hand" font-size="30" font-weight="800" style="fill:var(--berry)">1</text>
+        <text x="175" y="118" text-anchor="middle" font-size="11" class="mono" style="fill:var(--ink)">0+1, 0+1, 0+1</text>
+        <use href="#smoothie" x="122" y="128" width="26" height="40"/>
+        <use href="#smoothie" x="162" y="128" width="26" height="40"/>
+        <use href="#smoothie" x="202" y="128" width="26" height="40"/>
+        <text x="175" y="188" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">3 sold, board says 1 ❌</text>
+      </svg>
+      <div class="cap"><b>Three sold. The board says 1.</b> Each order wrote "what I remembered, plus one."</div>
+    </div>
+  </div>
+  <p>Two sales vanished, and every single step looked fine. The problem is the <b>gap</b>. Between "look" and "write," Sam put the bookmark down, and the number Sam remembered went stale. Programmers call this a <b>lost update</b>.</p>
+  <p>The fix: a whiteboard rule. "Read it, add one, write it back" happens <b>in one step</b>, with no gap for a bookmark. Effect's whiteboard is called a <b>Ref</b>, and that one step is called <code>Ref.update</code>.</p>
+  <p>Ty, the kitchen manager, has a job here too. Ty checks the label on the whiteboard: "numbers only." Try to write "banana" on it and Ty stops you before the kitchen opens.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 330" role="img" aria-label="Left: order 1 and order 2 both look at the whiteboard and see 0, pour, then both write 1, so one sale is lost. Right: with Ref.update, each order's look, add and write is one glued step, so the board goes 0 to 1 to 2.">
+      <g font-size="11" style="fill:var(--ink)">
+        <text x="180" y="16" text-anchor="middle" font-weight="700" font-size="13" style="fill:var(--berry)">read, pause, write</text>
+        <text x="530" y="16" text-anchor="middle" font-weight="700" font-size="13" style="fill:var(--mint)">Ref.update</text>
+        <!-- left heads -->
+        <rect x="20" y="28" width="80" height="28" rx="6" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="60" y="46" text-anchor="middle" font-weight="700">order 1</text>
+        <rect x="140" y="28" width="80" height="28" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><text x="180" y="46" text-anchor="middle" font-weight="700">whiteboard</text>
+        <rect x="260" y="28" width="80" height="28" rx="6" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="300" y="46" text-anchor="middle" font-weight="700">order 2</text>
+        <path d="M60 56V290M180 56V290M300 56V290" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity=".5"/>
+        <path d="M60 84H176" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="118" y="78" text-anchor="middle">look: 0</text>
+        <rect x="14" y="98" width="92" height="22" rx="5" style="fill:var(--mango-soft);stroke:var(--mango)"/><text x="60" y="113" text-anchor="middle">bookmark 🥤</text>
+        <path d="M300 144H184" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="242" y="138" text-anchor="middle">look: 0</text>
+        <rect x="254" y="158" width="92" height="22" rx="5" style="fill:var(--mango-soft);stroke:var(--mango)"/><text x="300" y="173" text-anchor="middle">bookmark 🥤</text>
+        <path d="M60 206H176" stroke="currentColor" stroke-width="1.6" marker-end="url(#arrow)"/><text x="118" y="200" text-anchor="middle">write 0 + 1 = 1</text>
+        <path d="M300 250H184" style="stroke:var(--berry)" stroke-width="1.6" marker-end="url(#arrow-berry)"/><text x="242" y="244" text-anchor="middle" style="fill:var(--berry)">write 0 + 1 = 1</text>
+        <text x="180" y="312" text-anchor="middle" font-weight="700" style="fill:var(--berry)">board: 1 ❌ should be 2</text>
+        <!-- divider -->
+        <path d="M355 26V316" style="stroke:var(--line)" stroke-width="2"/>
+        <!-- right heads -->
+        <rect x="370" y="28" width="80" height="28" rx="6" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="410" y="46" text-anchor="middle" font-weight="700">order 1</text>
+        <rect x="490" y="28" width="80" height="28" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/><text x="530" y="46" text-anchor="middle" font-weight="700">whiteboard</text>
+        <rect x="610" y="28" width="80" height="28" rx="6" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/><text x="650" y="46" text-anchor="middle" font-weight="700">order 2</text>
+        <path d="M410 56V290M530 56V290M650 56V290" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4" opacity=".5"/>
+        <rect x="364" y="78" width="92" height="22" rx="5" style="fill:var(--mango-soft);stroke:var(--mango)"/><text x="410" y="93" text-anchor="middle">pouring 🥤</text>
+        <rect x="604" y="112" width="92" height="22" rx="5" style="fill:var(--mango-soft);stroke:var(--mango)"/><text x="650" y="127" text-anchor="middle">pouring 🥤</text>
+        <rect x="412" y="160" width="118" height="40" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="471" y="176" text-anchor="middle" font-weight="700">one step</text><text x="471" y="192" text-anchor="middle">look, add, write: 1</text>
+        <rect x="530" y="222" width="118" height="40" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="589" y="238" text-anchor="middle" font-weight="700">one step</text><text x="589" y="254" text-anchor="middle">look, add, write: 2</text>
+        <text x="530" y="312" text-anchor="middle" font-weight="700" style="fill:var(--mint)">board: 2 ✓</text>
+      </g>
+    </svg>
+    <figcaption>The bug lives in the gap between "look" and "write." <code>Ref.update</code> has no gap: look, add, and write are glued into one step, so order 2 always sees order 1's mark.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p>A Ref is made, read, overwritten, and updated. Each of those is a recipe card, so you <code>yield*</code> them.</p>
+<pre><code>import { Effect, Console, Ref } from "effect"
+
+const program = Effect.gen(function* () {
+  const board = yield* Ref.make(0)          // a whiteboard that says 0
+
+  yield* Ref.set(board, 5)                  // wipe it, write 5
+  yield* Ref.update(board, (n) =&gt; n + 1)    // read, add 1, write back: one step
+
+  const sold = yield* Ref.get(board)        // look at it
+  yield* Console.log(`smoothies sold: ${sold}`)
+})
+
+Effect.runPromise(program)
+// smoothies sold: 6</code></pre>
+  <p><code>board</code> has the type <code>Ref&lt;number&gt;</code>. That's the "numbers only" label Ty checks.</p>
+
+  <h2>Watch the sales vanish</h2>
+  <p>Same whiteboard, two ways to sell. The sloppy way reads, pauses, then writes. The safe way uses <code>Ref.update</code>. Three orders run at once, as three fibers.</p>
+<pre><code>import { Effect, Console, Ref } from "effect"
+
+// The sloppy way: read, pause, write back what you remember
+const sellSloppy = (board: Ref.Ref&lt;number&gt;) =&gt;
+  Effect.gen(function* () {
+    const seen = yield* Ref.get(board)      // read the whiteboard
+    yield* Effect.sleep("1 second")         // go pour the smoothie 🥤
+    yield* Ref.set(board, seen + 1)         // write back: seen + 1
+  })
+
+// The safe way: the read-change-write is ONE step
+const sellSafe = (board: Ref.Ref&lt;number&gt;) =&gt;
+  Effect.gen(function* () {
+    yield* Effect.sleep("1 second")         // go pour the smoothie 🥤
+    yield* Ref.update(board, (n) =&gt; n + 1)  // nobody can cut in
+  })
+
+const busyMinute = (sell: (board: Ref.Ref&lt;number&gt;) =&gt; Effect.Effect&lt;void&gt;) =&gt;
+  Effect.gen(function* () {
+    const board = yield* Ref.make(0)        // a fresh whiteboard
+    yield* Effect.all(
+      [sell(board), sell(board), sell(board)],
+      { concurrency: "unbounded" }          // three bookmarks at once
+    )
+    const sold = yield* Ref.get(board)
+    yield* Console.log(`3 smoothies sold, whiteboard says ${sold}`)
+  })
+
+Effect.runPromise(
+  Effect.gen(function* () {
+    yield* busyMinute(sellSloppy)
+    yield* busyMinute(sellSafe)
+  })
+)
+// 3 smoothies sold, whiteboard says 1    &lt;-- lost two sales!
+// 3 smoothies sold, whiteboard says 3    &lt;-- correct</code></pre>
+  <p>Notice: the sloppy way <b>also uses a Ref</b>. A Ref doesn't save you if you split "read" and "write" into two steps with a pause between them. The magic is in <code>Ref.update</code>, which never leaves a gap.</p>
+
+  <div class="demo">
+    <h3>Where did the sales go?</h3>
+    <p>Three orders share one whiteboard. Pick how each order writes its sale, then run it. Watch what each order <i>remembers</i>.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="How each order updates the whiteboard">
+        <label><input type="radio" name="l9-mode" id="l9-sloppy" value="sloppy" checked><span>read, pause, write</span></label>
+        <label><input type="radio" name="l9-mode" id="l9-safe" value="safe"><span>Ref.update</span></label>
+      </span>
+      <button class="btn primary" id="l9-run">Run 3 orders</button>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 600 170" role="img" aria-label="The whiteboard and three orders, showing what each order remembers.">
+        <use href="#l9-whiteboard" x="6" y="8" width="180" height="135"/>
+        <text id="l9-num" x="96" y="98" text-anchor="middle" class="hand" font-size="48" font-weight="800" style="fill:var(--ink)">0</text>
+        <g font-size="13" style="fill:var(--ink)">
+          <rect x="206" y="10" width="384" height="44" rx="8" style="fill:var(--surface-2);stroke:var(--line)"/>
+          <text x="220" y="37" font-weight="700">order 1</text>
+          <text id="l9-s0" x="290" y="37" class="mono" font-size="12" style="fill:var(--muted)">waiting</text>
+          <rect x="206" y="62" width="384" height="44" rx="8" style="fill:var(--surface-2);stroke:var(--line)"/>
+          <text x="220" y="89" font-weight="700">order 2</text>
+          <text id="l9-s1" x="290" y="89" class="mono" font-size="12" style="fill:var(--muted)">waiting</text>
+          <rect x="206" y="114" width="384" height="44" rx="8" style="fill:var(--surface-2);stroke:var(--line)"/>
+          <text x="220" y="141" font-weight="700">order 3</text>
+          <text id="l9-s2" x="290" y="141" class="mono" font-size="12" style="fill:var(--muted)">waiting</text>
+        </g>
+      </svg>
+    </div>
+    <pre class="log" id="l9-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>A fresh whiteboard every run</h2>
+  <p><code>Ref.make(0)</code> is a recipe card too: "get a new whiteboard that says 0." So every time you run a recipe that makes one, you get a <b>brand new</b> whiteboard. In the code above, <code>busyMinute</code> runs twice and the second run starts at 0, not at 1. Monday's tally doesn't leak into Tuesday.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Three smoothies went out, and the whiteboard says 1. In kitchen words, what went wrong?</summary>Each order remembered an old number ("0") during the pause, then wrote "0 + 1" back, erasing the other orders' marks.</details>
+  <details><summary>2. JavaScript has one cook. So how can two orders "cut in" on each other at all?</summary>Bookmarks. During the pause Sam puts one order down and picks up another, so the gap between "look" and "write" is real even with one cook.</details>
+  <details><summary>3. Why does the sloppy seller lose sales even though it uses a Ref?</summary>It reads with <code>Ref.get</code>, pauses, then writes with <code>Ref.set</code>. That's still two steps with a gap. Only <code>Ref.update</code> glues them into one.</details>
+  <details><summary>4. You run a recipe that starts with <code>Ref.make(0)</code> two times. Does the second run start at 0, or where the first run left off?</summary>At 0. <code>Ref.make</code> is a recipe card, so each run makes a new whiteboard.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li><b>Be honest about one cook.</b> A plain <code>count++</code> in JavaScript is never torn in half. The bug only appears when a recipe reads, then pauses (<code>yield*</code> of a sleep, an <code>await</code>, a network call), then writes back. A sharp kid may notice that removing the <code>sleep</code> from <code>sellSloppy</code> gives 3. True today, but don't rely on it: Effect may also switch fibers between any two <code>yield*</code> steps to be fair. <code>Ref.update</code> is the guarantee.</li>
+      <li>Grown-up terms: this is a <b>race condition</b>, specifically a <b>lost update</b> or "read-modify-write" bug. A Ref is a mutable reference whose updates are <b>atomic</b> (all at once, never half done).</li>
+      <li><code>Ref.updateAndGet(board, f)</code> updates and hands back the new number in the same step. <code>Ref.modify</code> updates <i>and</i> returns something else, like a ticket number: <code>Ref.modify(board, (n) =&gt; [n + 1, n + 1])</code>. Mention, don't teach.</li>
+      <li><code>SynchronizedRef</code> is for when the update itself is a card (it needs to wait, like asking the fridge first): <code>SynchronizedRef.updateEffect</code>. Other updaters wait in line while it runs. <code>SubscriptionRef</code> is a whiteboard you can <i>watch</i>: it gives a stream of every new value (Stream is Lesson 11).</li>
+      <li>"Why not just a global <code>let count = 0</code>?" Three reasons: it is shared by every run of the program (no fresh whiteboard, so tests leak into each other); it doesn't show up in any type; and it has the same lost-update gap anyway. A Ref is made inside the recipe and passed where it's needed.</li>
+      <li>Lesson 10 (Queues) is the next step: instead of everyone writing on one board, orders are passed from one bookmark to another on a shelf.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-8">← Lesson 8: Schedules</a><a href="#lesson-10">Lesson 10: Queues →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l9-log"), num = K.$("#l9-num"), btn = K.$("#l9-run");
+    var lanes = [K.$("#l9-s0"), K.$("#l9-s1"), K.$("#l9-s2")];
+    function lane(i, text, color) { lanes[i].textContent = text; lanes[i].style.fill = color || "var(--ink)"; }
+    function show(n, color) { num.textContent = String(n); num.style.fill = color || "var(--ink)"; }
+    btn.addEventListener("click", async function () {
+      var mode = K.$("input[name=l9-mode]:checked").value, board = 0, seen = [0, 0, 0], i;
+      btn.disabled = true; K.clear(log); show(0);
+      for (i = 0; i < 3; i++) lane(i, "waiting", "var(--muted)");
+      if (mode === "sloppy") {
+        for (i = 0; i < 3; i++) {
+          await K.sleep(500); seen[i] = board;
+          lane(i, "looked: " + seen[i] + ", remembers " + seen[i], "var(--sky)");
+          K.log(log, "order " + (i + 1) + ": Ref.get → " + seen[i] + " (remembers " + seen[i] + ")");
+        }
+      }
+      for (i = 0; i < 3; i++) {
+        await K.sleep(300);
+        lane(i, (mode === "sloppy" ? "remembers " + seen[i] + ", " : "") + "pouring 🥤 (bookmark)", "var(--mango)");
+        K.log(log, "order " + (i + 1) + ": pouring 🥤 (bookmark)", "dim");
+      }
+      await K.sleep(900);
+      for (i = 0; i < 3; i++) {
+        await K.sleep(600);
+        if (mode === "sloppy") {
+          board = seen[i] + 1;
+          lane(i, "wrote " + seen[i] + " + 1 = " + board, "var(--berry)");
+          K.log(log, "order " + (i + 1) + ": Ref.set " + seen[i] + " + 1 = " + board + (i > 0 ? "   ← erased a sale!" : ""), i > 0 ? "bad" : "");
+        } else {
+          var before = board; board = board + 1;
+          lane(i, "one step: " + before + " → " + board, "var(--mint)");
+          K.log(log, "order " + (i + 1) + ": Ref.update n => n + 1  (" + before + " → " + board + ")", "ok");
+        }
+        show(board, mode === "sloppy" && i > 0 ? "var(--berry)" : "var(--ink)");
+      }
+      await K.sleep(400);
+      show(board, board === 3 ? "var(--mint)" : "var(--berry)");
+      K.log(log, "3 smoothies sold, whiteboard says " + board + (board === 3 ? "  ✅" : "  ❌ lost " + (3 - board) + " sales"), board === 3 ? "ok" : "bad");
+      btn.disabled = false;
+    });
+  })();
+  </script>
+</section>

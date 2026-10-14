@@ -1,0 +1,258 @@
+<section id="lesson-14" class="lesson" hidden>
+  <div class="eyebrow">Lesson 14</div>
+  <h1>The Practice Kitchen</h1>
+  <div class="bigidea"><strong>A recipe card only <i>asks</i> for its appliances and its clock, so you can run it in a practice kitchen with pretend ones.</strong> In the practice kitchen the blender is pretend and the wall clock only moves when you turn its knob. A test of "wait 10 minutes, then try again" finishes in a blink.</div>
+
+  <h2>The story</h2>
+  <p>Back in Lesson 5, Sam learned recipes in a practice kitchen with a pretend blender. Now the practice kitchen gets one more strange thing.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam uses a pretend blender that just says whirrr and hands back a smoothie.">
+        <use href="#sam-happy" x="6" y="22" width="102" height="170"/>
+        <use href="#blender" x="130" y="80" width="60" height="90"/>
+        <use href="#smoothie" x="196" y="122" width="32" height="48"/>
+        <rect x="118" y="14" width="114" height="44" rx="10" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <path d="M150 58L158 74L166 58" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <path d="M151 57H165" style="stroke:var(--surface);stroke-width:3"/>
+        <text x="175" y="33" text-anchor="middle" font-size="13" class="hand" style="fill:var(--ink)">whirrr...</text>
+        <text x="175" y="50" text-anchor="middle" font-size="10" style="fill:var(--muted)">(pretend)</text>
+      </svg>
+      <div class="cap"><b>The pretend blender.</b> It says "whirrr" and hands back a smoothie right away. No mess, no real mangoes.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty turns the knob on a magic wall clock. Click, click, ten minutes pass.">
+        <use href="#ty-look" x="4" y="22" width="102" height="170"/>
+        <use href="#l14-knobclock" x="112" y="30" width="108" height="90"/>
+        <path d="M218 62q14 10 0 20" style="fill:none;stroke:var(--mango);stroke-width:2" marker-end="url(#arrow-mango)"/>
+        <text x="168" y="144" text-anchor="middle" font-size="13" font-weight="700" class="hand" style="fill:var(--ink)">click, click</text>
+        <text x="168" y="164" text-anchor="middle" font-size="11" style="fill:var(--mango)">+10 minutes</text>
+      </svg>
+      <div class="cap"><b>The magic wall clock.</b> Its hands only move when someone turns the knob. Ten minutes pass in no time at all.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Ty checks the result against his clipboard: three tests passed in a third of a second.">
+        <use href="#ty-check" x="4" y="22" width="102" height="170"/>
+        <rect x="118" y="34" width="112" height="112" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <g font-size="11" style="fill:var(--ink)">
+          <text x="128" y="58">✓ smoothie</text>
+          <text x="128" y="80">✓ toast</text>
+          <text x="128" y="102">✓ fridge retry</text>
+          <text x="128" y="132" font-weight="700">3 passed, 0.3s</text>
+        </g>
+        <text x="174" y="168" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--mint)">thumbs up!</text>
+      </svg>
+      <div class="cap"><b>Ty checks the clipboard.</b> A practice run with a checklist is a <b>test</b>. The magic clock is the <b>test clock</b>.</div>
+    </div>
+  </div>
+  <p>Why want a clock that doesn't move? Look at Lesson 8's routine: "No mango? Check the fridge again every 5 minutes." To practice that with a real clock, Sam would stand around for 10 minutes. With the magic clock, the teacher turns the knob, <i>click, click</i>, and it's done. Ty, the kitchen manager, watches each practice run and checks the result against what it should be: thumbs up or thumbs down.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="One recipe card that needs a Blender and quietly a Clock goes to two kitchens. The real kitchen, Effect.runPromise, gives a real blender and a real clock. The practice kitchen, it.effect, gives a pretend blender and a test clock that moves only when you turn the knob. Ty checks the practice result.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="16" y="105" width="160" height="90" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="96" y="130" text-anchor="middle" font-weight="700">recipe card</text>
+        <text x="96" y="152" text-anchor="middle" font-size="11" style="fill:var(--sky)">Needs: Blender</text>
+        <text x="96" y="172" text-anchor="middle" font-size="11" style="fill:var(--muted)">(and quietly, a Clock)</text>
+        <path d="M176 135C215 110 225 75 258 75" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <path d="M176 165C215 190 225 225 258 225" fill="none" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)"/>
+
+        <rect x="262" y="20" width="270" height="110" rx="10" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="397" y="42" text-anchor="middle" font-weight="700">real kitchen</text>
+        <text x="397" y="58" text-anchor="middle" font-size="11" class="mono">Effect.runPromise</text>
+        <use href="#blender" x="276" y="70" width="30" height="45"/>
+        <text x="312" y="90" font-size="11">WHIRRRR</text>
+        <use href="#l14-wallclock" x="388" y="74" width="34" height="34"/>
+        <text x="428" y="88" font-size="11">real clock:</text>
+        <text x="428" y="104" font-size="11">10 min is 10 min</text>
+
+        <rect x="262" y="170" width="270" height="116" rx="10" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="397" y="192" text-anchor="middle" font-weight="700">practice kitchen</text>
+        <text x="397" y="208" text-anchor="middle" font-size="11" class="mono">it.effect</text>
+        <use href="#blender" x="276" y="222" width="30" height="45"/>
+        <text x="312" y="242" font-size="11">whirrr</text>
+        <text x="312" y="256" font-size="11">(pretend)</text>
+        <use href="#l14-knobclock" x="380" y="222" width="48" height="40"/>
+        <text x="432" y="238" font-size="11">test clock:</text>
+        <text x="432" y="254" font-size="11">moves only when</text>
+        <text x="432" y="270" font-size="11">you turn the knob</text>
+
+        <path d="M532 228H582" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow-mint)" fill="none" style="stroke:var(--mint)"/>
+        <use href="#ty-check" x="590" y="160" width="60" height="100"/>
+        <text x="620" y="276" text-anchor="middle" font-size="11" class="mono">expect(...)</text>
+        <text x="620" y="292" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mint)">✓ pass</text>
+      </g>
+    </svg>
+    <figcaption>Same card, two kitchens. The card never knows which one it's in.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+  <p>Step 1: install the practice kitchen once, in your class folder.</p>
+<pre><code>npm install -D vitest @effect/vitest</code></pre>
+  <p>Step 2: make a file whose name ends in <code>.test.ts</code>, like <code>kitchen.test.ts</code>. Bring back Lesson 5's <code>Blender</code>, <code>smoothie</code>, and <code>FakeBlender</code>, then write a test:</p>
+<pre><code>import { it, expect } from "@effect/vitest"
+import { Effect } from "effect"
+
+it.effect("makes a smoothie with a pretend blender", () =&gt;
+  Effect.gen(function* () {
+    const drink = yield* smoothie.pipe(Effect.provide(FakeBlender))
+    expect(drink).toBe("🥤 (pretend)")
+  }))</code></pre>
+  <p>Read it as: "<b>It</b> makes a smoothie with a pretend blender. Run this recipe in the practice kitchen. <b>Expect</b> the drink <b>to be</b> a pretend smoothie." <code>expect</code> is Ty with his clipboard.</p>
+  <p>Step 3: a test that needs the magic clock.</p>
+<pre><code>import { Fiber } from "effect"
+import { TestClock } from "effect/testing"
+
+it.effect("the toast is ready after 10 minutes", () =&gt;
+  Effect.gen(function* () {
+    const toast = Effect.sleep("10 minutes").pipe(Effect.as("🍞"))
+
+    const bookmark = yield* Effect.forkChild(toast)   // start it, keep a bookmark
+    yield* TestClock.adjust("10 minutes")             // turn the knob
+    const result = yield* Fiber.join(bookmark)        // wait for the bookmark
+
+    expect(result).toBe("🍞")
+  }))</code></pre>
+  <p>Why the bookmark (Lesson 6)? If Sam just slept on the toast, <i>he</i> would be the one stuck waiting, and nobody would be left to turn the knob. So he starts the toast on a bookmark, turns the knob himself, then picks the bookmark back up.</p>
+  <p>Step 4: run it.</p>
+<pre><code>npx vitest run
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Duration  313ms</code></pre>
+  <p>Three tests (the third one is below), and the whole run took about a third of a second, even though the recipes "waited" 20 minutes.</p>
+
+  <h2>Fast-forwarding Lesson 8's routine</h2>
+  <p>Here is a fridge check that fails twice, then finds a mango. Lesson 8's routine says: try again every 5 minutes.</p>
+<pre><code>import { Data, Schedule } from "effect"
+
+class NoMango extends Data.TaggedError("NoMango") {}
+
+it.effect("the fridge check retries every 5 minutes", () =&gt;
+  Effect.gen(function* () {
+    let tries = 0
+    const checkFridge = Effect.gen(function* () {
+      tries = tries + 1
+      if (tries &lt; 3) return yield* Effect.fail(new NoMango())
+      return "🥭"
+    })
+
+    const patient = checkFridge.pipe(Effect.retry(Schedule.spaced("5 minutes")))
+    const bookmark = yield* Effect.forkChild(patient)
+
+    yield* TestClock.adjust("5 minutes")
+    expect(tries).toBe(2)                     // second try, still no mango
+
+    yield* TestClock.adjust("5 minutes")
+    const fruit = yield* Fiber.join(bookmark)
+    expect(fruit).toBe("🥭")                  // third try worked
+    expect(tries).toBe(3)
+  }))</code></pre>
+  <p>Each turn of the knob lets exactly one more try happen. You can stop between turns and check on things, like freezing a video to look at one frame.</p>
+
+  <div class="demo">
+    <h3>Real clock or test clock?</h3>
+    <p>Run the fridge-retry test both ways. The real clock is scaled down here (1 kitchen minute = 0.6 real seconds), or you'd be waiting 10 whole minutes. Watch the stopwatch.</p>
+    <div class="controls">
+      <button class="btn" id="l14-real">Run with real clock</button>
+      <button class="btn primary" id="l14-test">Run with test clock</button>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start">
+      <svg viewBox="0 0 160 186" aria-hidden="true" style="width:130px;height:auto">
+        <rect x="128" y="62" width="14" height="16" rx="2" style="fill:var(--surface-2);stroke:var(--ink);stroke-width:2"/>
+        <rect id="l14-knob" x="140" y="54" width="14" height="32" rx="5" style="fill:var(--mango);stroke:var(--ink);stroke-width:2"/>
+        <circle cx="70" cy="70" r="60" style="fill:var(--surface);stroke:var(--ink);stroke-width:3"/>
+        <path d="M70 14V22M70 118V126M14 70H22M118 70H126" style="stroke:var(--ink);stroke-width:2.5;stroke-linecap:round"/>
+        <line id="l14-hour" x1="70" y1="70" x2="70" y2="42" style="stroke:var(--ink);stroke-width:4;stroke-linecap:round"/>
+        <line id="l14-min" x1="70" y1="70" x2="70" y2="22" style="stroke:var(--berry);stroke-width:3;stroke-linecap:round"/>
+        <circle cx="70" cy="70" r="4" style="fill:var(--ink)"/>
+        <text id="l14-time" x="70" y="152" text-anchor="middle" font-size="14" font-weight="700" class="mono" style="fill:var(--ink)">12:00</text>
+        <text id="l14-watch" x="70" y="176" text-anchor="middle" font-size="12" class="mono" style="fill:var(--muted)">real: 0.00s</text>
+      </svg>
+      <pre class="log" id="l14-log" style="min-width:0" aria-live="polite"></pre>
+    </div>
+  </div>
+
+  <h2>Why the clock can be magic</h2>
+  <p><code>Effect.sleep</code> and every schedule from Lesson 8 never look at the wall themselves. They <i>ask Effect's clock</i> what time it is. The clock is an appliance, just like the blender. The kitchen always has one, so it doesn't show up on the "Needs" line, but the recipe still asks for it.</p>
+  <p><code>Effect.runPromise</code> hands out the real clock. <code>it.effect</code> hands out the test clock. That's the whole trick, and it's the same trick as Lesson 5: <b>the recipe asks, the kitchen provides.</b></p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. In the practice kitchen, what's pretend? Name two things.</summary>The blender (a pretend layer we provide) and the clock (the test clock that <code>it.effect</code> hands out).</details>
+  <details><summary>2. Why does the toast test start the toast on a bookmark (<code>Effect.forkChild</code>) before turning the knob?</summary>If the test itself slept, it would be stuck waiting and nothing would be left to turn the knob. The bookmark lets the toast wait while the test keeps going.</details>
+  <details><summary>3. The retry test "waits" 10 minutes. About how long does it really take to run? Why?</summary>A few milliseconds. The test clock jumps forward when you call <code>TestClock.adjust</code>; it never ticks through the minutes.</details>
+  <details><summary>4. A friend's recipe calls JavaScript's own <code>setTimeout</code> instead of <code>Effect.sleep</code>. Will <code>TestClock.adjust</code> speed it up?</summary>No. <code>setTimeout</code> never asks Effect's clock, so the knob can't reach it. Only waits that ask the kitchen's clock can be fast-forwarded.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>If a student forgets <code>TestClock.adjust</code>, the test doesn't fail right away. It sits waiting on a clock that never moves until vitest gives up ("Test timed out in 5000ms"). That's a great bug to make on purpose.</li>
+      <li><code>it.live("name", () =&gt; ...)</code> is the same as <code>it.effect</code> but uses the real clock. Mention it for things that truly need real time; most tests shouldn't.</li>
+      <li><code>layer(FakeBlender)("practice kitchen", (it) =&gt; { ... })</code> from <code>@effect/vitest</code> gives every test inside the block the same pretend blender, built once. Mention it, don't teach it.</li>
+      <li><code>expect</code> comes from vitest itself; <code>@effect/vitest</code> passes it along. <code>assert.strictEqual(a, b)</code> works too, and you'll see it in Effect's own examples.</li>
+      <li>This is <i>why</i> services exist. A recipe that builds its own blender, or reads the real clock, can only be practiced in the real kitchen. Asking instead of grabbing is what makes recipes testable.</li>
+      <li>Grown-up terms: a pretend service is a <b>test double</b> (or "fake"); the magic clock is <b>virtual time</b>.</li>
+      <li>Setup: in the class folder, <code>npm install -D vitest @effect/vitest</code>, name files <code>*.test.ts</code>, run <code>npx vitest run</code> (or <code>npx vitest</code> to re-run on every save). No config file is needed.</li>
+      <li>Capstone idea: give students their smoothie shop from Unit 1 and ask for three tests: the happy path with a pretend blender, the "out of mango" path, and a retry that needs the knob turned twice.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-13">← Lesson 13: Logs and spans</a><a href="#cheat-sheet">Cheat sheet →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l14-log"), real = K.$("#l14-real"), test = K.$("#l14-test");
+    var minHand = K.$("#l14-min"), hourHand = K.$("#l14-hour"), timeEl = K.$("#l14-time"), watch = K.$("#l14-watch"), knob = K.$("#l14-knob");
+    var MS_PER_MIN = 600, t0 = 0, timer = null;
+    function setClock(min) {
+      minHand.setAttribute("transform", "rotate(" + (min * 6) + " 70 70)");
+      hourHand.setAttribute("transform", "rotate(" + (min * 0.5) + " 70 70)");
+      timeEl.textContent = "12:" + (min < 10 ? "0" : "") + Math.floor(min);
+    }
+    function tickWatch() { watch.textContent = "real: " + ((performance.now() - t0) / 1000).toFixed(2) + "s"; }
+    function animate(from, to) {
+      var start = performance.now(), dur = (to - from) * MS_PER_MIN;
+      return new Promise(function (done) {
+        function step(now) {
+          var f = Math.min(1, (now - start) / dur); setClock(from + (to - from) * f); tickWatch();
+          if (f < 1) requestAnimationFrame(step); else done();
+        }
+        requestAnimationFrame(step);
+      });
+    }
+    function turnKnob() { knob.style.fill = "var(--mint)"; return K.sleep(150).then(function () { knob.style.fill = "var(--mango)"; }); }
+    function run(useTest) {
+      real.disabled = test.disabled = true; K.clear(log); setClock(0); t0 = performance.now(); tickWatch();
+      timer = setInterval(tickWatch, 50);
+      var tries = 0, minute = 0, clockName = useTest ? "test clock 🧪" : "real clock ⏰";
+      function attempt() {
+        tries++;
+        if (tries < 3) { K.log(log, "12:" + (minute < 10 ? "0" : "") + minute + "  try " + tries + ": no mango ✕  (retry in 5 minutes)", "bad"); return false; }
+        K.log(log, "12:" + minute + "  try " + tries + ": found 🥭", "ok"); return true;
+      }
+      K.log(log, "running with the " + clockName, "dim");
+      attempt();
+      var chain = Promise.resolve();
+      [0, 1].forEach(function () {
+        chain = chain.then(function () {
+          if (useTest) {
+            K.log(log, "      TestClock.adjust(\"5 minutes\")  🔧 click", "dim");
+            return turnKnob().then(function () { minute += 5; setClock(minute); attempt(); });
+          }
+          K.log(log, "      ...waiting for real...", "dim");
+          return animate(minute, minute + 5).then(function () { minute += 5; attempt(); });
+        });
+      });
+      chain.then(function () {
+        clearInterval(timer); tickWatch();
+        var secs = ((performance.now() - t0) / 1000).toFixed(2);
+        K.log(log, "✓ the fridge check retries every 5 minutes   (" + secs + "s real time)", "ok");
+        if (!useTest) K.log(log, "  scaled down! unscaled, that would be 10 real minutes.", "dim");
+        real.disabled = test.disabled = false;
+      });
+    }
+    setClock(0);
+    real.addEventListener("click", function () { run(false); });
+    test.addEventListener("click", function () { run(true); });
+  })();
+  </script>
+</section>

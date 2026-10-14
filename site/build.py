@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Assemble site/dist/index.html from the parts in site/src.
 
-shell.html holds the page chrome, styles and router. sprites.svg holds every
-character and prop drawing as <symbol>s. The numbered section files are the
-home page, the seven lessons and the cheat sheet, in order.
+shell.html holds the page chrome, styles and router. sprites.svg holds the cast
+and the shared props as <symbol>s; sprites-*.svg files hold props added by later
+lessons. The numbered section files are the home page, the lessons and the cheat
+sheet, in order.
 """
 import pathlib
 
@@ -12,7 +13,7 @@ SRC, DIST = ROOT / "src", ROOT / "dist"
 DIST.mkdir(exist_ok=True)
 
 shell = (SRC / "shell.html").read_text()
-sprites = (SRC / "sprites.svg").read_text()
+sprites = "\n".join(p.read_text() for p in sorted(SRC.glob("sprites*.svg")))
 sections = "\n".join(p.read_text() for p in sorted(SRC.glob("[0-9][0-9]-*.html")))
 
 page = shell.replace("<!--@sprites-->", sprites).replace("<!--@sections-->", sections)

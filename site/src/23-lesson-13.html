@@ -1,0 +1,304 @@
+<section id="lesson-13" class="lesson" hidden>
+  <div class="eyebrow">Lesson 13</div>
+  <h1>The Kitchen Diary</h1>
+  <div class="bigidea"><strong>A busy kitchen keeps a diary, so that tomorrow you can find out what happened today.</strong> Effect's diary lines already know <i>when</i> they were written and <i>which</i> bookmark wrote them. They can carry a sticky note (order #42) on every line, and they can time each step with a stopwatch.</div>
+
+  <h2>The story</h2>
+  <p>Maya is back at the counter, and she has a question nobody can answer.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Maya asks what happened to her smoothie yesterday. Sam shrugs; he made thirty smoothies.">
+        <use href="#maya-surprised" x="2" y="30" width="100" height="166"/>
+        <use href="#sam-shrug" x="132" y="30" width="100" height="166"/>
+        <rect x="4" y="4" width="132" height="24" rx="6" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="70" y="20" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"Why so slow yesterday?"</text>
+        <rect x="146" y="4" width="90" height="24" rx="6" style="fill:var(--surface-2);stroke:var(--line);stroke-width:1.5"/>
+        <text x="191" y="20" text-anchor="middle" font-size="10.5" style="fill:var(--ink)">"30 orders... ?"</text>
+      </svg>
+      <div class="cap"><b>"What happened to my smoothie?"</b> Sam made thirty smoothies yesterday. Nobody remembers order #42.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam writes in a diary on a clipboard. A sticky note says order 42, and a stopwatch sits nearby.">
+        <use href="#sam-busy" x="0" y="26" width="102" height="170"/>
+        <use href="#l13-diary" x="112" y="24" width="96" height="128"/>
+        <use href="#l13-sticky" x="182" y="30" width="48" height="48"/>
+        <text x="204" y="58" text-anchor="middle" font-size="12" font-weight="700" class="hand" style="fill:#1b2734">#42</text>
+        <use href="#l13-stopwatch" x="128" y="150" width="38" height="44"/>
+        <text x="200" y="178" text-anchor="middle" font-size="11" font-weight="700" class="mono" style="fill:var(--mango)">click!</text>
+      </svg>
+      <div class="cap"><b>So the kitchen starts a diary.</b> Every line: the time, how serious, which bookmark. A sticky note for the order, a stopwatch for the blender.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="A week later Sam reads the line with Maya's sticky note: warning, blender jammed, blend took four minutes.">
+        <use href="#sam-happy" x="0" y="26" width="102" height="170"/>
+        <rect x="100" y="56" width="136" height="78" rx="6" style="fill:var(--paper);stroke:var(--ink);stroke-width:2"/>
+        <path d="M100 78h136M100 100h136" style="stroke:var(--paper-rule);stroke-width:1.2"/>
+        <text x="108" y="72" font-size="10" class="mono" style="fill:#1b2734">12:01 INFO</text>
+        <text x="108" y="94" font-size="10" font-weight="700" class="mono" style="fill:var(--paper-red)">12:04 WARN</text>
+        <text x="108" y="116" font-size="10" font-weight="700" class="mono" style="fill:var(--paper-red)">blender jammed</text>
+        <text x="108" y="128" font-size="9" class="mono" style="fill:#1b2734">blend=4 minutes</text>
+        <use href="#l13-sticky" x="196" y="36" width="40" height="40"/>
+        <text x="214" y="60" text-anchor="middle" font-size="11" font-weight="700" class="hand" style="fill:#1b2734">#42</text>
+        <text x="168" y="160" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--mint)">found it ✓</text>
+      </svg>
+      <div class="cap"><b>A week later it's slow again.</b> Sam flips to the lines with Maya's sticky note. Mystery solved.</div>
+    </div>
+  </div>
+  <p>Programmers call the diary a <b>log</b>. Writing one line is <b>logging</b>. (Ty can't help here. Ty checks recipe cards <i>before</i> cooking. The diary is about what happened <i>while</i> cooking.)</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 300" role="img" aria-label="A step in the recipe calls Effect.log. The diary keeper adds the time, the level, the bookmark number, sticky notes and a stopwatch reading. If the line is loud enough it goes in the diary; a whisper is left out.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="10" y="95" width="150" height="60" rx="8" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="85" y="117" text-anchor="middle" font-weight="700">a step in the recipe</text>
+        <text x="85" y="138" text-anchor="middle" font-size="10" class="mono">Effect.log("blending")</text>
+        <path d="M160 125H196" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+
+        <rect x="200" y="30" width="215" height="190" rx="10" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="307" y="52" text-anchor="middle" font-weight="700">the diary keeper adds:</text>
+        <g font-size="11">
+          <text x="216" y="80">🕒 time</text><text x="400" y="80" text-anchor="end" class="mono">16:20:01.042</text>
+          <text x="216" y="110">📢 level</text><text x="400" y="110" text-anchor="end" class="mono">INFO</text>
+          <text x="216" y="140">🔖 bookmark</text><text x="400" y="140" text-anchor="end" class="mono">(#2)</text>
+          <text x="216" y="170">🏷️ sticky note</text><text x="400" y="170" text-anchor="end" class="mono">{ order: 42 }</text>
+          <text x="216" y="200">⏱️ stopwatch</text><text x="400" y="200" text-anchor="end" class="mono">blend=120ms</text>
+        </g>
+        <path d="M415 125H436" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+
+        <path d="M485 80L530 125L485 170L440 125Z" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="485" y="122" text-anchor="middle" font-weight="700" font-size="11">loud</text>
+        <text x="485" y="137" text-anchor="middle" font-weight="700" font-size="11">enough?</text>
+
+        <path d="M530 125H566" style="stroke:var(--mint)" stroke-width="1.8" marker-end="url(#arrow-mint)" fill="none"/>
+        <text x="548" y="117" text-anchor="middle" font-size="11" style="fill:var(--mint)">yes</text>
+        <rect x="570" y="70" width="120" height="110" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <use href="#l13-diary" x="607" y="78" width="46" height="61"/>
+        <text x="630" y="156" text-anchor="middle" font-size="11" font-weight="700">one line</text>
+        <text x="630" y="171" text-anchor="middle" font-size="11">in the diary 📓</text>
+
+        <path d="M485 170V206" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <text x="492" y="192" font-size="11">no</text>
+        <rect x="430" y="210" width="110" height="36" rx="8" style="fill:var(--surface-2);stroke:var(--line);stroke-width:1.5"/>
+        <text x="485" y="226" text-anchor="middle" font-size="11">left out</text>
+        <text x="485" y="240" text-anchor="middle" font-size="10" style="fill:var(--muted)">(a whisper)</text>
+
+        <text x="350" y="285" text-anchor="middle" font-size="12" class="mono"><tspan style="fill:var(--muted)">[16:20:01.042]</tspan> <tspan font-weight="700">INFO</tspan> <tspan style="fill:var(--berry)">(#2)</tspan> <tspan style="fill:var(--mango)">blend=120ms</tspan>: blending <tspan style="fill:var(--sky)">{ order: 42 }</tspan></text>
+      </g>
+    </svg>
+    <figcaption>You only write the message. Effect fills in everything else. The bottom line is what comes out.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect } from "effect"
+
+const smoothie = Effect.gen(function* () {
+  yield* Effect.log("order received")
+  yield* Effect.logWarning("only 2 mangoes left")
+  yield* Effect.logError("blender jammed!")
+})
+
+Effect.runPromise(smoothie)
+// something like:
+// [16:20:01.042] INFO (#1): order received
+// [16:20:01.043] WARN (#1): only 2 mangoes left
+// [16:20:01.043] ERROR (#1): blender jammed!</code></pre>
+  <p>Read one line left to right: <b>the time</b> (hours, minutes, seconds, thousandths), <b>the level</b> (how serious), <b>the bookmark</b> (<code>#1</code> is the fiber that wrote it), and then <b>your message</b>. Your times and numbers will be different. The shape will be the same.</p>
+  <p><code>Effect.log</code> is a recipe card too, <code>Effect&lt;void&gt;</code>: nothing can go wrong, needs nothing. It only writes when the recipe runs.</p>
+
+  <h2>Whisper or shout</h2>
+  <p>Some lines are whispers, some are shouts. The levels, quietest to loudest: <b>Debug</b> (whisper), <b>Info</b> (normal voice), <b>Warn</b> (watch out), <b>Error</b> (problem!).</p>
+  <p><code>Effect.logDebug("checking the fridge")</code> is a whisper: it is left out unless you ask for it. You can also turn the volume knob the other way, so only warnings and louder get written. The kitchen supplies that setting, just like it supplied the blender in Lesson 5. Same <code>smoothie</code> as above:</p>
+<pre><code>import { References } from "effect"
+
+Effect.runPromise(
+  smoothie.pipe(Effect.provideService(References.MinimumLogLevel, "Warn"))
+)
+// something like:
+// [16:20:01.043] WARN (#1): only 2 mangoes left
+// [16:20:01.043] ERROR (#1): blender jammed!</code></pre>
+  <p>The recipe did not change. Only the knob did.</p>
+
+  <h2>Sticky notes and stopwatches</h2>
+  <p>Two orders at once, two bookmarks. First, the sticky note. <code>Effect.annotateLogs</code> sticks it on <i>every</i> line inside, so you don't have to type "order 42" over and over:</p>
+<pre><code>const makeSmoothie = (order: number) =&gt;
+  Effect.gen(function* () {
+    yield* Effect.log("blending")
+    yield* Effect.sleep("100 millis")
+    yield* Effect.log("poured 🥤")
+  }).pipe(Effect.annotateLogs({ order }))   // 🏷️ sticky note on every line
+
+Effect.runPromise(
+  Effect.all([makeSmoothie(41), makeSmoothie(42)], { concurrency: 2 })
+)
+// something like:
+// [16:20:01.042] INFO (#2): blending { order: 41 }
+// [16:20:01.043] INFO (#3): blending { order: 42 }
+// [16:20:01.144] INFO (#2): poured 🥤 { order: 41 }
+// [16:20:01.144] INFO (#3): poured 🥤 { order: 42 }</code></pre>
+  <p>Bookmark <code>#2</code> cooked order 41 and bookmark <code>#3</code> cooked order 42. The lines are mixed together, but the sticky notes sort them out.</p>
+  <p>Now the stopwatch. <code>Effect.withLogSpan("blend")</code> starts one when the step begins, and every line inside says how long it has been running:</p>
+<pre><code>const blend = Effect.gen(function* () {
+  yield* Effect.log("blender on")
+  yield* Effect.sleep("120 millis")
+  yield* Effect.log("blender off")
+}).pipe(Effect.withLogSpan("blend"))        // ⏱️ start the stopwatch
+
+Effect.runPromise(blend)
+// something like:
+// [16:20:01.042] INFO (#1) blend=1ms: blender on
+// [16:20:01.164] INFO (#1) blend=122ms: blender off</code></pre>
+
+  <div class="demo">
+    <h3>Keep the kitchen diary</h3>
+    <p>Two orders cook at once on two bookmarks. Run the kitchen, then flip the knob and the toggles: the same run is redrawn as if they had been set from the start. Order 42 has a bad day.</p>
+    <div class="controls">
+      <button class="btn primary" id="l13-run">Run the kitchen</button>
+      <span class="seg" role="radiogroup" aria-label="Minimum log level">
+        <label><input type="radio" name="l13-level" value="0"><span>everything (Debug)</span></label>
+        <label><input type="radio" name="l13-level" value="1" checked><span>Info and up</span></label>
+        <label><input type="radio" name="l13-level" value="2"><span>Warn and up</span></label>
+      </span>
+      <label class="check"><input type="checkbox" id="l13-notes" checked> 🏷️ sticky notes</label>
+      <label class="check"><input type="checkbox" id="l13-watch" checked> ⏱️ stopwatch</label>
+    </div>
+    <pre class="log" id="l13-log" aria-live="polite"><span class="dim">Press "Run the kitchen".
+</span></pre>
+    <p style="margin:1rem 0 .3rem"><b>The timeline (spans):</b> one bar per step, smaller steps tucked under the recipe that ran them.</p>
+    <svg id="l13-timeline" viewBox="0 0 640 200" role="img" aria-label="Timeline of spans: makeSmoothie, blend and pour for orders 41 and 42." style="width:100%;height:auto;display:block">
+      <g font-size="12" class="mono" style="fill:var(--ink)">
+        <path d="M150 182H630" stroke="currentColor" stroke-width="1"/>
+        <text x="150" y="196" text-anchor="middle" font-size="10" style="fill:var(--muted)">0ms</text>
+        <text x="270" y="196" text-anchor="middle" font-size="10" style="fill:var(--muted)">100ms</text>
+        <text x="390" y="196" text-anchor="middle" font-size="10" style="fill:var(--muted)">200ms</text>
+        <text x="510" y="196" text-anchor="middle" font-size="10" style="fill:var(--muted)">300ms</text>
+        <text x="630" y="196" text-anchor="end" font-size="10" style="fill:var(--muted)">400ms</text>
+      </g>
+      <g id="l13-bars" font-size="12" class="mono" style="fill:var(--ink)"></g>
+    </svg>
+  </div>
+
+  <h2>Spans: drawing the timeline</h2>
+  <p>A diary is words. Sometimes you want a <i>picture</i> of the day: a bar for each step, showing when it started and how long it took, with smaller steps tucked under bigger ones. Programmers call one bar a <b>span</b>, and the whole picture a <b>trace</b>.</p>
+<pre><code>const blend = Effect.sleep("100 millis").pipe(Effect.withSpan("blend"))
+const pour  = Effect.sleep("20 millis").pipe(Effect.withSpan("pour"))
+
+const makeSmoothie = Effect.fn("makeSmoothie")(function* (order: number) {
+  yield* blend
+  yield* pour
+  return `🥤 for order ${order}`
+})
+
+Effect.runPromise(makeSmoothie(42)).then(console.log)
+// 🥤 for order 42
+// (no extra lines print: the spans are for a tracing tool to draw)</code></pre>
+  <p><code>Effect.withSpan("blend")</code> names one step. <code>Effect.fn("makeSmoothie")</code> is a recipe that takes ingredients (here, the order number) and gets a name tag, which makes a span too. Hook up a tracing tool and it draws:</p>
+  <figure>
+    <svg viewBox="0 0 620 120" role="img" aria-label="A trace: makeSmoothie takes 120 milliseconds; inside it, blend takes the first 100 and pour the last 20.">
+      <g font-size="12" class="mono" style="fill:var(--ink)">
+        <text x="10" y="30">makeSmoothie</text>
+        <rect x="150" y="16" width="420" height="20" rx="4" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="580" y="31">120ms</text>
+        <text x="30" y="65">blend</text>
+        <rect x="150" y="51" width="350" height="20" rx="4" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="510" y="66">100ms</text>
+        <text x="30" y="100">pour</text>
+        <rect x="500" y="86" width="70" height="20" rx="4" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="580" y="101">20ms</text>
+      </g>
+    </svg>
+    <figcaption>Smaller steps are tucked under the bigger step that ran them. The length of each bar is how long it took.</figcaption>
+  </figure>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. Name three parts of a log line that Effect fills in for you.</summary>The time, the level, and the bookmark (fiber) number. Plus sticky notes and the stopwatch, if you asked for them.</details>
+  <details><summary>2. Your diary is too noisy. Do you change the recipe, or turn the knob? Which knob?</summary>Turn the knob: <code>References.MinimumLogLevel</code>. The recipe stays the same.</details>
+  <details><summary>3. Two smoothies are being made at once and their lines are mixed up. What tells them apart?</summary>The bookmark number, like <code>#2</code> and <code>#3</code>, and the sticky note, like <code>{ order: 42 }</code>.</details>
+  <details><summary>4. What's the difference between <code>withLogSpan</code> (stopwatch) and <code>withSpan</code> (a bar on the timeline)?</summary><code>withLogSpan</code> puts a time <i>inside diary lines</i>, like <code>blend=122ms</code>. <code>withSpan</code> makes a bar for a tracing tool to draw on a timeline.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li><i>"Why not just <code>console.log</code>?"</i> <code>console.log</code> has no time, no level, no bookmark, no sticky notes, and you can't turn it down without deleting lines. Unit 1 used <code>Console.log</code> for plain output, and that's still fine for "here is my answer." <code>Effect.log</code> is for "here is what happened."</li>
+      <li>Also: <code>Effect.logFatal</code> (louder than Error), <code>Effect.logTrace</code> (quieter than Debug). <code>Effect.log</code> is Info level. <code>Effect.log("blending", order)</code> takes several values, like <code>console.log</code>, but sticky notes are better for things you want to search by later.</li>
+      <li>The default format is for people. Real apps often switch to one JSON object per line, <code>Logger.layer([Logger.consoleJson])</code>, so machines can search the diary. Mention, don't teach.</li>
+      <li>Tracing tools speak a shared language called OpenTelemetry. Effect ships exporters in <code>effect/observability</code> (<code>OtlpTracer</code>, <code>OtlpLogger</code>). Setting one up needs a running collector; not worth class time. Say "the bars get sent to a tool that draws them."</li>
+      <li>Effect also has <b>metrics</b> (<code>Metric.counter</code>, <code>Metric.histogram</code>): numbers like "smoothies made today." Diary = what happened, timeline = how long, metrics = how many.</li>
+      <li>Fiber numbers like <code>#2</code> depend on how many fibers ran before, so never test against them. Lesson 14 tests behavior, not diary formatting.</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-12">← Lesson 12: Schema</a><a href="#lesson-14">Lesson 14: Testing →</a></div>
+
+  <script>
+  (function () {
+    var log = K.$("#l13-log"), btn = K.$("#l13-run"), bars = K.$("#l13-bars");
+    var NAMES = ["DEBUG", "INFO", "WARN", "ERROR"];
+    // The pretend run: [time ms, fiber, level 0-3, message, order, blend start or null]
+    var EVENTS = [
+      [0, 2, 1, "order received", 41, null], [1, 3, 1, "order received", 42, null],
+      [10, 2, 0, "checking the fridge", 41, null], [11, 3, 0, "checking the fridge", 42, null],
+      [15, 3, 2, "only 1 mango left", 42, null],
+      [20, 2, 1, "blender on", 41, 20], [21, 3, 1, "blender on", 42, 21],
+      [120, 2, 1, "blender off", 41, 20], [140, 2, 1, "poured 🥤", 41, null],
+      [260, 3, 3, "blender jammed!", 42, 21], [262, 3, 0, "shaking the blender", 42, 21],
+      [380, 3, 1, "blender off", 42, 21], [400, 3, 1, "poured 🥤", 42, null]
+    ];
+    // Spans: [label, indent, start, end, color]
+    var SPANS = [
+      ["makeSmoothie(41)", 0, 0, 140, "sky"], ["blend", 1, 20, 120, "mango"], ["pour", 1, 120, 140, "mint"],
+      ["makeSmoothie(42)", 0, 0, 400, "sky"], ["blend", 1, 21, 380, "mango"], ["pour", 1, 380, 400, "mint"]
+    ];
+    var NS = "http://www.w3.org/2000/svg", X0 = 150, PX = 1.2, rects = [];
+    SPANS.forEach(function (s, i) {
+      var y = 8 + i * 28;
+      var t = document.createElementNS(NS, "text");
+      t.setAttribute("x", 10 + s[1] * 16); t.setAttribute("y", y + 15); t.textContent = s[0];
+      var r = document.createElementNS(NS, "rect");
+      r.setAttribute("x", X0 + s[2] * PX); r.setAttribute("y", y); r.setAttribute("height", 20); r.setAttribute("rx", 4); r.setAttribute("width", 0);
+      r.setAttribute("style", "fill:var(--" + s[4] + "-soft);stroke:var(--" + s[4] + ");stroke-width:1.5");
+      bars.appendChild(t); bars.appendChild(r); rects.push(r);
+    });
+
+    var shown = [], startClock = 0, now = 0;
+    function pad(n, w) { n = String(n); while (n.length < w) n = "0" + n; return n; }
+    function stamp(ms) {
+      var d = new Date(startClock + ms);
+      return pad(d.getHours(), 2) + ":" + pad(d.getMinutes(), 2) + ":" + pad(d.getSeconds(), 2) + "." + pad(d.getMilliseconds(), 3);
+    }
+    function render() {
+      var min = Number(K.$("input[name=l13-level]:checked").value);
+      var notes = K.$("#l13-notes").checked, watch = K.$("#l13-watch").checked;
+      if (!shown.length) return;
+      K.clear(log);
+      shown.forEach(function (e) {
+        if (e[2] < min) return;
+        var line = "[" + stamp(e[0]) + "] " + NAMES[e[2]] + " (#" + e[1] + ")";
+        if (watch && e[5] !== null) line += " blend=" + (e[0] - e[5]) + "ms";
+        line += ": " + e[3];
+        if (notes) line += " { order: " + e[4] + " }";
+        K.log(log, line, e[2] === 0 ? "dim" : e[2] === 3 ? "bad" : null);
+        if (e[2] === 2) log.lastChild.style.color = "var(--mango)";
+      });
+    }
+    function drawBars() {
+      SPANS.forEach(function (s, i) {
+        var w = now < s[2] ? 0 : (Math.min(now, s[3]) - s[2]) * PX;
+        rects[i].setAttribute("width", w);
+      });
+    }
+    K.$$("input[name=l13-level], #l13-notes, #l13-watch").forEach(function (el) { el.addEventListener("change", render); });
+    btn.addEventListener("click", function () {
+      btn.disabled = true; shown = []; now = 0; startClock = Date.now(); K.clear(log); drawBars();
+      var i = 0;
+      (function tick() {
+        while (i < EVENTS.length && EVENTS[i][0] <= now) { shown.push(EVENTS[i]); i++; }
+        render(); drawBars();
+        if (now >= 400) { btn.disabled = false; return; }
+        now += 10;
+        K.sleep(45).then(tick);
+      })();
+    });
+  })();
+  </script>
+</section>

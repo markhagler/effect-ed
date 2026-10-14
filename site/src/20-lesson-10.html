@@ -1,0 +1,306 @@
+<section id="lesson-10" class="lesson" hidden>
+  <div class="eyebrow">Lesson 10</div>
+  <h1>The Order Shelf, Queues</h1>
+  <div class="bigidea"><strong>A queue is a shelf between two fibers: one side puts orders on, the other side takes them off, in order.</strong> Whoever finds the shelf empty, or full, waits. And waiting is a bookmark, not a frozen kitchen.</div>
+
+  <h2>The story</h2>
+  <p>Lunch rush. Maya and eleven friends line up at the counter. Taking an order is quick: ten seconds. Making a smoothie is slow: a whole minute in the blender.</p>
+  <div class="strip">
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam blends one smoothie while Maya and a long line of friends wait.">
+        <rect x="6" y="6" width="150" height="26" rx="6" style="fill:var(--berry-soft);stroke:var(--berry);stroke-width:1.5"/>
+        <text x="81" y="23" text-anchor="middle" font-size="11" style="fill:var(--ink)">"Next! ...in a minute."</text>
+        <use href="#sam-busy" x="0" y="44" width="90" height="150"/>
+        <use href="#blender" x="82" y="112" width="44" height="66"/>
+        <use href="#maya-sad" x="128" y="62" width="78" height="130"/>
+        <g style="fill:var(--muted);opacity:.55">
+          <circle cx="214" cy="76" r="9"/><rect x="205" y="88" width="18" height="40" rx="7"/>
+          <circle cx="230" cy="84" r="8"/><rect x="222" y="95" width="16" height="36" rx="6"/>
+        </g>
+        <use href="#clock" x="196" y="6" width="30" height="30"/>
+      </svg>
+      <div class="cap"><b>One order at a time.</b> Sam takes an order, then blends it. The whole line stands still for a minute per person.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="Sam puts an order slip on one end of a shelf. The blending station takes the oldest slip from the other end.">
+        <text x="125" y="40" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mango)">first on, first off</text>
+        <path d="M78 50H172" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow-mango)" fill="none"/>
+        <use href="#sam-card" x="-6" y="44" width="90" height="150"/>
+        <use href="#l10-shelf" x="74" y="112" width="110" height="22"/>
+        <use href="#l10-slip" x="92" y="82" width="26" height="32"/>
+        <use href="#l10-slip" x="130" y="82" width="26" height="32"/>
+        <use href="#blender" x="184" y="80" width="50" height="75"/>
+        <text x="128" y="160" text-anchor="middle" font-size="11" style="fill:var(--ink)">the order shelf</text>
+      </svg>
+      <div class="cap"><b>The order shelf.</b> The front counter puts a slip on one end. The blending station takes the <i>oldest</i> slip off the other end.</div>
+    </div>
+    <div class="panel">
+      <svg viewBox="0 0 240 200" role="img" aria-label="The shelf has two slips and no room. Sam holds a third slip and waits.">
+        <rect x="4" y="6" width="132" height="26" rx="6" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+        <text x="70" y="23" text-anchor="middle" font-size="11" style="fill:var(--ink)">"One second, please!"</text>
+        <use href="#sam-worried" x="-6" y="44" width="90" height="150"/>
+        <use href="#l10-slip" x="60" y="66" width="22" height="28"/>
+        <use href="#l10-shelf" x="84" y="112" width="100" height="20"/>
+        <use href="#l10-slip" x="100" y="82" width="26" height="32"/>
+        <use href="#l10-slip" x="138" y="82" width="26" height="32"/>
+        <text x="134" y="70" text-anchor="middle" font-size="12" font-weight="700" style="fill:var(--berry)">FULL</text>
+        <use href="#blender" x="186" y="80" width="50" height="75"/>
+        <text x="134" y="160" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">pushes back ⟵</text>
+      </svg>
+      <div class="cap"><b>Full shelf? The counter waits.</b> It has two slots. The next slip goes on only when the blender takes one off.</div>
+    </div>
+  </div>
+  <p>Remember Lesson 6: still one cook. The front counter is one recipe with a bookmark, the blending station is another. Sam hops between them whenever one of them has to wait. Two kinds of waiting can happen:</p>
+  <ul>
+    <li><b>The shelf is empty.</b> The blending station has nothing to do. It puts in a bookmark and waits for a slip. Sam goes and takes orders meanwhile. Nothing freezes.</li>
+    <li><b>The shelf is full.</b> It only has two slots. The front counter says "one second, please" and waits until the blending station takes a slip off. Then the next slip goes on.</li>
+  </ul>
+  <p>That second kind is important. The full shelf <i>pushes back</i> on the front counter, so the kitchen never ends up with 500 slips and 3 bananas. Programmers call that push <b>backpressure</b>.</p>
+  <p>Programmers call the shelf itself a <b>queue</b>. Ty, the kitchen manager, checks what goes on it: if it's an order shelf, only order slips go on. Try to put a shoe there and Ty stops you before the kitchen opens.</p>
+
+  <h2>The picture</h2>
+  <figure>
+    <svg viewBox="0 0 700 250" role="img" aria-label="The front counter fiber puts slips on the order shelf with Queue.offer. The shelf has two slots: the oldest slip at the far end and one empty slot. The blending station fiber takes the oldest slip with Queue.take. If the shelf is full the counter waits; if it is empty the blender waits.">
+      <g font-size="12" style="fill:var(--ink)">
+        <rect x="20" y="90" width="170" height="70" rx="8" style="fill:var(--sky-soft);stroke:var(--sky);stroke-width:1.5"/>
+        <text x="105" y="118" text-anchor="middle" font-weight="700">front counter fiber</text>
+        <text x="105" y="140" text-anchor="middle" font-size="11" class="mono">Queue.offer: put on</text>
+        <path d="M190 125H228" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+
+        <text x="350" y="30" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mango)">first on, first off</text>
+        <path d="M262 40H438" style="stroke:var(--mango)" stroke-width="1.8" marker-end="url(#arrow-mango)" fill="none"/>
+        <rect x="232" y="52" width="236" height="150" rx="10" style="fill:var(--mango-soft);stroke:var(--mango);stroke-width:1.5"/>
+        <text x="350" y="74" text-anchor="middle" font-weight="700" class="mono" font-size="11">order shelf: Queue.bounded(2)</text>
+        <rect x="262" y="88" width="80" height="72" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <rect x="358" y="88" width="80" height="72" rx="6" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <use href="#l10-slip" x="378" y="96" width="40" height="50"/>
+        <use href="#l10-shelf" x="250" y="158" width="200" height="40"/>
+        <text x="302" y="128" text-anchor="middle" font-size="11" style="fill:var(--muted)">empty slot</text>
+        <text x="398" y="157" text-anchor="middle" font-size="10">slip 1 (oldest)</text>
+
+        <path d="M468 125H506" stroke="currentColor" stroke-width="1.8" marker-end="url(#arrow)" fill="none"/>
+        <rect x="510" y="90" width="170" height="70" rx="8" style="fill:var(--mint-soft);stroke:var(--mint);stroke-width:1.5"/>
+        <text x="595" y="118" text-anchor="middle" font-weight="700">blending station fiber</text>
+        <text x="595" y="140" text-anchor="middle" font-size="11" class="mono">Queue.take: oldest off</text>
+
+        <text x="105" y="186" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--berry)">shelf full? counter waits</text>
+        <text x="105" y="202" text-anchor="middle" font-size="11" style="fill:var(--berry)">(backpressure)</text>
+        <text x="595" y="186" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--sky)">shelf empty? blender waits</text>
+        <text x="350" y="232" text-anchor="middle" font-size="11" style="fill:var(--muted)">waiting = a bookmark (Lesson 6), never a frozen kitchen</text>
+      </g>
+    </svg>
+    <figcaption>Slips go in one end and come out the other, in the same order. Shelf full? The counter waits. Shelf empty? The blender waits.</figcaption>
+  </figure>
+
+  <h2>The tiniest code</h2>
+<pre><code>import { Effect, Queue, Console, Fiber } from "effect"
+
+const program = Effect.gen(function* () {
+  const shelf = yield* Queue.bounded&lt;string&gt;(2)   // a shelf with 2 slots
+
+  const cashier = Effect.gen(function* () {
+    for (const order of ["mango", "berry", "kiwi", "lime"]) {
+      yield* Queue.offer(shelf, order)             // put (waits if full)
+      yield* Console.log(`cashier: ${order} is on the shelf`)
+    }
+  })
+
+  const blender = Effect.gen(function* () {
+    for (let i = 0; i &lt; 4; i++) {
+      const order = yield* Queue.take(shelf)       // take (waits if empty)
+      yield* Effect.sleep("1 second")              // blending takes a while
+      yield* Console.log(`blender: ${order} smoothie 🥤`)
+    }
+  })
+
+  const front = yield* Effect.forkChild(cashier)   // bookmark 1
+  const back = yield* Effect.forkChild(blender)    // bookmark 2
+  yield* Fiber.join(front)
+  yield* Fiber.join(back)
+})
+
+Effect.runPromise(program)
+// cashier: mango is on the shelf
+// cashier: berry is on the shelf
+// cashier: kiwi is on the shelf
+// blender: mango smoothie 🥤
+// cashier: lime is on the shelf     &lt;-- waited a whole second for a free slot
+// blender: berry smoothie 🥤
+// blender: kiwi smoothie 🥤
+// blender: lime smoothie 🥤</code></pre>
+  <p>Read the log slowly. Mango and berry fill both slots. Kiwi gets on because the blender already grabbed mango off the shelf and into the jar. Then the shelf is full again, so lime waits, the cashier's bookmark stays put, until mango is done and the blender takes berry.</p>
+  <p>The recipe-card lines still work. <code>Queue.bounded&lt;string&gt;(2)</code> is a card that <b>gives you</b> a shelf for strings. <code>Queue.take(shelf)</code> is a card that <b>gives you</b> a string. Neither has anything on the "can go wrong" line.</p>
+
+  <div class="demo">
+    <h3>Run the lunch rush</h3>
+    <p>Eight orders. The cashier takes one every half second. Pick the shelf size, how many blenders, and how fast they blend. Watch who waits.</p>
+    <div class="controls">
+      <span class="seg" role="radiogroup" aria-label="Shelf slots">
+        <label><input type="radio" name="l10-slots" value="1"><span>1 slot</span></label>
+        <label><input type="radio" name="l10-slots" value="2" checked><span>2 slots</span></label>
+        <label><input type="radio" name="l10-slots" value="3"><span>3 slots</span></label>
+      </span>
+      <span class="seg" role="radiogroup" aria-label="Number of blenders">
+        <label><input type="radio" name="l10-nb" value="1" checked><span>1 blender</span></label>
+        <label><input type="radio" name="l10-nb" value="2"><span>2 blenders</span></label>
+      </span>
+      <span class="seg" role="radiogroup" aria-label="Blending speed">
+        <label><input type="radio" name="l10-speed" value="1600" checked><span>slow blend</span></label>
+        <label><input type="radio" name="l10-speed" value="250"><span>fast blend</span></label>
+      </span>
+      <button class="btn primary" id="l10-run">Run</button>
+    </div>
+    <div class="stage">
+      <svg viewBox="0 0 700 220" aria-hidden="true">
+        <g font-size="12" style="fill:var(--ink)">
+          <use id="l10-cash" href="#sam-happy" x="20" y="34" width="96" height="160"/>
+          <text id="l10-left" x="68" y="22" text-anchor="middle" font-weight="700">orders left: 8</text>
+          <text id="l10-cash-st" x="68" y="212" text-anchor="middle" font-weight="700" style="fill:var(--muted)">ready</text>
+          <text x="350" y="22" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--mango)">first on, first off</text>
+          <path d="M260 32H440" style="stroke:var(--mango)" stroke-width="1.8" marker-end="url(#arrow-mango)" fill="none"/>
+          <g id="l10-slots-g"></g>
+          <use href="#l10-shelf" x="200" y="134" width="300" height="60"/>
+          <text id="l10-shelf-st" x="350" y="212" text-anchor="middle" font-weight="700" style="fill:var(--muted)">shelf: 0 of 2</text>
+          <use id="l10-b0" href="#blender" x="512" y="56" width="56" height="84"/>
+          <use id="l10-b1" href="#blender" x="618" y="56" width="56" height="84"/>
+          <text id="l10-b0-st" x="540" y="160" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--muted)">idle</text>
+          <text id="l10-b1-st" x="646" y="160" text-anchor="middle" font-size="11" font-weight="700" style="fill:var(--muted)">idle</text>
+          <text id="l10-made" x="593" y="212" text-anchor="middle" font-weight="700">🥤 0 of 8</text>
+        </g>
+      </svg>
+    </div>
+    <pre class="log" id="l10-log" aria-live="polite"></pre>
+  </div>
+
+  <h2>Two blenders, one shelf</h2>
+  <p>Add a second blending station. Both take from the same shelf, and each slip goes to exactly one of them, never both.</p>
+<pre><code>const blender = (name: string) =&gt;
+  Effect.gen(function* () {
+    for (let i = 0; i &lt; 2; i++) {
+      const order = yield* Queue.take(shelf)
+      yield* Effect.sleep("1 second")
+      yield* Console.log(`${name}: ${order} smoothie 🥤`)
+    }
+  })
+
+const left = yield* Effect.forkChild(blender("left blender"))
+const right = yield* Effect.forkChild(blender("right blender"))
+// ...cashier forked and every fiber joined, same as before
+// left blender: mango smoothie 🥤
+// right blender: berry smoothie 🥤
+// left blender: kiwi smoothie 🥤
+// right blender: lime smoothie 🥤</code></pre>
+  <p>Four smoothies in about two seconds instead of four. Still one cook: the <i>blenders</i> do the waiting, and Sam just keeps two bookmarks open.</p>
+
+  <h2>Check yourself</h2>
+  <details><summary>1. The blending station finds the shelf empty. What does it do? Does the rest of the kitchen freeze?</summary>It waits for a slip, with a bookmark in its recipe. Nothing freezes: Sam goes off and takes orders, and the blender's recipe picks up again the moment a slip lands on the shelf.</details>
+  <details><summary>2. The shelf has 2 slots, but the log shows three orders on the shelf before the first smoothie. How?</summary>The blender already took mango off the shelf and put it in the jar. That freed a slot, so kiwi went on. Only two slips were ever on the shelf at once.</details>
+  <details><summary>3. What is backpressure, in kitchen words? Why is it a good thing that the cashier has to wait?</summary>The full shelf pushing back on the front counter: "no room, wait a second." It's good because otherwise orders pile up faster than they can be made, and the kitchen drowns in slips it can't finish.</details>
+  <details><summary>4. With two blenders and four one-second orders, how long does it take? Did we add a second cook?</summary>About two seconds. No new cook: the blenders do the slow part, and Sam just keeps one more bookmark open.</details>
+
+  <details>
+    <summary>Teacher notes</summary>
+    <ul>
+      <li>Grown-up words: the cashier is the <b>producer</b>, the blender is the <b>consumer</b>, and "first on, first off" is <b>FIFO</b> (first in, first out). Use them after the picture lands, not before.</li>
+      <li>Other shelf shapes, worth a mention: <code>Queue.unbounded()</code> has no limit, so <code>offer</code> never waits (and the slips can pile up forever). <code>Queue.sliding(n)</code>: when full, the new slip goes on and the <i>oldest</i> falls off. <code>Queue.dropping(n)</code>: when full, the <i>new</i> slip is thrown away. In those two, <code>offer</code> hands back <code>false</code> when a slip didn't make it.</li>
+      <li>Why the loops count to 4: a real kitchen loops forever (<code>Effect.forever</code>) and stops by interruption (Lesson 6) or by closing the shelf. Closing: make it with <code>Queue.bounded&lt;string, Cause.Done&gt;(n)</code> and call <code>Queue.end(shelf)</code>. Slips already on the shelf can still be taken, then <code>take</code> fails with <code>Done</code>. That's what the queue's second type slot is for. <code>Queue.shutdown</code> is the rude version: it throws away whatever is left.</li>
+      <li>If a kid asks "can everyone hear every order?": that's <code>PubSub</code>, the <b>loudspeaker</b>. Each listener calls <code>PubSub.subscribe</code> (it needs a Scope, Lesson 7) and every listener gets every message from <code>PubSub.publish</code>. A queue hands each slip to exactly one taker.</li>
+      <li><code>Deferred</code> is the pickup bell: a one-time slot that is filled once (<code>Deferred.succeed</code>) and wakes everyone waiting on <code>Deferred.await</code>. Nice for "start when the kitchen opens."</li>
+      <li>Contrast with Lesson 9: the whiteboard (<code>Ref</code>) holds <i>one</i> current value anyone can read again. The shelf holds a <i>line</i> of things, and taking one removes it. Lesson 11's conveyor belt can be fed straight from a queue (<code>Stream.fromQueue</code>).</li>
+    </ul>
+  </details>
+
+  <div class="pager"><a href="#lesson-9">← Lesson 9: Shared state</a><a href="#lesson-11">Lesson 11: Streams →</a></div>
+
+  <script>
+  (function () {
+    var NS = "http://www.w3.org/2000/svg";
+    var FRUITS = ["mango", "berry", "kiwi", "lime", "peach", "melon", "apple", "grape"];
+    var log = K.$("#l10-log"), btn = K.$("#l10-run"), slotsG = K.$("#l10-slots-g");
+    var cash = K.$("#l10-cash"), cashSt = K.$("#l10-cash-st"), left = K.$("#l10-left");
+    var shelfSt = K.$("#l10-shelf-st"), made = K.$("#l10-made");
+    var bUse = [K.$("#l10-b0"), K.$("#l10-b1")], bSt = [K.$("#l10-b0-st"), K.$("#l10-b1-st")];
+    function val(name) { return +K.$("input[name=" + name + "]:checked").value; }
+    function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+    function status(t, msg, color) { t.textContent = msg; t.style.fill = color || "var(--muted)"; }
+
+    var cap = 2, shelf = [];
+    function drawShelf() {
+      slotsG.textContent = "";
+      var w = 76, gap = 14, total = cap * w + (cap - 1) * gap, x0 = 350 - total / 2;
+      for (var i = 0; i < cap; i++) {
+        var x = x0 + i * (w + gap);
+        slotsG.appendChild(el("rect", { x: x, y: 52, width: w, height: 86, rx: 6, fill: "none", stroke: "currentColor", "stroke-width": 1.2, "stroke-dasharray": "5 4", opacity: .6 }));
+        // oldest slip sits at the right end, nearest the blenders
+        var item = shelf[cap - 1 - i];
+        if (item) {
+          slotsG.appendChild(el("use", { href: "#l10-slip", x: x + 16, y: 78, width: 44, height: 55 }));
+          var t = el("text", { x: x + w / 2, y: 70, "text-anchor": "middle", "font-size": 12, "font-weight": 700 });
+          t.textContent = item; slotsG.appendChild(t);
+        }
+      }
+      status(shelfSt, "shelf: " + shelf.length + " of " + cap, shelf.length === cap ? "var(--berry)" : "var(--muted)");
+    }
+    function reset() {
+      cap = val("l10-slots"); shelf = [];
+      var nb = val("l10-nb");
+      bUse[1].style.display = bSt[1].style.display = nb === 2 ? "" : "none";
+      bSt.forEach(function (t) { status(t, "idle"); });
+      cash.setAttribute("href", "#sam-happy"); status(cashSt, "ready");
+      left.textContent = "orders left: 8"; made.textContent = "🥤 0 of 8";
+      drawShelf();
+    }
+    K.$$("input[name=l10-slots], input[name=l10-nb]").forEach(function (r) { r.addEventListener("change", function () { if (!btn.disabled) reset(); }); });
+    reset();
+
+    btn.addEventListener("click", async function () {
+      btn.disabled = true; K.clear(log); reset();
+      var nb = val("l10-nb"), blendMs = val("l10-speed"), placed = 0, done = 0, cashWait = 0, blendWait = 0, TICK = 50;
+      var waiters = [];   // like Effect, the blender that started waiting first gets the next slip
+
+      async function cashier() {
+        for (var i = 0; i < FRUITS.length; i++) {
+          status(cashSt, "taking order", "var(--ink)");
+          await K.sleep(500);
+          if (shelf.length >= cap) {
+            cash.setAttribute("href", "#sam-worried"); status(cashSt, "shelf full: waiting ⏳", "var(--berry)");
+            K.log(log, "cashier: shelf full, " + FRUITS[i] + " waits", "bad");
+            while (shelf.length >= cap) { await K.sleep(TICK); cashWait += TICK; }
+            cash.setAttribute("href", "#sam-happy");
+          }
+          shelf.push(FRUITS[i]); placed++; drawShelf();
+          left.textContent = "orders left: " + (FRUITS.length - placed);
+          K.log(log, "cashier: " + FRUITS[i] + " is on the shelf");
+        }
+        status(cashSt, "all orders placed ✓", "var(--mint)");
+      }
+
+      async function blender(k) {
+        var name = nb === 2 ? (k === 0 ? "left blender" : "right blender") : "blender";
+        while (true) {
+          if (shelf.length === 0 || (waiters.length && waiters[0] !== k)) {
+            if (shelf.length === 0 && placed === FRUITS.length) break;
+            if (waiters.indexOf(k) < 0) waiters.push(k);
+            status(bSt[k], "waiting ⏳", "var(--sky)");
+            await K.sleep(TICK); blendWait += TICK; continue;
+          }
+          if (waiters[0] === k) waiters.shift();
+          var order = shelf.shift(); drawShelf();
+          status(bSt[k], "blending " + order, "var(--mango)");
+          await K.sleep(blendMs);
+          done++; made.textContent = "🥤 " + done + " of 8";
+          K.log(log, name + ": " + order + " smoothie 🥤", "ok");
+        }
+        status(bSt[k], "done ✓", "var(--mint)");
+      }
+
+      var jobs = [cashier()];
+      for (var k = 0; k < nb; k++) jobs.push(blender(k));
+      await Promise.all(jobs);
+      K.log(log, "cashier waited " + (cashWait / 1000).toFixed(1) + " s for a free slot (backpressure)", "dim");
+      K.log(log, "blenders waited " + (blendWait / 1000).toFixed(1) + " s in total at an empty shelf", "dim");
+      btn.disabled = false;
+    });
+  })();
+  </script>
+</section>

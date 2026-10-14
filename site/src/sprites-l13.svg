@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false"><defs>
+    <symbol id="l13-diary" viewBox="0 0 90 120">
+      <rect x="3" y="10" width="84" height="106" rx="6" style="fill:var(--mango);stroke:var(--ink);stroke-width:2"/>
+      <rect x="11" y="18" width="68" height="92" rx="2" style="fill:var(--paper);stroke:#1b2734;stroke-width:1.5"/>
+      <rect x="30" y="4" width="30" height="16" rx="4" style="fill:var(--muted);stroke:var(--ink);stroke-width:2"/>
+      <path d="M18 34h54M18 46h54M18 58h54M18 70h54M18 82h54M18 94h54" style="stroke:var(--paper-rule);stroke-width:1.5"/>
+      <path d="M18 31h20M42 31h24M18 43h14M36 43h30M18 55h22M44 55h18M18 67h16M38 67h28" style="stroke:#1b2734;stroke-width:2;stroke-linecap:round"/>
+      <path d="M18 79h12M34 79h30" style="stroke:var(--paper-red);stroke-width:2;stroke-linecap:round"/>
+    </symbol>
+    <symbol id="l13-sticky" viewBox="0 0 60 60">
+      <path d="M4 6H56V44L44 56H4Z" style="fill:#ffe27a;stroke:#1b2734;stroke-width:2;stroke-linejoin:round"/>
+      <path d="M56 44H44V56" style="fill:#f1c94a;stroke:#1b2734;stroke-width:2;stroke-linejoin:round"/>
+    </symbol>
+    <symbol id="l13-stopwatch" viewBox="0 0 60 70">
+      <rect x="24" y="2" width="12" height="8" rx="2" style="fill:var(--muted);stroke:var(--ink);stroke-width:2"/>
+      <path d="M46 16l5-5" style="stroke:var(--ink);stroke-width:3;stroke-linecap:round"/>
+      <circle cx="30" cy="40" r="26" style="fill:var(--paper);stroke:var(--ink);stroke-width:2.5"/>
+      <path d="M30 40V22" style="stroke:var(--berry);stroke-width:3;stroke-linecap:round"/>
+      <path d="M30 17v4M30 59v4M7 40h4M49 40h4" style="stroke:#1b2734;stroke-width:2;stroke-linecap:round"/>
+      <circle cx="30" cy="40" r="2.5" style="fill:#1b2734"/>
+    </symbol>
+</defs></svg>

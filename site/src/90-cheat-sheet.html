@@ -1,7 +1,7 @@
 <section id="cheat-sheet" class="lesson" hidden>
   <div class="eyebrow">Reference</div>
   <h1>Promise vs. Effect, on one page</h1>
-  <p>Everything from the seven lessons, side by side. The receipt on the left, the recipe card on the right.</p>
+  <p>Everything from the fourteen lessons, side by side. The receipt on the left, the recipe card on the right.</p>
   <div class="sheet">
     <table>
       <thead><tr><th>Question</th><th>Promise (the receipt)</th><th>Effect (the recipe card)</th></tr></thead>
@@ -22,6 +22,14 @@
         <tr><td>Always clean up</td><td><code>try { } finally { }</code>, no interrupt case</td><td><code>Effect.acquireRelease</code>: success, error, and interrupt</td></tr>
         <tr><td>Ask for a helper</td><td>Import it or pass it in by hand</td><td><code>yield* Blender</code>, then <code>Effect.provide(layer)</code></td></tr>
         <tr><td>Turn it into the other</td><td>(a Promise is already running)</td><td><code>Effect.runPromise(card)</code> at the door of the program</td></tr>
+        <tr><td>Go again on a timetable</td><td><code>setInterval</code>, or a loop with <code>setTimeout</code></td><td><code>Effect.repeat(card, Schedule.spaced("10 minutes"))</code></td></tr>
+        <tr><td>Retry, waiting longer each time</td><td>A loop, a counter, and <code>setTimeout</code>, by hand</td><td><code>Effect.retry(card, Schedule.max([Schedule.exponential("1 second"), Schedule.recurs(3)]))</code></td></tr>
+        <tr><td>Share a number between running tasks</td><td>A global <code>let</code>; read, <code>await</code>, write back loses updates</td><td><code>Ref.make(0)</code>, then <code>Ref.update(board, (n) =&gt; n + 1)</code>, one step</td></tr>
+        <tr><td>Hand work from one task to another</td><td>A shared array and polling</td><td><code>Queue.bounded(3)</code>, <code>Queue.offer</code>, <code>Queue.take</code>; a full shelf makes the putter wait</td></tr>
+        <tr><td>Many values over time</td><td>Event listeners push whether you're ready or not</td><td><code>Stream</code> with <code>map</code>, <code>filter</code>, <code>take</code>; runs only when pulled</td></tr>
+        <tr><td>Check data from outside</td><td><code>JSON.parse</code> and hope</td><td><code>Schema.decodeUnknownEffect(Crate)(data)</code> gives <code>Effect&lt;Crate, SchemaError&gt;</code></td></tr>
+        <tr><td>Write down what happened</td><td><code>console.log</code>: no time, level, or fiber</td><td><code>Effect.log</code>, <code>Effect.annotateLogs({ order: 42 })</code>, <code>Effect.withLogSpan("blend")</code></td></tr>
+        <tr><td>Test "wait 10 minutes" quickly</td><td>Fake timers that patch <code>setTimeout</code> everywhere</td><td><code>it.effect</code> + <code>TestClock.adjust("10 minutes")</code></td></tr>
       </tbody>
     </table>
   </div>
@@ -35,7 +43,7 @@
     <li>Trailing <code>never</code>s can be left off: <code>Effect&lt;number&gt;</code> means <code>Effect&lt;number, never, never&gt;</code>.</li>
   </ul>
 
-  <h2>The five lines of Effect 4 you actually need this month</h2>
+  <h2>The five lines of Unit 1 you actually need</h2>
 <pre><code>import { Effect, Console, Context, Layer, Data, Fiber } from "effect"
 
 Effect.gen(function* () { const x = yield* step; return x })   // a recipe with steps
@@ -43,6 +51,18 @@ class OutOfMango extends Data.TaggedError("OutOfMango") {}     // a named error
 class Blender extends Context.Service&lt;Blender, { ... }&gt;()("Blender") {}   // a needed thing
 Layer.succeed(Blender, { ... })                                 // a way to provide it
 Effect.runPromise(card.pipe(Effect.provide(layer)))            // the door out of the kitchen</code></pre>
+
+  <h2>The Unit 2 lines you'll reach for</h2>
+<pre><code>import { Effect, Schedule, Ref, Queue, Stream, Schema } from "effect"
+import { TestClock } from "effect/testing"
+
+Effect.retry(card, Schedule.exponential("1 second"))               // try again, waiting longer each time
+Ref.make(0)                                                        // a card that makes a shared whiteboard
+Queue.bounded&lt;string&gt;(3)                                           // a card that makes a 3-slot order shelf
+Stream.make("🥭", "🍓", "🥝").pipe(Stream.map(wash), Stream.take(2))  // a conveyor belt with stations
+Schema.decodeUnknownEffect(Crate)(delivery)                        // check the delivery at the back door
+Effect.log("blending").pipe(Effect.annotateLogs({ order: 42 }))    // a diary line with a sticky note
+TestClock.adjust("10 minutes")                                     // turn the magic clock's knob</code></pre>
 
   <h2>Kitchen word, programmer word</h2>
   <div class="sheet">
@@ -68,9 +88,23 @@ Effect.runPromise(card.pipe(Effect.provide(layer)))            // the door out o
         <tr><td>Pulling the bookmark out</td><td>interruption</td><td>Stopping a fiber cleanly; its cleanup still runs.</td></tr>
         <tr><td>Borrow it, always return it</td><td>acquire / release</td><td>Get a resource and guarantee cleanup on every ending.</td></tr>
         <tr><td>The due date</td><td>scope</td><td>The window during which a borrowed resource is held.</td></tr>
+        <tr><td>The routine chart on the wall</td><td>schedule</td><td>A plan for when to go again and when to stop, separate from any card.</td></tr>
+        <tr><td>Knock again / wipe again</td><td>retry / repeat</td><td>Go again after a failure / go again after a success, following a schedule.</td></tr>
+        <tr><td>The kitchen whiteboard</td><td>Ref</td><td>One shared value; <code>Ref.update</code> reads, changes, and writes it back in one step.</td></tr>
+        <tr><td>Three sales, board says 1</td><td>lost update (race condition)</td><td>A fiber reads, pauses, and writes back an old number.</td></tr>
+        <tr><td>The order shelf</td><td>queue</td><td>Values between fibers, first in, first out. Waits when empty or full.</td></tr>
+        <tr><td>The full shelf pushing back</td><td>backpressure</td><td>A slow taker makes a fast putter wait.</td></tr>
+        <tr><td>A conveyor belt of fruit</td><td>stream</td><td>Many values, one after another, maybe forever. Moves only when pulled.</td></tr>
+        <tr><td>The packing list by the back door</td><td>schema</td><td>Describes good data once: checks it while running, and gives Ty the type.</td></tr>
+        <tr><td>The rejection slip</td><td>SchemaError</td><td>What's on the "Can go wrong" line when a delivery doesn't match.</td></tr>
+        <tr><td>The kitchen diary</td><td>log</td><td>A line with the time, the level, and the bookmark that wrote it.</td></tr>
+        <tr><td>A sticky note / a stopwatch</td><td>annotation / log span</td><td>Extra info on every line / how long a step has been running.</td></tr>
+        <tr><td>One bar on the timeline</td><td>span</td><td>A named step with a start and an end, for a tracing tool to draw.</td></tr>
+        <tr><td>The practice kitchen</td><td>test</td><td>Run a recipe with pretend appliances and check the result.</td></tr>
+        <tr><td>The magic wall clock</td><td>test clock</td><td>A clock that only moves when the test turns the knob.</td></tr>
       </tbody>
     </table>
   </div>
 
-  <div class="pager"><a href="#lesson-7">← Lesson 7</a><a href="#home">Home →</a></div>
+  <div class="pager"><a href="#lesson-14">← Lesson 14</a><a href="#home">Home →</a></div>
 </section>
